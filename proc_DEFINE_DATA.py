@@ -8,25 +8,28 @@ from Util.DataPatterns import *
 
 
 def proc_DEFINE_DATA(lines):
-    clearLines =  filter(isNotRem, lines)
+    clearLines =  map(l472, filter(isNotRem, lines))
 
     try:
-        line_ws = clearLines.index(filter(isWorking, clearLines)[0])
+        line_dd = clearLines.index(filter(isDefine, clearLines)[0])
     except IndexError:
-        return False, [], [], 'Nao e um programa Cobol valido'
+        return False, [], [], 'Nao e um programa Natural valido'
 
     try:
-        line_end = clearLines.index(filter(isLinkage, clearLines)[0])
+        line_ed = clearLines.index(filter(isEndDefine, clearLines)[0])
     except IndexError:
-        try:
-            line_end = clearLines.index(filter(isProcedure, clearLines)[0])
-        except IndexError:
-            return False, [], [], 'Nao e um programa Cobol valido'
+        return False, [], [], 'Nao e um programa Natural valido'
 
-    lines = homogenize(clearLines[line_ws + 1:line_end])
+    lines = homogenize(clearLines[line_dd + 1:line_ed])
 
-    wstxt = 'ws = {'
-    wsdic = {}
+    def_global = 'dd_global = {}'
+    ref_global = {}
+
+    def_parameter = 'dd_parameter = {}'
+    ref_parameter = {}
+
+    def_local = 'dd_local = {}'
+    ref_local = {}
 
     for line in lines:
         match = DataPatterns.row_pattern.match(line.strip())

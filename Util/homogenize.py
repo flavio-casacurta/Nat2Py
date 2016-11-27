@@ -8,7 +8,7 @@
 from HOFs import *
 def homogenize(book, cbl=False):
     inlin = '      ' if cbl else ''
-    clearLines = map(l672, filter(all3(isNotRem, isNotBlank, isNotEjectOrSkip), book))
+    clearLines = map(l472, filter(all3(isNotRem, isNotBlank, isNotEjectOrSkip), book))
     joinLines = []
     holder = []
     for line in clearLines:
