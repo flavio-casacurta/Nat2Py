@@ -1,0 +1,7 @@
+0020 GLOBAL USING G11111AA
+0030 LOCAL USING L11111AA
+0040 LOCAL
+0050 1 #ATR                           (C)
+0720 1 #TX-PFS                        (A48)
+0730   INIT <'PF8 - AVANCA'>
+0740 1 #CAMPO-RETORNA                 (A78)

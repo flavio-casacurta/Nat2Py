@@ -22,14 +22,10 @@ def proc_DEFINE_DATA(lines):
 
     lines = homogenize(clearLines[line_dd + 1:line_ed])
 
-    def_global = 'dd_global = {}'
-    ref_global = {}
-
-    def_parameter = 'dd_parameter = {}'
-    ref_parameter = {}
-
-    def_local = 'dd_local = {}'
-    ref_local = {}
+    references = {}
+    def_global = ''
+    def_parameter = 'dd_parameter = {'
+    def_local = 'dd_local = {'
 
     for line in lines:
         match = DataPatterns.row_pattern.match(line.strip())
