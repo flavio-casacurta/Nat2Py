@@ -17,15 +17,19 @@ def homogenize(dda):
     while True:
         if stop:
             break
-        try:
-            line = ilines.next()
-        except StopIteration:
-            break
+
+        if not holder:
+            try:
+                line = ilines.next()
+            except StopIteration:
+                break
+
         if word(line, 1) in RESERV:
             joinLines.append(line)
             continue
 
-        holder.append(line if not holder else line.strip())
+        if not holder:
+            holder.append(line if not holder else line.strip())
         try:
             line = ilines.next()
         except StopIteration:
@@ -34,8 +38,6 @@ def homogenize(dda):
             continue
         if not word(line, 1).isdigit():
             holder.append(line if not holder else line.strip())
-            joinLines.append(" ".join(holder))
-            holder = []
         else:
             joinLines.append(" ".join(holder))
             holder = []
