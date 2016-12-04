@@ -5,14 +5,16 @@ class DataPatterns:
     opt_pattern_format = "({})?"
 
     row_pattern_base = r"""^(?P<level>\d{1,3})\s+(?P<name>\S+)"""
-    row_pattern_attrib = r"""\s+\((?P<attrib>.\d+(\,\d+)?)"""
+    row_pattern_attrib = r"""\s+\((?P<attrib>.(\d+)?(\,\d+)?)"""
     row_pattern_occurs = r"""\/\d+\:(?P<occurs>\d+)"""
+    row_pattern_two_dimension = r"""\,\d+\:(?P<two_dimension>\d+)"""
     row_pattern_end = r"""\)"""
     row_pattern_init = r"""\s+INIT<(?P<init>.+)>"""
 
     row_pattern = re.compile(row_pattern_base +
                              opt_pattern_format.format(row_pattern_attrib) +
                              opt_pattern_format.format(row_pattern_occurs) +
+                             opt_pattern_format.format(row_pattern_two_dimension) +
                              opt_pattern_format.format(row_pattern_end) +
                              opt_pattern_format.format(row_pattern_init))
 

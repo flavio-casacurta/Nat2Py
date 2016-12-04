@@ -4,7 +4,7 @@
    Created on 25/05/2015
    @author: C&C - HardSoft
 '''
-RESERV = 'GLOBAL LOCAL PARAMETER'
+from warehouse import DDA
 
 from HOFs import *
 def homogenize(dda):
@@ -24,7 +24,7 @@ def homogenize(dda):
             except StopIteration:
                 break
 
-        if word(line, 1) in RESERV:
+        if word(line, 1) in DDA:
             joinLines.append(line)
             continue
 

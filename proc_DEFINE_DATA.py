@@ -3,8 +3,24 @@ import os
 import re
 from Util.HOFs import *
 from Util.homogenize import homogenize
-from Util.Constantes_Figurativas import *
+from Util.warehouse import DDA
 from Util.DataPatterns import *
+
+
+references = {}
+def_gda = '''gda = {'''
+def_pda = '''pda = {'''
+def_lda = '''lda = {'''
+def_rda = '''rda = {'''
+
+
+
+def proc_USING(dda, Using):
+    using = file(r'Convertidos\{}.txt'.format(Using)).read()
+    comp = 'def_{} += using'.format(DDA[dda])
+    exec compile(comp, '', 'exec')
+    filejson = file('Convertidos/{}.json'.format(Using)).read()
+    references.update(json.loads(filejson))
 
 
 def proc_DEFINE_DATA(lines):
@@ -22,15 +38,23 @@ def proc_DEFINE_DATA(lines):
 
     lines = homogenize(clearLines[line_dd + 1:line_ed])
 
-    references = {}
-    def_global = ''
-    def_parameter = 'dd_parameter = {'
-    def_local = 'dd_local = {'
 
     for line in lines:
+
+        wrd1 =  word(line, 1)
+        if wrd1 in DDA:
+            dic = DDA[wrd1]
+            if word(line, 2) == 'USING':
+                proc_USING(wrd1, word(line, 3))
+            continue
+
         match = DataPatterns.row_pattern.match(line.strip())
         if not match:
-            continue
+            match = DataPatterns.row_pattern_redefine.match(line.strip())
+            if not match:
+                print line
+                continue
+
         match = match.groupdict()
 
         if not match['level']:

@@ -9,4 +9,10 @@ CONSTANTES_FIGURATIVAS = { 'ZERO' : 0
                          , 'LOW-VALUE' : '\x00'
                          , 'LOW-VALUES' : '\x00'}
 
+
+DDA = { 'GLOBAL': 'gda'
+      , 'LOCAL': 'lda'
+      , 'PARAMETER': 'pda'}
+
+
 DATATYPES_NATURAL = {}
