@@ -2,7 +2,7 @@
  "CAMPO-ALFA":{"def": "lda['F255']['CAMPO-ALFA']", "type": "A", "length": 78, "occurs": null},
  "CAMPO-NUMERICO":{"def": "lda['F255']['CAMPO-NUMERICO']", "type": "A", "length": 17, "scale": 2 "occurs": null},
  "CAMPO-PACK":{"def": "lda['F255']['CAMPO-PACK']", "type": "A", "length": 13, "scale": 2 "occurs": null}}
-0050     2 CAMPO-PACK                       P 13,2
+
 0060     2 CAMPO-BINARIO                    B    4
 0070     2 CAMPO-NUMERICO-DATA              N  8,0
 0080     2 CAMPO-DATE-DATA                  D
