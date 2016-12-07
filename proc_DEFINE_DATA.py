@@ -14,13 +14,19 @@ def_lda = '''lda = {'''
 def_rda = '''rda = {'''
 
 
-
 def proc_USING(dda, Using):
     using = file(r'Convertidos\{}.txt'.format(Using)).read()
     comp = 'def_{} += using'.format(DDA[dda])
     exec compile(comp, '', 'exec')
     filejson = file('Convertidos/{}.json'.format(Using)).read()
     references.update(json.loads(filejson))
+
+
+def dictionarize(dda, lst_fields, match):
+
+    comp = 'def_{} += using'.format(dda)
+    exec compile(comp, '', 'exec')
+    references[field]=
 
 
 def proc_DEFINE_DATA(lines):
@@ -38,6 +44,7 @@ def proc_DEFINE_DATA(lines):
 
     lines = homogenize(clearLines[line_dd + 1:line_ed])
 
+    redefines = False
 
     for line in lines:
 
@@ -57,9 +64,6 @@ def proc_DEFINE_DATA(lines):
 
         match = match.groupdict()
 
-        if not match['level']:
-            continue
-
         level = int(match['level'])
 
         if redefines:
@@ -68,9 +72,10 @@ def proc_DEFINE_DATA(lines):
         redefines = False
         level_redefines = 0
 
-        if match['redefines']:
+        if 'redefine' in match:
             level_redefines = level
             redefines = True
+            dic = 'rda'
             continue
 
         if occurs:

@@ -1,0 +1,4 @@
+{"F255":{"def": "lda['F255']", "type": null, "length": 0, "occurs": 4},
+ "CAMPO-ALFA":{"def": "lda['F255']['CAMPO-ALFA']", "type": "A", "length": 78, "occurs": null},
+ "CAMPO-NUMERICO":{"def": "lda['F255']['CAMPO-NUMERICO']", "type": "A", "length": 17, "scale": 2, "occurs": null},
+ "CAMPO-PACK":{"def": "lda['F255']['CAMPO-PACK']", "type": "A", "length": 13, "scale": 2, "occurs": null}}

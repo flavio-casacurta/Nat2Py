@@ -1,0 +1,18 @@
+{"F255":{"def": "lda['F255']", "type": null, "length": 0, "occurs": 4},
+ "CAMPO-ALFA":{"def": "lda['F255']['CAMPO-ALFA']", "type": "A", "length": 78, "occurs": null},
+ "CAMPO-NUMERICO":{"def": "lda['F255']['CAMPO-NUMERICO']", "type": "A", "length": 17, "scale": 2 "occurs": null},
+ "CAMPO-PACK":{"def": "lda['F255']['CAMPO-PACK']", "type": "A", "length": 13, "scale": 2 "occurs": null}}
+0050     2 CAMPO-PACK                       P 13,2
+0060     2 CAMPO-BINARIO                    B    4
+0070     2 CAMPO-NUMERICO-DATA              N  8,0
+0080     2 CAMPO-DATE-DATA                  D
+0090     2 CAMPO-NUMERICO-HORA              N  6,0
+0100     2 CAMPO-TIME-HORA                  T
+0110   M 2 CAMPO-MULTIPLO                   N  3,0 (1:5)
+0120   P 2 GP-SEM-MULTIPLO
+0130     3 CAMPO-PE-ALFA                    A   10 (1:5)
+0140     3 CAMPO-PE-NUM                     N  5,0 (1:5)
+0150   P 2 GP-COM-MULTIPLO
+0160   M 3 CAMPO-PE2-MULTIPLO               N  3,0 (1:5,1:5)
+0170     3 CAMPO-PE2-ALFA                   A   10 (1:5)
+0180     3 CAMPO-PE2-NUM                    N  5,0 (1:5)
