@@ -1,2 +1,1 @@
-{"#TAB-TXT-TELA": {"def": "gda['#TAB-TXT-TELA']", "type": "A", "length": 78, "occurs": 4}
-,"#TAB-TXT-TEST": {"def": "gda['#TAB-TXT-TEST']", "type": null, "length": 0, "occurs": null, "bool": false}}
+{"#TAB-TXT-TELA": {"def": "gda['#TAB-TXT-TELA']", "type": "A", "length": 78, "occurs": 4}}

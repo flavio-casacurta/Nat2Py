@@ -22,11 +22,15 @@ def proc_USING(dda, Using):
     references.update(json.loads(filejson))
 
 
-def dictionarize(dda, lst_fields, match):
-
-    comp = 'def_{} += using'.format(dda)
+def dictionarize(dda, field, attrb):
+    comp = 'def_{} += field'.format(dda)
     exec compile(comp, '', 'exec')
-    references[field]=
+    references[field]=attrb
+
+
+def get_attrb(match):
+        attrb={}
+
 
 
 def proc_DEFINE_DATA(lines):
@@ -50,7 +54,7 @@ def proc_DEFINE_DATA(lines):
 
         wrd1 =  word(line, 1)
         if wrd1 in DDA:
-            dic = DDA[wrd1]
+            dda = DDA[wrd1]
             if word(line, 2) == 'USING':
                 proc_USING(wrd1, word(line, 3))
             continue
@@ -68,6 +72,7 @@ def proc_DEFINE_DATA(lines):
 
         if redefines:
             if level > level_redefines:
+                attrb = get_attrb(match)
                 continue
         redefines = False
         level_redefines = 0
@@ -75,7 +80,10 @@ def proc_DEFINE_DATA(lines):
         if 'redefine' in match:
             level_redefines = level
             redefines = True
-            dic = 'rda'
+            field = match['redefine']
+            dda = 'rda'
+            attrb = {}
+            dictionarize(dda, field, attrb)
             continue
 
         if occurs:
