@@ -28,8 +28,18 @@ def dictionarize(dda, field, attrb):
     references[field]=attrb
 
 
-def get_attrb(match):
-        attrb={}
+def set_attrb(dda, match):
+    attrb = {}
+    dicattr = {}
+    dicattr['def'] = """{}['{}']""".format(dda, match['name'])
+    dicattr['type'] = ' ' if not match.get('type', None) else match['type']
+    dicattr['length'] = 0 if not match.get('length', 0) else int(match['length'])
+    dicattr['scale'] = 0 if not match.get('scale', 0) else int(match['scale'])
+    dicattr['occurs'] = 0 if not match.get('occurs', 0) else int(match['occurs'])
+    dicattr['two_dimension'] = 0 if not match.get('two_dimension', 0) else int(match['two_dimension'])
+    dicattr['init'] = ' ' if not match.get('init', None) else match['init']
+    attrb[match['name']] = dicattr
+    references.update(attrb)
 
 
 

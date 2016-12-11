@@ -5,7 +5,7 @@ class DataPatterns:
     opt_pattern_format = "({})?"
 
     row_pattern_base = r"""^(?P<level>\d{1,3})\s+(?P<name>\S+)"""
-    row_pattern_attrib = r"""\s+\((?P<attrib>.(\d+)?(\,\d+)?)"""
+    row_pattern_attrib = r"""\s+\((?P<type>[ABCDFILNPT])((?P<length>\d+)(\,)?(?P<scale>\d+))?"""
     row_pattern_occurs = r"""\/\d+\:(?P<occurs>\d+)"""
     row_pattern_two_dimension = r"""\,\d+\:(?P<two_dimension>\d+)"""
     row_pattern_end = r"""\)"""
