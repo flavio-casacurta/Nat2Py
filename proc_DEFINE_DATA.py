@@ -59,12 +59,13 @@ def proc_DEFINE_DATA(lines):
     lines = homogenize(clearLines[line_dd + 1:line_ed])
 
     redefines = False
+    dda_def = ''
 
     for line in lines:
 
         wrd1 =  word(line, 1)
         if wrd1 in DDA:
-            dda = DDA[wrd1]
+            dda = dda_def = DDA[wrd1]
             if word(line, 2) == 'USING':
                 proc_USING(wrd1, word(line, 3))
             continue
