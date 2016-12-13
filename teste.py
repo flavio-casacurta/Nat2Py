@@ -1,11 +1,5 @@
-from Util.HOFs import *
-from Util.homogenize import homogenize
+import proc_DEFINE_DATA
 
 lines = file(r'define_data.TXT').readlines()
 
-clearLines =  map(l472, filter(isNotRem, lines))
-
-lines = homogenize(clearLines)
-
-for line in lines:
-    print line
+dda, reference = proc_DEFINE_DATA.proc_DEFINE_DATA(lines)

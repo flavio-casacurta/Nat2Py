@@ -4,7 +4,8 @@ import re
 class DataPatterns:
     opt_pattern_format = "({})?"
 
-    row_pattern_base = r"""^(?P<level>\d{1,3})\s+(?P<name>\S+)\s+\("""
+    row_pattern_base = r"""^(?P<level>\d{1,3})\s+(?P<name>\S+)"""
+    row_pattern_ini = r"""\s+\("""
     row_pattern_attrib = r"""(?P<type>[ABCDFILNPT])((?P<length>\d+)(\,(?P<scale>\d+))?)?"""
     row_pattern_occurs = r"""/?\d+\:(?P<occurs>\d+)"""
     row_pattern_two_dimension = r"""\,\d+\:(?P<two_dimension>\d+)"""
@@ -12,6 +13,7 @@ class DataPatterns:
     row_pattern_init = r"""\s+INIT<(?P<init>.+)>"""
 
     row_pattern = re.compile(row_pattern_base +
+                             opt_pattern_format.format(row_pattern_ini) +
                              opt_pattern_format.format(row_pattern_attrib) +
                              opt_pattern_format.format(row_pattern_occurs) +
                              opt_pattern_format.format(row_pattern_two_dimension) +

@@ -4,14 +4,15 @@ import re
 from Util.HOFs import *
 from Util.homogenize import homogenize
 from Util.warehouse import DDA
+from Util.warehouse import DATATYPES_NATURAL
 from Util.DataPatterns import *
 
 
 references = {}
-def_gda = '''gda = {'''
-def_pda = '''pda = {'''
-def_lda = '''lda = {'''
-def_rda = '''rda = {'''
+def_gda = '''gda = '''
+def_pda = '''pda = '''
+def_lda = '''lda = '''
+def_rda = '''rda = '''
 
 
 def proc_USING(dda, Using):
@@ -22,10 +23,25 @@ def proc_USING(dda, Using):
     references.update(json.loads(filejson))
 
 
-def dictionarize(dda, field, attrb):
-    comp = 'def_{} += field'.format(dda)
+def set_init(match):
+    type = None if not match.get('type', None) else match['type']
+    init = None if not match.get('init', None) else match['init']
+    if type and not init:
+        init = DATATYPES_NATURAL[type]['init']
+    return init
+
+
+def dictionarize(dda, ancestors, match):
+    init = set_init(match)
+    if not init:
+        ancestors.append(match['name'])
+    ref = eval("""'{}'.format("['{}']" * len(ancestors))""").format(*ancestors)
+    attrb = eval("""'{}'.format("['{}': " * len(ancestors))""").format(*ancestors)
+    attrb = attrb.replace('[','{').replace(']', '}')
+
+
+    comp = 'def_{} += attrb '.format(dda)
     exec compile(comp, '', 'exec')
-    references[field]=attrb
 
 
 def set_attrb(dda, match):
@@ -37,10 +53,9 @@ def set_attrb(dda, match):
     dicattr['scale'] = 0 if not match.get('scale', 0) else int(match['scale'])
     dicattr['occurs'] = 0 if not match.get('occurs', 0) else int(match['occurs'])
     dicattr['two_dimension'] = 0 if not match.get('two_dimension', 0) else int(match['two_dimension'])
-    dicattr['init'] = ' ' if not match.get('init', None) else match['init']
+    dicattr['init'] = set_init(match)
     attrb[match['name']] = dicattr
     references.update(attrb)
-
 
 
 def proc_DEFINE_DATA(lines):
@@ -60,6 +75,7 @@ def proc_DEFINE_DATA(lines):
 
     redefines = False
     dda_def = ''
+    ancestors = []
 
     for line in lines:
 
@@ -91,31 +107,11 @@ def proc_DEFINE_DATA(lines):
         if 'redefine' in match:
             level_redefines = level
             redefines = True
-            field = match['redefine']
+            ancestors = match['redefine']
             dda = 'rda'
             attrb = {}
-            dictionarize(dda, field, attrb)
+            dictionarize(dda, ancestors, attrb)
             continue
-
-        if occurs:
-            if level > level_occurs:
-                if match['pic']:
-                    occurs_length += field_length(match['pic'], match['usage'])
-                continue
-            logical_record_length += occurs_length * occurs
-        occurs = False
-        level_occurs = 0
-
-        if match['occurs']:
-            level_occurs = level
-            occurs = (int(nextWord('OCCURS', line)) if 'TO' not in wrds else
-                      int(nextWord('TO', line)))
-
-        if match['pic']:
-            if occurs:
-                occurs_length += field_length(match['pic'], match['usage'])
-            else:
-                logical_record_length += field_length(match['pic'], match['usage'])
 
 
 

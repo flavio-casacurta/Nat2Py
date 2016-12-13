@@ -1,9 +1,39 @@
+0010 DEFINE DATA
 0020 GLOBAL USING G11111AA
-    *
 0030 LOCAL USING L11111AA
 0040 LOCAL
 0050 1 #ATR                           (C)
+0060 1 #ATR1                          (C/1:5)
+0070 1 #ATR2                          (C/1:5,1:5)
+0080 1 #ATR3                          (C)
+0090 1 #ATR4                          (C)
+0100 1 #ATR5                          (C)
+0110 1 #ATR6                          (C)
+0120 1 #TELA
+0130  2 #CAMPO-ALFA                    (A78)
+0140  2 #CAMPO-NUM                     (A20)
+0200  2 #CAMPO-PACK                    (A16)
+0260  2 #CAMPO-BIN                     (A09)
+0290  2 #CAMPO-DATA-TELA               (A08)
+0360  2 #CAPO-HORA-TELA                (A06)
+0430  2 #CAMPO-MULTIPLO                (A03/1:5)
+0600 **
+0610  2 #TL-CONFIRMA                   (A01)
+0620 1 #IND1                          (N05)
+0630 1 #IND2                          (N05)
+0640 1 #IND-TL                        (N07)
+0650 1 #TL-TX-CONF                    (A13) INIT<'CONFIRMA S/N:'>
+0660 1 #TL-TX-REGISTRO                (A16) INIT<'REGISTRO ISN   :'>
+0670 1 #TL-REGISTRO                   (N08)
+0680 1 #TL-TX-DATE                    (A10) INIT<'DATA DATE:'>
+0690 1 #TL-DT-DATE                    (A10)
+0700 1 #TL-TX-TIME                    (A10) INIT<'HORA TIME:'>
+0710 1 #TL-HO-TIME                    (A08)
 0720 1 #TX-PFS                        (A48)
-0730   INIT
-       <'PF8 - AVANCA'>
+0730   INIT <'PF8 - AVANCA'>
 0740 1 #CAMPO-RETORNA                 (A78)
+0750 1 #TB-RETORNA                    (A78/1:10000)
+0760 1 #IND-TB                        (N01)
+0770 END-DEFINE
+0780 SET KEY ALL
+
