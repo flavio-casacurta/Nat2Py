@@ -83,9 +83,10 @@ def proc_DEFINE_DATA(lines):
 
         if redefines:
             if level > level_redefines:
-                attrb = get_attrb(match)
+                attrb = set_attrb(match)
                 continue
         redefines = False
+        dda = dda_def
         level_redefines = 0
 
         if 'redefine' in match:
