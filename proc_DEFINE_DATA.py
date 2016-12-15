@@ -13,6 +13,7 @@ def_gda = '''gda = '''
 def_pda = '''pda = '''
 def_lda = '''lda = '''
 def_rda = '''rda = '''
+ancestors = []
 
 
 def proc_USING(dda, Using):
@@ -25,26 +26,30 @@ def proc_USING(dda, Using):
 
 def set_init(match):
     type = None if not match.get('type', None) else match['type']
-    init = None if not match.get('init', None) else match['init']
+    init = '{' if not match.get('init', None) else match['init']
     if type and not init:
         init = DATATYPES_NATURAL[type]['init']
     return init
 
 
-def dictionarize(dda, ancestors, match):
+def dictionarize(dda, match):
     init = set_init(match)
-    if not init:
-        ancestors.append(match['name'])
-    ref = eval("""'{}'.format("['{}']" * len(ancestors))""").format(*ancestors)
-    attrb = eval("""'{}'.format("['{}': " * len(ancestors))""").format(*ancestors)
-    attrb = attrb.replace('[','{').replace(']', '}')
-
-
+    ac1 = '[' if match('occurs') else ''
+    fc1 = ']' if match('occurs') else ''
+    ac2 = '[' if match('two_dimension') else ''
+    fc2 = ']' if match('two_dimension') else ''
+    attrb = ': {}{}{}{}{}{}'.format(ac1, ac2, init, match['name'], fc1, fc2)
     comp = 'def_{} += attrb '.format(dda)
     exec compile(comp, '', 'exec')
 
 
-def set_attrb(dda, match):
+def get_ref(dda, match):
+    ancestors.append(match['name'])
+    ref = dda + eval("""'{}'.format("['{}']" * len(ancestors))""").format(*ancestors)
+    return ref
+
+
+def get_attrb(dda, match):
     attrb = {}
     dicattr = {}
     dicattr['def'] = """{}['{}']""".format(dda, match['name'])
@@ -75,7 +80,6 @@ def proc_DEFINE_DATA(lines):
 
     redefines = False
     dda_def = ''
-    ancestors = []
 
     for line in lines:
 
@@ -99,7 +103,7 @@ def proc_DEFINE_DATA(lines):
 
         if redefines:
             if level > level_redefines:
-                attrb = set_attrb(match)
+                attrb = get_attrb(match)
                 continue
         redefines = False
         dda = dda_def
@@ -111,7 +115,7 @@ def proc_DEFINE_DATA(lines):
             ancestors = match['redefine']
             dda = 'rda'
             attrb = {}
-            dictionarize(dda, ancestors, attrb)
+            dictionarize(dda, attrb)
             continue
 
 

@@ -1,0 +1,30 @@
+lda = {'#ATR': ''
+      ,'#ATR1': ['']
+      ,'#ATR2': [['']]
+      ,'#ATR3': ''
+      ,'#ATR4': ''
+      ,'#ATR5': ''
+      ,'#ATR6': ''
+       '#TELA':{'#CAMPO-ALFA': ''
+               ,'#CAMPO-NUM':  ''
+               ,'#CAMPO-PACK': ''
+               ,'#CAMPO-BIN': ''
+               ,'#CAMPO-DATA-TELA': ''
+               ,'#CAPO-HORA-TELA': ''
+               ,'#CAMPO-MULTIPLO': ['']
+               ,'#TL-CONFIRMA': ''}
+
+      ,'#IND1': 0
+      ,'#IND2': 0
+      ,'#IND-TL': 0
+      ,'#TL-TX-CONF': 'CONFIRMA S/N:'
+      ,'#TL-TX-REGISTRO': 'REGISTRO ISN   :'
+      ,'#TL-REGISTRO': 0
+      ,'#TL-TX-DATE': 'DATA DATE:'
+      ,'#TL-DT-DATE': ''
+      ,'#TL-TX-TIME': 'HORA TIME:'
+      ,'#TL-HO-TIME': ''
+      ,'#TX-PFS': 'PF8 - AVANCA'
+      ,'#CAMPO-RETORNA': ''
+      ,'#TB-RETORNA': ['']
+      ,'#IND-TB' 0}
