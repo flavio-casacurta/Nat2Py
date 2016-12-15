@@ -15,7 +15,7 @@ DDA = { 'GLOBAL': 'gda'
       , 'PARAMETER': 'pda'}
 
 
-DATATYPES_NATURAL = {'A': {'type': 'str', 'init': ' '},
+DATATYPES_NATURAL = {'A': {'type': 'str', 'init': "''"},
                      'N': {'type': 'Decimal', 'init': 0},
                      'P': {'type': 'Decimal', 'init': 0},
                      'I': {'type': 'int', 'init': 0},
