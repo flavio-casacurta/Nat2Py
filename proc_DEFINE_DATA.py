@@ -14,33 +14,36 @@ def_pda = '''pda = '''
 def_lda = '''lda = '''
 def_rda = '''rda = '''
 ancestors = []
+spc = ''
 
 
 def proc_USING(dda, Using):
     using = file(r'Convertidos\{}.txt'.format(Using)).read()
-    comp = 'def_{} += using'.format(DDA[dda])
-    exec compile(comp, '', 'exec')
     filejson = file('Convertidos/{}.json'.format(Using)).read()
     references.update(json.loads(filejson))
+    return using
 
 
 def set_init(match):
     type = None if not match.get('type', None) else match['type']
-    init = '{' if not match.get('init', None) else match['init']
-    if type and not init:
-        init = DATATYPES_NATURAL[type]['init']
+    init = None if not match.get('init', None) else match['init']
+    if type:
+        if not init:
+            init = DATATYPES_NATURAL[type]['init']
+    else:
+        init = '{'
     return init
 
 
-def dictionarize(dda, match):
+def dictionarize(match, spc):
     init = set_init(match)
-    ac1 = '[' if match('occurs') else ''
-    fc1 = ']' if match('occurs') else ''
-    ac2 = '[' if match('two_dimension') else ''
-    fc2 = ']' if match('two_dimension') else ''
-    attrb = ': {}{}{}{}{}{}'.format(ac1, ac2, init, match['name'], fc1, fc2)
-    comp = 'def_{} += attrb '.format(dda)
-    exec compile(comp, '', 'exec')
+    ac1 = '[' if match['occurs'] else ''
+    fc1 = ']' if match['occurs'] else ''
+    ac2 = '[' if match['two_dimension'] else ''
+    fc2 = ']' if match['two_dimension'] else ''
+    comma = '' if init == '{' else ','
+    attrb = """{}'{}': {}{}{}{}{}{}\n""".format(spc, match['name'], ac1, ac2, init, fc1, fc2, comma)
+    return attrb, init
 
 
 def get_ref(dda, match):
@@ -87,7 +90,9 @@ def proc_DEFINE_DATA(lines):
         if wrd1 in DDA:
             dda = dda_def = DDA[wrd1]
             if word(line, 2) == 'USING':
-                proc_USING(wrd1, word(line, 3))
+                using = proc_USING(wrd1, word(line, 3))
+                comp = 'def_{} += using'.format(DDA[dda])
+                exec compile(comp, '', 'exec')
             continue
 
         match = DataPatterns.row_pattern.match(line.strip())
@@ -118,5 +123,12 @@ def proc_DEFINE_DATA(lines):
             dictionarize(dda, attrb)
             continue
 
+        attrb, init = dictionarize(match, spc)
+        if init == '{':
+            spc = ' ' * (len(match['name'])+12)
+        comp = 'def_{} += attrb'.format(dda)
+        exec compile(comp, '', 'exec')
 
+
+    return references, def_gda, def_pda, def_lda, def_rda
 

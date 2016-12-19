@@ -1,4 +1,5 @@
 0010 DEFINE DATA
+0020 GLOBAL USING G11111AA
 0040 LOCAL
 0050 1 #ATR                           (C)
 0060 1 #ATR1                          (C/1:5)
