@@ -1,6 +1,7 @@
 
 import os
 import re
+import json
 from Util.HOFs import *
 from Util.homogenize import homogenize
 from Util.warehouse import DDA
@@ -9,12 +10,10 @@ from Util.DataPatterns import *
 
 
 references = {}
-def_gda = '''gda = '''
-def_pda = '''pda = '''
-def_lda = '''lda = '''
-def_rda = '''rda = '''
-ancestors = []
-spc = ''
+def_gda = '''gda = {'''
+def_pda = '''pda = {'''
+def_lda = '''lda = {'''
+def_rda = '''rda = {'''
 
 
 def proc_USING(dda, Using):
@@ -46,7 +45,7 @@ def dictionarize(match, spc):
     return attrb, init
 
 
-def get_ref(dda, match):
+def get_ref(dda, match, ancestors):
     ancestors.append(match['name'])
     ref = dda + eval("""'{}'.format("['{}']" * len(ancestors))""").format(*ancestors)
     return ref
@@ -81,17 +80,20 @@ def proc_DEFINE_DATA(lines):
 
     lines = homogenize(clearLines[line_dd + 1:line_ed])
 
+    ancestors = ['']
+    spc = ' ' * 7
     redefines = False
     dda_def = ''
+    level_ant = 1
 
     for line in lines:
 
         wrd1 =  word(line, 1)
         if wrd1 in DDA:
             dda = dda_def = DDA[wrd1]
-            if word(line, 2) == 'USING':
+            if words(line)[0] > 1 and word(line, 2) == 'USING':
                 using = proc_USING(wrd1, word(line, 3))
-                comp = 'def_{} += using'.format(DDA[dda])
+                comp = 'def_{} += using'.format(dda)
                 exec compile(comp, '', 'exec')
             continue
 
@@ -105,6 +107,9 @@ def proc_DEFINE_DATA(lines):
         match = match.groupdict()
 
         level = int(match['level'])
+        if level <= level_ant:
+            ancestors.pop()
+            level_ant = level
 
         if redefines:
             if level > level_redefines:
@@ -124,11 +129,11 @@ def proc_DEFINE_DATA(lines):
             continue
 
         attrb, init = dictionarize(match, spc)
+        defdda = get_ref(dda, match, ancestors)
         if init == '{':
             spc = ' ' * (len(match['name'])+12)
         comp = 'def_{} += attrb'.format(dda)
         exec compile(comp, '', 'exec')
-
 
     return references, def_gda, def_pda, def_lda, def_rda
 
