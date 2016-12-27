@@ -23,7 +23,7 @@ def proc_USING(dda, Using):
     return using
 
 
-def set_init(match):
+def get_init(match):
     type = None if not match.get('type', None) else match['type']
     init = None if not match.get('init', None) else match['init']
     if type:
@@ -36,10 +36,10 @@ def set_init(match):
 
 def get_def(dda, match, ancestors):
     ancestors.append(match['name'])
-    return eval("""{}'{}'.format("dda, ['{}']" * len(ancestors))""").format(*ancestors)
+    return eval("""'{}{}'.format(dda, ['{}'] * len(ancestors))""").format(*ancestors)
 
 
-def set_attrb(dda, match, ancestors):
+def set_attrb(dda, match, ancestors, init):
     attrb = {}
     dicattr = {}
     dicattr['def'] = get_def(dda, match, ancestors)
@@ -48,25 +48,25 @@ def set_attrb(dda, match, ancestors):
     dicattr['scale'] = 0 if not match.get('scale', 0) else int(match['scale'])
     dicattr['occurs'] = 0 if not match.get('occurs', 0) else int(match['occurs'])
     dicattr['two_dimension'] = 0 if not match.get('two_dimension', 0) else int(match['two_dimension'])
-    dicattr['init'] = set_init(match)
+    dicattr['init'] = init
     attrb[match['name']] = dicattr
     references.update(attrb)
 
 
 def dictionarize(dda, match, ancestors, spc):
-    set_attrb(dda, match, ancestors)
-    init = set_init(match)
+    init = get_init(match)
+    set_attrb(dda, match, ancestors, init)
     ac1 = '[' if match['occurs'] else ''
     fc1 = ']' if match['occurs'] else ''
     ac2 = '[' if match['two_dimension'] else ''
     fc2 = ']' if match['two_dimension'] else ''
     comma = '' if init == '{' else ','
-    attrb = """{}'{}': {}{}{}{}{}{}\n""".format(spc, match['name'], ac1, ac2, init, fc1, fc2, comma)
+    attrb = """{}'{}': {}{}{}{}{}{}\n""".format(' '*spc, match['name'], ac1, ac2, init, fc1, fc2, comma)
     return attrb, init, ancestors
 
 
 def proc_DEFINE_DATA(lines):
-    clearLines =  map(l472, filter(isNotRem, lines))
+    clearLines =  map(l472, filter(both(isNotBlank, isNotRem), lines))
 
     try:
         line_dd = clearLines.index(filter(isDefine, clearLines)[0])
@@ -81,7 +81,8 @@ def proc_DEFINE_DATA(lines):
     lines = homogenize(clearLines[line_dd + 1:line_ed])
 
     ancestors = ['']
-    spc = ' ' * 7
+    spc = 0
+    spa = 0
     redefines = False
     level_redefines = 0
     dda_def = ''
@@ -108,30 +109,41 @@ def proc_DEFINE_DATA(lines):
         match = match.groupdict()
 
         level = int(match['level'])
+
         if level <= level_ant:
-            ancestors.pop()
-            level_ant = level
+            ancestor = ancestors.pop()
+            if level < level_ant:
+                attrb = '{}{}\n'.format(' ' * (spc-1), '}')
+                comp = 'def_{} += attrb'.format(dda)
+                exec compile(comp, '', 'exec')
+                spc -= spa
+        level_ant = level
 
         if redefines:
-            if level > level_redefines:
-                continue
-        redefines = False
-        dda = dda_def
-        level_redefines = 0
+            if level <= level_redefines:
+                redefines = False
+                dda = dda_def
+                level_redefines = 0
 
         if 'redefine' in match:
             level_redefines = level
             redefines = True
-            ancestors = match['redefine']
             dda = 'rda'
-            attrb, init, ancestors = dictionarize(dda, match, ancestors, spc)
-            continue
 
         attrb, init, ancestors = dictionarize(dda, match, ancestors, spc)
         if init == '{':
-            spc = ' ' * (len(match['name'])+12)
+            spa = (len(match['name']) + 5)
+            spc += spa
+        else:
+            spc = 7 if spc == 0 else spc
         comp = 'def_{} += attrb'.format(dda)
         exec compile(comp, '', 'exec')
+
+    attrb = '{}{}\n'.format(' '*7, '}')
+    for dda in DDA.values():
+        comp = 'def_{} += attrb'.format(dda)
+        exec compile(comp, '', 'exec')
+
 
     return references, def_gda, def_pda, def_lda, def_rda
 
