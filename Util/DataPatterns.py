@@ -10,7 +10,7 @@ class DataPatterns:
     row_pattern_occurs = r"""/?\d+\:(?P<occurs>\d+)"""
     row_pattern_two_dimension = r"""\,\d+\:(?P<two_dimension>\d+)"""
     row_pattern_end = r"""\)"""
-    row_pattern_init = r"""\s+INIT<(?P<init>.+)>"""
+    row_pattern_init = r"""\s+INIT\s*<(?P<init>.+)>"""
 
     row_pattern = re.compile(row_pattern_base +
                              opt_pattern_format.format(row_pattern_ini) +

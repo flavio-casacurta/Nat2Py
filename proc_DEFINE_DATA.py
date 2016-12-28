@@ -36,13 +36,14 @@ def get_init(match):
 
 def get_def(dda, match, ancestors):
     ancestors.append(match['name'])
-    return eval("""'{}{}'.format(dda, ['{}'] * len(ancestors))""").format(*ancestors)
+    return eval("""'{}{}'.format(dda, "['{}']" * len(ancestors))""").format(*ancestors)
 
 
 def set_attrb(dda, match, ancestors, init):
     attrb = {}
     dicattr = {}
     dicattr['def'] = get_def(dda, match, ancestors)
+    dicattr['level'] = int(match['level'])
     dicattr['type'] = ' ' if not match.get('type', None) else match['type']
     dicattr['length'] = 0 if not match.get('length', 0) else int(match['length'])
     dicattr['scale'] = 0 if not match.get('scale', 0) else int(match['scale'])
@@ -112,6 +113,12 @@ def proc_DEFINE_DATA(lines):
 
         if level <= level_ant:
             ancestor = ancestors.pop()
+            while True:
+                if ancestors and references[ancestors[-1]]['level'] >= level:
+                    ancestors.pop()
+                else:
+                    break
+
             if level < level_ant:
                 attrb = '{}{}\n'.format(' ' * (spc-1), '}')
                 comp = 'def_{} += attrb'.format(dda)
@@ -144,6 +151,5 @@ def proc_DEFINE_DATA(lines):
         comp = 'def_{} += attrb'.format(dda)
         exec compile(comp, '', 'exec')
 
-
-    return references, def_gda, def_pda, def_lda, def_rda
+    return True, references, def_gda, def_pda, def_lda, def_rda
 
