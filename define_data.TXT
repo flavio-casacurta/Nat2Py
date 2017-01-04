@@ -1,5 +1,6 @@
 0010 DEFINE DATA
 0020 GLOBAL USING G11111AA
+0030 LOCAL USING L11111AA
 0040 LOCAL
 0050 1 #ATR                           (C)
 0060 1 #ATR1                          (C/1:5)
@@ -11,11 +12,51 @@
 0120 1 #TELA
 0130  2 #CAMPO-ALFA                    (A78)
 0140  2 #CAMPO-NUM                     (A20)
+0150  2 REDEFINE                       #CAMPO-NUM
+0160    3 FILLER                       1X
+0170    3 #CAMPO-R-NU-TOT              (N19)
+0180    3 REDEFINE                     #CAMPO-R-NU-TOT
+0190      4 #CAMPO-R-NU-DEC            (N17,2)
 0200  2 #CAMPO-PACK                    (A16)
+0210  2 REDEFINE                       #CAMPO-PACK
+0220    3 FILLER                       1X
+0230    3 #CAMPO-R-PACK-TOT            (N15)
+0240    3 REDEFINE                     #CAMPO-R-PACK-TOT
+0250      4 #CAMPO-R-PACK-DEC          (N13,2)
 0260  2 #CAMPO-BIN                     (A09)
+0270  2 REDEFINE                       #CAMPO-BIN
+0280    3 #CAMPO-BIN-N                 (N09)
 0290  2 #CAMPO-DATA-TELA               (A08)
+0300  2 REDEFINE                       #CAMPO-DATA-TELA
+0310    3 #CAMPO-DT-NUM-ANO            (A04)
+0320    3 #CAMPO-DT-NUM-MES            (A02)
+0330    3 #CAMPO-DT-NUM-DIA            (A02)
+0340  2 REDEFINE                       #CAMPO-DATA-TELA
+0350    3 #CAMPO-DATA-TELA-N           (N08)
 0360  2 #CAPO-HORA-TELA                (A06)
+0370  2 REDEFINE                       #CAPO-HORA-TELA
+0380    3 #COMPO-HORA-HO               (A02)
+0390    3 #COMPO-HORA-MM               (A02)
+0400    3 #COMPO-HORA-SS               (A02)
+0410  2 REDEFINE                       #CAPO-HORA-TELA
+0420    3 #COMPO-HORA-HO-N             (N06)
 0430  2 #CAMPO-MULTIPLO                (A03/1:5)
+0440  2 REDEFINE                     #CAMPO-MULTIPLO
+0450    3 #CAMPO-MULTIPLO-R            (N03/1:5)
+0460  2 #CAMPO-PE-1                    (1:5)
+0470    3 #CAMPO-PE-ALFA               (A10)
+0480    3 #CAMPO-PE-NUM                (A05)
+0490    3 REDEFINE                     #CAMPO-PE-NUM
+0500      4 #CAMPO-PE-NUM-R            (N05)
+0510 **
+0520  2 #CAMPO-PE-2                    (1:5)
+0530    3 #CAMPO-PE2-MULTIPLO          (A03/1:5)
+0540    3 REDEFINE                    #CAMPO-PE2-MULTIPLO
+0550      4 #CAMPO-PE2-MULTIPLO-R      (N03/1:5)
+0560    3 #CAMPO-PE2-ALFA              (A10)
+0570    3 #CAMPO-PE2-NUM               (A05)
+0580    3 REDEFINE                     #CAMPO-PE2-NUM
+0590      4 #CAMPO-PE2-NUM-R           (N05)
 0600 **
 0610  2 #TL-CONFIRMA                   (A01)
 0620 1 #IND1                          (N05)
@@ -35,4 +76,3 @@
 0760 1 #IND-TB                        (N01)
 0770 END-DEFINE
 0780 SET KEY ALL
-

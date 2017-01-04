@@ -29,6 +29,8 @@ def get_init(match):
     if type:
         if not init:
             init = DATATYPES_NATURAL[type]['init']
+            if init == 0 and match.get('scale', 0) > 0:
+                init = 0.0
     else:
         init = '{'
     return init
@@ -50,17 +52,17 @@ def set_attrb(dda, match, ancestors, init):
     dicattr['occurs'] = 0 if not match.get('occurs', 0) else int(match['occurs'])
     dicattr['two_dimension'] = 0 if not match.get('two_dimension', 0) else int(match['two_dimension'])
     dicattr['init'] = init
-    attrb[match['name']] = dicattr
+    attrb["'{}'".format(match['name'])] = dicattr
     references.update(attrb)
 
 
 def dictionarize(dda, match, ancestors, spc):
     init = get_init(match)
     set_attrb(dda, match, ancestors, init)
-    ac1 = '[' if match['occurs'] else ''
-    fc1 = ']' if match['occurs'] else ''
-    ac2 = '[' if match['two_dimension'] else ''
-    fc2 = ']' if match['two_dimension'] else ''
+    ac1 = '[' if match.get('occurs', None) else ''
+    fc1 = ']' if match.get('occurs', None) else ''
+    ac2 = '[' if match.get('two_dimension', None) else ''
+    fc2 = ']' if match.get('two_dimension', None) else ''
     comma = '' if init == '{' else ','
     attrb = """{}'{}': {}{}{}{}{}{}\n""".format(' '*spc, match['name'], ac1, ac2, init, fc1, fc2, comma)
     return attrb, init, ancestors
@@ -82,7 +84,7 @@ def proc_DEFINE_DATA(lines):
     lines = homogenize(clearLines[line_dd + 1:line_ed])
 
     ancestors = ['']
-    spc = 0
+    spc = 7
     spa = 0
     redefines = False
     level_redefines = 0
@@ -100,9 +102,9 @@ def proc_DEFINE_DATA(lines):
                 exec compile(comp, '', 'exec')
             continue
 
-        match = DataPatterns.row_pattern.match(line.strip())
+        match = DataPatterns.row_pattern_redefine.match(line.strip())
         if not match:
-            match = DataPatterns.row_pattern_redefine.match(line.strip())
+            match = DataPatterns.row_pattern.match(line.strip())
             if not match:
                 print line
                 continue
@@ -114,7 +116,7 @@ def proc_DEFINE_DATA(lines):
         if level <= level_ant:
             ancestor = ancestors.pop()
             while True:
-                if ancestors and references[ancestors[-1]]['level'] >= level:
+                if ancestors and references["'{}'".format(ancestors[-1])]['level'] >= level:
                     ancestors.pop()
                 else:
                     break
@@ -135,6 +137,7 @@ def proc_DEFINE_DATA(lines):
         if 'redefine' in match:
             level_redefines = level
             redefines = True
+            match['name'] = match['redefine']
             dda = 'rda'
 
         attrb, init, ancestors = dictionarize(dda, match, ancestors, spc)
