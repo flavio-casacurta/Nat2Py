@@ -47,6 +47,7 @@ def set_attrb(dda, match, ancestors, init):
     dicattr['def'] = get_def(dda, match, ancestors)
     dicattr['level'] = int(match['level'])
     dicattr['type'] = ' ' if not match.get('type', None) else match['type']
+    dicattr['redefine'] = False if not match.get('redefine', None) else True
     dicattr['length'] = 0 if not match.get('length', 0) else int(match['length'])
     dicattr['scale'] = 0 if not match.get('scale', 0) else int(match['scale'])
     dicattr['occurs'] = 0 if not match.get('occurs', 0) else int(match['occurs'])
@@ -84,7 +85,7 @@ def proc_DEFINE_DATA(lines):
     lines = homogenize(clearLines[line_dd + 1:line_ed])
 
     ancestors = ['']
-    spc = 7
+    spc = 0
     spa = 0
     redefines = False
     level_redefines = 0
@@ -100,6 +101,7 @@ def proc_DEFINE_DATA(lines):
                 using = proc_USING(wrd1, word(line, 3))
                 comp = 'def_{} += using'.format(dda)
                 exec compile(comp, '', 'exec')
+                spc = 7
             continue
 
         match = DataPatterns.row_pattern_redefine.match(line.strip())
@@ -149,7 +151,7 @@ def proc_DEFINE_DATA(lines):
         comp = 'def_{} += attrb'.format(dda)
         exec compile(comp, '', 'exec')
 
-    attrb = '{}{}\n'.format(' '*7, '}')
+    attrb = '{}{}\n'.format(' '*6, '}')
     for dda in DDA.values():
         comp = 'def_{} += attrb'.format(dda)
         exec compile(comp, '', 'exec')

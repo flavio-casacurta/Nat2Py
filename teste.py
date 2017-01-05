@@ -2,7 +2,7 @@ import proc_DEFINE_DATA
 from print_dict import Print_Dict
 from Util.change import change
 
-lines = file(r'define_data.TXT').readlines()
+lines = file(r'define_data1.TXT').readlines()
 
 ret, references, def_gda, def_pda, def_lda, def_rda = proc_DEFINE_DATA.proc_DEFINE_DATA(lines)
 
