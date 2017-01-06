@@ -52,7 +52,7 @@ def set_attrb(dda, match, ancestors, init):
     dicattr['scale'] = 0 if not match.get('scale', 0) else int(match['scale'])
     dicattr['occurs'] = 0 if not match.get('occurs', 0) else int(match['occurs'])
     dicattr['two_dimension'] = 0 if not match.get('two_dimension', 0) else int(match['two_dimension'])
-    dicattr['init'] = init
+    dicattr['init'] = '' if init == '{' else init
     attrb["'{}'".format(match['name'])] = dicattr
     references.update(attrb)
 
@@ -87,16 +87,13 @@ def proc_DEFINE_DATA(lines):
     ancestors = ['']
     spc = 0
     spa = 0
-    redefines = False
-    level_redefines = 0
-    dda_def = ''
     level_ant = 1
 
     for line in lines:
 
         wrd1 =  word(line, 1)
         if wrd1 in DDA:
-            dda = dda_def = DDA[wrd1]
+            dda = DDA[wrd1]
             if words(line)[0] > 1 and word(line, 2) == 'USING':
                 using = proc_USING(wrd1, word(line, 3))
                 comp = 'def_{} += using'.format(dda)
@@ -130,17 +127,8 @@ def proc_DEFINE_DATA(lines):
                 spc -= spa
         level_ant = level
 
-        if redefines:
-            if level <= level_redefines:
-                redefines = False
-                dda = dda_def
-                level_redefines = 0
-
         if 'redefine' in match:
-            level_redefines = level
-            redefines = True
-            match['name'] = match['redefine']
-            dda = 'rda'
+            match['name'] = '{}-R'.format(match['redefine'])
 
         attrb, init, ancestors = dictionarize(dda, match, ancestors, spc)
         if init == '{':

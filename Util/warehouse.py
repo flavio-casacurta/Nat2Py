@@ -12,8 +12,7 @@ CONSTANTES_FIGURATIVAS = { 'ZERO' : 0
 
 DDA = { 'GLOBAL': 'gda'
       , 'LOCAL': 'lda'
-      , 'PARAMETER': 'pda'
-      , 'REDEFINES': 'rda'}
+      , 'PARAMETER': 'pda'}
 
 
 DATATYPES_NATURAL = {'A': {'type': 'str', 'init': "''"},
