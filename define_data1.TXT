@@ -1,0 +1,19 @@
+0010 DEFINE DATA
+0040 LOCAL
+0050 1 #ATR                           (C)
+0120 1 #TELA
+0130  2 #CAMPO-ALFA                    (A78)
+0140  2 #CAMPO-NUM                     (A20)
+0150  2 REDEFINE                       #CAMPO-NUM
+0160    3 FILLER                       1X
+0170    3 #CAMPO-R-NU-TOT              (N19)
+0180    3 REDEFINE                     #CAMPO-R-NU-TOT
+0190      4 #CAMPO-R-NU-DEC            (N17,2)
+0200  2 #CAMPO-PACK                    (A16)
+0210  2 REDEFINE                       #CAMPO-PACK
+0220    3 FILLER                       1X
+0230    3 #CAMPO-R-PACK-TOT            (N15)
+0240    3 REDEFINE                     #CAMPO-R-PACK-TOT
+0250      4 #CAMPO-R-PACK-DEC          (N13,2)
+0770 END-DEFINE
+0780 SET KEY ALL

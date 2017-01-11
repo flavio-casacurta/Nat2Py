@@ -1,0 +1,883 @@
+"#ATR" {
+    def = lda['#ATR']
+    init = ''
+    length = 0
+    level = 1
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = C
+    }
+"#ATR1" {
+    def = lda['#ATR1']
+    init = ''
+    length = 0
+    level = 1
+    occurs = 5
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = C
+    }
+"#ATR2" {
+    def = lda['#ATR2']
+    init = ''
+    length = 0
+    level = 1
+    occurs = 5
+    redefine = False
+    scale = 0
+    two_dimension = 5
+    type = C
+    }
+"#ATR3" {
+    def = lda['#ATR3']
+    init = ''
+    length = 0
+    level = 1
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = C
+    }
+"#ATR4" {
+    def = lda['#ATR4']
+    init = ''
+    length = 0
+    level = 1
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = C
+    }
+"#ATR5" {
+    def = lda['#ATR5']
+    init = ''
+    length = 0
+    level = 1
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = C
+    }
+"#ATR6" {
+    def = lda['#ATR6']
+    init = ''
+    length = 0
+    level = 1
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = C
+    }
+"#CAMPO-ALFA" {
+    def = lda['#TELA']['#CAMPO-ALFA']
+    init = ''
+    length = 78
+    level = 2
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#CAMPO-BIN" {
+    def = lda['#TELA']['#CAMPO-BIN']
+    init = ''
+    length = 9
+    level = 2
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#CAMPO-BIN-N" {
+    def = lda['#TELA']['#CAMPO-BIN-R1']['#CAMPO-BIN-N']
+    init = 0
+    length = 9
+    level = 3
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = N
+    }
+"#CAMPO-BIN-R1" {
+    def = lda['#TELA']['#CAMPO-BIN-R1']
+    init = 
+    length = 0
+    level = 2
+    occurs = 0
+    redefine = True
+    scale = 0
+    two_dimension = 0
+    type =  
+    }
+"#CAMPO-DATA-TELA" {
+    def = lda['#TELA']['#CAMPO-DATA-TELA']
+    init = ''
+    length = 8
+    level = 2
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#CAMPO-DATA-TELA-N" {
+    def = lda['#TELA']['#CAMPO-DATA-TELA-R2']['#CAMPO-DATA-TELA-N']
+    init = 0
+    length = 8
+    level = 3
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = N
+    }
+"#CAMPO-DATA-TELA-R1" {
+    def = lda['#TELA']['#CAMPO-DATA-TELA-R1']
+    init = 
+    length = 0
+    level = 2
+    occurs = 0
+    redefine = True
+    scale = 0
+    two_dimension = 0
+    type =  
+    }
+"#CAMPO-DATA-TELA-R2" {
+    def = lda['#TELA']['#CAMPO-DATA-TELA-R2']
+    init = 
+    length = 0
+    level = 2
+    occurs = 0
+    redefine = True
+    scale = 0
+    two_dimension = 0
+    type =  
+    }
+"#CAMPO-DT-NUM-ANO" {
+    def = lda['#TELA']['#CAMPO-DATA-TELA-R1']['#CAMPO-DT-NUM-ANO']
+    init = ''
+    length = 4
+    level = 3
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#CAMPO-DT-NUM-DIA" {
+    def = lda['#TELA']['#CAMPO-DATA-TELA-R1']['#CAMPO-DT-NUM-DIA']
+    init = ''
+    length = 2
+    level = 3
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#CAMPO-DT-NUM-MES" {
+    def = lda['#TELA']['#CAMPO-DATA-TELA-R1']['#CAMPO-DT-NUM-MES']
+    init = ''
+    length = 2
+    level = 3
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#CAMPO-MULTIPLO" {
+    def = lda['#TELA']['#CAMPO-MULTIPLO']
+    init = ''
+    length = 3
+    level = 2
+    occurs = 5
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#CAMPO-MULTIPLO-R" {
+    def = lda['#TELA']['#CAMPO-MULTIPLO-R1']['#CAMPO-MULTIPLO-R']
+    init = 0
+    length = 3
+    level = 3
+    occurs = 5
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = N
+    }
+"#CAMPO-MULTIPLO-R1" {
+    def = lda['#TELA']['#CAMPO-MULTIPLO-R1']
+    init = 
+    length = 0
+    level = 2
+    occurs = 0
+    redefine = True
+    scale = 0
+    two_dimension = 0
+    type =  
+    }
+"#CAMPO-NUM" {
+    def = lda['#TELA']['#CAMPO-NUM']
+    init = ''
+    length = 20
+    level = 2
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#CAMPO-NUM-R1" {
+    def = lda['#TELA']['#CAMPO-NUM-R1']
+    init = 
+    length = 0
+    level = 2
+    occurs = 0
+    redefine = True
+    scale = 0
+    two_dimension = 0
+    type =  
+    }
+"#CAMPO-PACK" {
+    def = lda['#TELA']['#CAMPO-PACK']
+    init = ''
+    length = 16
+    level = 2
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#CAMPO-PACK-R1" {
+    def = lda['#TELA']['#CAMPO-PACK-R1']
+    init = 
+    length = 0
+    level = 2
+    occurs = 0
+    redefine = True
+    scale = 0
+    two_dimension = 0
+    type =  
+    }
+"#CAMPO-PE-1" {
+    def = lda['#TELA']['#CAMPO-PE-1']
+    init = 
+    length = 0
+    level = 2
+    occurs = 5
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type =  
+    }
+"#CAMPO-PE-2" {
+    def = lda['#TELA']['#CAMPO-PE-2']
+    init = 
+    length = 0
+    level = 2
+    occurs = 5
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type =  
+    }
+"#CAMPO-PE-ALFA" {
+    def = lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-ALFA']
+    init = ''
+    length = 10
+    level = 3
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#CAMPO-PE-NUM" {
+    def = lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM']
+    init = ''
+    length = 5
+    level = 3
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#CAMPO-PE-NUM-R" {
+    def = lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM-R1']['#CAMPO-PE-NUM-R']
+    init = 0
+    length = 5
+    level = 4
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = N
+    }
+"#CAMPO-PE-NUM-R1" {
+    def = lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM-R1']
+    init = 
+    length = 0
+    level = 3
+    occurs = 0
+    redefine = True
+    scale = 0
+    two_dimension = 0
+    type =  
+    }
+"#CAMPO-PE2-ALFA" {
+    def = lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-ALFA']
+    init = ''
+    length = 10
+    level = 3
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#CAMPO-PE2-MULTIPLO" {
+    def = lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO']
+    init = ''
+    length = 3
+    level = 3
+    occurs = 5
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#CAMPO-PE2-MULTIPLO-R" {
+    def = lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO-R1']['#CAMPO-PE2-MULTIPLO-R']
+    init = 0
+    length = 3
+    level = 4
+    occurs = 5
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = N
+    }
+"#CAMPO-PE2-MULTIPLO-R1" {
+    def = lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO-R1']
+    init = 
+    length = 0
+    level = 3
+    occurs = 0
+    redefine = True
+    scale = 0
+    two_dimension = 0
+    type =  
+    }
+"#CAMPO-PE2-NUM" {
+    def = lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM']
+    init = ''
+    length = 5
+    level = 3
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#CAMPO-PE2-NUM-R" {
+    def = lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM-R1']['#CAMPO-PE2-NUM-R']
+    init = 0
+    length = 5
+    level = 4
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = N
+    }
+"#CAMPO-PE2-NUM-R1" {
+    def = lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM-R1']
+    init = 
+    length = 0
+    level = 3
+    occurs = 0
+    redefine = True
+    scale = 0
+    two_dimension = 0
+    type =  
+    }
+"#CAMPO-R-NU-DEC" {
+    def = lda['#TELA']['#CAMPO-NUM-R1']['#CAMPO-R-NU-TOT-R1']['#CAMPO-R-NU-DEC']
+    init = 0.0
+    length = 17
+    level = 4
+    occurs = 0
+    redefine = False
+    scale = 2
+    two_dimension = 0
+    type = N
+    }
+"#CAMPO-R-NU-TOT" {
+    def = lda['#TELA']['#CAMPO-NUM-R1']['#CAMPO-R-NU-TOT']
+    init = 0
+    length = 19
+    level = 3
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = N
+    }
+"#CAMPO-R-NU-TOT-R1" {
+    def = lda['#TELA']['#CAMPO-NUM-R1']['#CAMPO-R-NU-TOT-R1']
+    init = 
+    length = 0
+    level = 3
+    occurs = 0
+    redefine = True
+    scale = 0
+    two_dimension = 0
+    type =  
+    }
+"#CAMPO-R-PACK-DEC" {
+    def = lda['#TELA']['#CAMPO-PACK-R1']['#CAMPO-R-PACK-TOT-R1']['#CAMPO-R-PACK-DEC']
+    init = 0.0
+    length = 13
+    level = 4
+    occurs = 0
+    redefine = False
+    scale = 2
+    two_dimension = 0
+    type = N
+    }
+"#CAMPO-R-PACK-TOT" {
+    def = lda['#TELA']['#CAMPO-PACK-R1']['#CAMPO-R-PACK-TOT']
+    init = 0
+    length = 15
+    level = 3
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = N
+    }
+"#CAMPO-R-PACK-TOT-R1" {
+    def = lda['#TELA']['#CAMPO-PACK-R1']['#CAMPO-R-PACK-TOT-R1']
+    init = 
+    length = 0
+    level = 3
+    occurs = 0
+    redefine = True
+    scale = 0
+    two_dimension = 0
+    type =  
+    }
+"#CAMPO-RETORNA" {
+    def = lda['#CAMPO-RETORNA']
+    init = ''
+    length = 78
+    level = 1
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#CAPO-HORA-TELA" {
+    def = lda['#TELA']['#CAPO-HORA-TELA']
+    init = ''
+    length = 6
+    level = 2
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#CAPO-HORA-TELA-R1" {
+    def = lda['#TELA']['#CAPO-HORA-TELA-R1']
+    init = 
+    length = 0
+    level = 2
+    occurs = 0
+    redefine = True
+    scale = 0
+    two_dimension = 0
+    type =  
+    }
+"#CAPO-HORA-TELA-R2" {
+    def = lda['#TELA']['#CAPO-HORA-TELA-R2']
+    init = 
+    length = 0
+    level = 2
+    occurs = 0
+    redefine = True
+    scale = 0
+    two_dimension = 0
+    type =  
+    }
+"#COMPO-HORA-HO" {
+    def = lda['#TELA']['#CAPO-HORA-TELA-R1']['#COMPO-HORA-HO']
+    init = ''
+    length = 2
+    level = 3
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#COMPO-HORA-HO-N" {
+    def = lda['#TELA']['#CAPO-HORA-TELA-R2']['#COMPO-HORA-HO-N']
+    init = 0
+    length = 6
+    level = 3
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = N
+    }
+"#COMPO-HORA-MM" {
+    def = lda['#TELA']['#CAPO-HORA-TELA-R1']['#COMPO-HORA-MM']
+    init = ''
+    length = 2
+    level = 3
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#COMPO-HORA-SS" {
+    def = lda['#TELA']['#CAPO-HORA-TELA-R1']['#COMPO-HORA-SS']
+    init = ''
+    length = 2
+    level = 3
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#IND-TB" {
+    def = lda['#IND-TB']
+    init = 0
+    length = 1
+    level = 1
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = N
+    }
+"#IND-TL" {
+    def = lda['#IND-TL']
+    init = 0
+    length = 7
+    level = 1
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = N
+    }
+"#IND1" {
+    def = lda['#IND1']
+    init = 0
+    length = 5
+    level = 1
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = N
+    }
+"#IND2" {
+    def = lda['#IND2']
+    init = 0
+    length = 5
+    level = 1
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = N
+    }
+"#TB-RETORNA" {
+    def = lda['#TB-RETORNA']
+    init = ''
+    length = 78
+    level = 1
+    occurs = 10000
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#TELA" {
+    def = lda['#TELA']
+    init = 
+    length = 0
+    level = 1
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type =  
+    }
+"#TL-CONFIRMA" {
+    def = lda['#TELA']['#TL-CONFIRMA']
+    init = ''
+    length = 1
+    level = 2
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#TL-DT-DATE" {
+    def = lda['#TL-DT-DATE']
+    init = ''
+    length = 10
+    level = 1
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#TL-HO-TIME" {
+    def = lda['#TL-HO-TIME']
+    init = ''
+    length = 8
+    level = 1
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#TL-REGISTRO" {
+    def = lda['#TL-REGISTRO']
+    init = 0
+    length = 8
+    level = 1
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = N
+    }
+"#TL-TX-CONF" {
+    def = lda['#TL-TX-CONF']
+    init = 'CONFIRMA S/N:'
+    length = 13
+    level = 1
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#TL-TX-DATE" {
+    def = lda['#TL-TX-DATE']
+    init = 'DATA DATE:'
+    length = 10
+    level = 1
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#TL-TX-REGISTRO" {
+    def = lda['#TL-TX-REGISTRO']
+    init = 'REGISTRO ISN   :'
+    length = 16
+    level = 1
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#TL-TX-TIME" {
+    def = lda['#TL-TX-TIME']
+    init = 'HORA TIME:'
+    length = 10
+    level = 1
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"#TX-PFS" {
+    def = lda['#TX-PFS']
+    init = 'PF8 - AVANCA'
+    length = 48
+    level = 1
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"FILLER_01" {
+    def = lda['#TELA']['#CAMPO-NUM-R1']['FILLER_01']
+    init = ''
+    length = 1
+    level = 3
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+"FILLER_02" {
+    def = lda['#TELA']['#CAMPO-PACK-R1']['FILLER_02']
+    init = ''
+    length = 1
+    level = 3
+    occurs = 0
+    redefine = False
+    scale = 0
+    two_dimension = 0
+    type = A
+    }
+#TAB-TXT-TELA {
+    def = gda['#TAB-TXT-TELA']
+    length = 78
+    occurs = 4
+    type = A
+    }
+CAMPO-ALFA {
+    def = lda['F255']['CAMPO-ALFA']
+    length = 78
+    occurs = None
+    type = A
+    }
+CAMPO-BINARIO {
+    def = lda['F255']['CAMPO-BINARIO']
+    length = 4
+    occurs = None
+    scale = 0
+    type = B
+    }
+CAMPO-DATE-DATA {
+    def = lda['F255']['CAMPO-DATE-DATA']
+    length = 0
+    occurs = None
+    scale = 0
+    type = D
+    }
+CAMPO-MULTIPLO {
+    def = lda['F255']['CAMPO-MULTIPLO']
+    length = 3
+    occurs = 5
+    scale = 0
+    type = N
+    }
+CAMPO-NUMERICO {
+    def = lda['F255']['CAMPO-NUMERICO']
+    length = 17
+    occurs = None
+    scale = 2
+    type = A
+    }
+CAMPO-NUMERICO-DATA {
+    def = lda['F255']['CAMPO-NUMERICO-DATA']
+    length = 4
+    occurs = None
+    scale = 0
+    type = B
+    }
+CAMPO-NUMERICO-HORA {
+    def = lda['F255']['CAMPO-NUMERICO-HORA']
+    length = 6
+    occurs = None
+    scale = 0
+    type = N
+    }
+CAMPO-PACK {
+    def = lda['F255']['CAMPO-PACK']
+    length = 13
+    occurs = None
+    scale = 2
+    type = A
+    }
+CAMPO-PE-ALFA {
+    def = lda['F255']['GP-SEM-MULTIPLO']['CAMPO-PE-ALFA']
+    length = 10
+    occurs = 5
+    scale = 0
+    type = A
+    }
+CAMPO-PE-NUM {
+    def = lda['F255']['GP-SEM-MULTIPLO']['CAMPO-PE-NUM']
+    length = 5
+    occurs = 5
+    scale = 0
+    type = N
+    }
+CAMPO-PE2-ALFA {
+    def = lda['F255']['GP-COM-MULTIPLO']['CAMPO-PE2-ALFA']
+    length = 10
+    occurs = 5
+    scale = 0
+    type = A
+    }
+CAMPO-PE2-MULTIPLO {
+    def = lda['F255']['GP-COM-MULTIPLO']['CAMPO-PE2-MULTIPLO']
+    length = 3
+    occurs = 5
+    scale = 0
+    two_dimension = 5
+    type = N
+    }
+CAMPO-PE2-NUM {
+    def = lda['F255']['GP-COM-MULTIPLO']['CAMPO-PE2-NUM']
+    length = 5
+    occurs = 5
+    scale = 0
+    type = N
+    }
+CAMPO-TIME-HORA {
+    def = lda['F255']['CAMPO-TIME-HORA']
+    length = 6
+    occurs = None
+    scale = 0
+    type = N
+    }
+F255 {
+    def = lda['F255']
+    length = 0
+    occurs = None
+    type = None
+    }
+GP-COM-MULTIPLO {
+    def = lda['F255']['GP-COM-MULTIPLO']
+    length = 0
+    occurs = None
+    scale = 0
+    type = None
+    }
+GP-SEM-MULTIPLO {
+    def = lda['F255']['GP-SEM-MULTIPLO']
+    length = 0
+    occurs = None
+    scale = 0
+    type = None
+    }

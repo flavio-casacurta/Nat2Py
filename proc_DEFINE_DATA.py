@@ -53,19 +53,19 @@ def set_attrb(dda, match, ancestors, init):
     dicattr['occurs'] = 0 if not match.get('occurs', 0) else int(match['occurs'])
     dicattr['two_dimension'] = 0 if not match.get('two_dimension', 0) else int(match['two_dimension'])
     dicattr['init'] = '' if init == '{' else init
-    attrb["'{}'".format(match['name'])] = dicattr
+    attrb['"{}"'.format(match['name'])] = dicattr
     references.update(attrb)
 
 
 def dictionarize(dda, match, ancestors, spc):
     init = get_init(match)
     set_attrb(dda, match, ancestors, init)
-    ac1 = '[' if match.get('occurs', None) else ''
-    fc1 = ']' if match.get('occurs', None) else ''
-    ac2 = '[' if match.get('two_dimension', None) else ''
-    fc2 = ']' if match.get('two_dimension', None) else ''
+    ac1 = '' if init == '{' else '[' if match.get('occurs', None) else ''
+    fc1 = '' if init == '{' else ']' if match.get('occurs', None) else ''
+    ac2 = '' if init == '{' else '[' if match.get('two_dimension', None) else ''
+    fc2 = '' if init == '{' else ']' if match.get('two_dimension', None) else ''
     comma = '' if init == '{' else ','
-    attrb = """{}'{}': {}{}{}{}{}{}\n""".format(' '*spc, match['name'], ac1, ac2, init, fc1, fc2, comma)
+    attrb = """{}"{}": {}{}{}{}{}{}\n""".format(' '*spc, match['name'], ac1, ac2, init, fc1, fc2, comma)
     return attrb, init, ancestors
 
 
@@ -115,20 +115,25 @@ def proc_DEFINE_DATA(lines):
         if level <= level_ant:
             ancestor = ancestors.pop()
             while True:
-                if ancestors and references["'{}'".format(ancestors[-1])]['level'] >= level:
-                    ancestors.pop()
+                if ancestors and level < references['"{}"'.format(ancestor)]['level']:
+                    attrb = '{}{}\n'.format(' ' * (spc-1), '},')
+                    comp = 'def_{} += attrb'.format(dda)
+                    exec compile(comp, '', 'exec')
+                    spc = spc - spa if spc > spa else spc
+                if ancestors and references['"{}"'.format(ancestors[-1])]['level'] >= level:
+                    ancestor = ancestors.pop()
                 else:
                     break
 
-            if level < level_ant:
-                attrb = '{}{}\n'.format(' ' * (spc-1), '}')
-                comp = 'def_{} += attrb'.format(dda)
-                exec compile(comp, '', 'exec')
-                spc -= spa
         level_ant = level
 
         if 'redefine' in match:
-            match['name'] = '{}-R'.format(match['redefine'])
+            red = 0
+            while True:
+                red += 1
+                if '"{}-R{}"'.format(match['redefine'], red) not in references:
+                    break
+            match['name'] = '{}-R{}'.format(match['redefine'], red)
 
         attrb, init, ancestors = dictionarize(dda, match, ancestors, spc)
         if init == '{':
@@ -138,6 +143,20 @@ def proc_DEFINE_DATA(lines):
             spc = 7 if spc == 0 else spc
         comp = 'def_{} += attrb'.format(dda)
         exec compile(comp, '', 'exec')
+
+    level = 1
+    if level <= level_ant:
+        ancestor = ancestors.pop()
+        while True:
+            if ancestors and level < references["'{}'".format(ancestor)]['level']:
+                attrb = '{}{}\n'.format(' ' * (spc-1), '},')
+                comp = 'def_{} += attrb'.format(dda)
+                exec compile(comp, '', 'exec')
+                spc = spc - spa if spc > spa else spc
+            if ancestors and references["'{}'".format(ancestors[-1])]['level'] >= level:
+                ancestor = ancestors.pop()
+            else:
+                break
 
     attrb = '{}{}\n'.format(' '*6, '}')
     for dda in DDA.values():

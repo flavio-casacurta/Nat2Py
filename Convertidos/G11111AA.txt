@@ -1,5 +1,5 @@
-'#TAB-TXT-TELA': ['TELA DE INCLUSAO DE DADOS',
-                  'TELA DE CONSULTA DE DADOS' ,
-                  'TELA DE ALTERACAO DE DADOS',
-                  'TELA DE EXCLUSAO DE DADOS'
+"#TAB-TXT-TELA": ["TELA DE INCLUSAO DE DADOS",
+                  "TELA DE CONSULTA DE DADOS" ,
+                  "TELA DE ALTERACAO DE DADOS",
+                  "TELA DE EXCLUSAO DE DADOS"
                  ]
