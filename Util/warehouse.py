@@ -15,13 +15,13 @@ DDA = { 'GLOBAL': 'gda'
       , 'PARAMETER': 'pda'}
 
 
-DATATYPES_NATURAL = {'A': {'type': 'str', 'init': "''"},
-                     'N': {'type': 'Decimal', 'init': 0},
-                     'P': {'type': 'Decimal', 'init': 0},
-                     'I': {'type': 'int', 'init': 0},
-                     'F': {'type': 'float', 'init': 0.0},
-                     'B': {'type': 'int', 'init': 0},
-                     'C': {'type': 'str', 'init': "''"},
-                     'D': {'type': 'date', 'init': '(1, 1, 1)'},
-                     'T': {'type': 'time', 'init': '(1, 1, 1)'},
+DATATYPES_NATURAL = {'A': {'type': 'str', 'init': "''", 'import': ''},
+                     'N': {'type': 'Decimal', 'init': 'Decimal(0)', 'import': 'from decimal import *\n'},
+                     'P': {'type': 'Decimal', 'init': 'Decimal(0)', 'import': 'from decimal import *\n'},
+                     'I': {'type': 'int', 'init': 0, 'import': ''},
+                     'F': {'type': 'Decimal', 'init': 'Decimal(0.0)', 'import': 'from decimal import *\n'},
+                     'B': {'type': 'int', 'init': 0, 'import': ''},
+                     'C': {'type': 'str', 'init': "''", 'import': ''},
+                     'D': {'type': 'date', 'init': 'date(1, 1, 1)', 'import': 'from datetime import date\n'},
+                     'T': {'type': 'time', 'init': 'time(1, 1, 1)', 'import': 'from datetime import time\n'},
                      'L': {'type': 'boolean', 'init': False}}

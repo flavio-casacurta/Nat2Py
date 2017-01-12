@@ -1,8 +1,8 @@
 "F255":{
         "CAMPO-ALFA": "",
-        "CAMPO-NUMERICO": 0,0,
+        "CAMPO-NUMERICO": 0.0,
         "CAMPO-PACK": 0.0,
-        "CAMPO-BINARIO" 0,
+        "CAMPO-BINARIO": 0,
         "CAMPO-NUMERICO-DATA": 0.0,
         "CAMPO-DATE-DATA": date(1, 1, 1),
         "CAMPO-NUMERICO-HORA": 0.0,
@@ -11,10 +11,10 @@
         "GP-SEM-MULTIPLO":{
                            "CAMPO-PE-ALFA": [""],
                            "CAMPO-PE-NUM": [0],
-                          }
+                          },
         "GP-COM-MULTIPLO":{
                            "CAMPO-PE2-MULTIPLO": [[0]],
                            "CAMPO-PE2-ALFA": [""],
                            "CAMPO-PE2-NUM": [0]
-                          }
-       }
+                          },
+       },

@@ -16,24 +16,31 @@ def_lda = '''lda = {'''
 def_rda = '''rda = {'''
 
 
-def proc_USING(dda, Using):
+def proc_USING(dda, Using, imports):
+
+    with open (r'Convertidos\{}.imp'.format(Using)) as impo:
+        for imp in impo.readlines():
+            if imp and imp not in imports:
+                imports += imp
+
     using = file(r'Convertidos\{}.txt'.format(Using)).read()
     filejson = file('Convertidos/{}.json'.format(Using)).read()
     references.update(json.loads(filejson))
-    return using
+    return using, imports
 
 
-def get_init(match):
+def get_init(match, imports):
     type = None if not match.get('type', None) else match['type']
     init = None if not match.get('init', None) else match['init']
     if type:
         if not init:
             init = DATATYPES_NATURAL[type]['init']
-            if init == 0 and match.get('scale', 0) > 0:
-                init = 0.0
+            imp = DATATYPES_NATURAL[type]['import']
+            if imp and imp not in imports:
+                imports += imp
     else:
         init = '{'
-    return init
+    return init , imports
 
 
 def get_def(dda, match, ancestors):
@@ -57,8 +64,8 @@ def set_attrb(dda, match, ancestors, init):
     references.update(attrb)
 
 
-def dictionarize(dda, match, ancestors, spc):
-    init = get_init(match)
+def dictionarize(dda, match, ancestors, spc, imports):
+    init, imports = get_init(match, imports)
     set_attrb(dda, match, ancestors, init)
     ac1 = '' if init == '{' else '[' if match.get('occurs', None) else ''
     fc1 = '' if init == '{' else ']' if match.get('occurs', None) else ''
@@ -66,7 +73,7 @@ def dictionarize(dda, match, ancestors, spc):
     fc2 = '' if init == '{' else ']' if match.get('two_dimension', None) else ''
     comma = '' if init == '{' else ','
     attrb = """{}"{}": {}{}{}{}{}{}\n""".format(' '*spc, match['name'], ac1, ac2, init, fc1, fc2, comma)
-    return attrb, init, ancestors
+    return attrb, init, ancestors, imports
 
 
 def proc_DEFINE_DATA(lines):
@@ -83,7 +90,7 @@ def proc_DEFINE_DATA(lines):
         return False, [], [], 'Nao e um programa Natural valido'
 
     lines = homogenize(clearLines[line_dd + 1:line_ed])
-
+    imports = ''
     ancestors = ['']
     spc = 0
     spa = 0
@@ -95,7 +102,7 @@ def proc_DEFINE_DATA(lines):
         if wrd1 in DDA:
             dda = DDA[wrd1]
             if words(line)[0] > 1 and word(line, 2) == 'USING':
-                using = proc_USING(wrd1, word(line, 3))
+                using, imports = proc_USING(wrd1, word(line, 3), imports)
                 comp = 'def_{} += using'.format(dda)
                 exec compile(comp, '', 'exec')
                 spc = 7
@@ -135,7 +142,7 @@ def proc_DEFINE_DATA(lines):
                     break
             match['name'] = '{}-R{}'.format(match['redefine'], red)
 
-        attrb, init, ancestors = dictionarize(dda, match, ancestors, spc)
+        attrb, init, ancestors, imports = dictionarize(dda, match, ancestors, spc, imports)
         if init == '{':
             spa = (len(match['name']) + 5)
             spc += spa
@@ -163,5 +170,5 @@ def proc_DEFINE_DATA(lines):
         comp = 'def_{} += attrb'.format(dda)
         exec compile(comp, '', 'exec')
 
-    return True, references, def_gda, def_pda, def_lda, def_rda
+    return True, references, def_gda, def_pda, def_lda, imports
 
