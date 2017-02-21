@@ -1,0 +1,2 @@
+ ADARUN DBID=<dbid>,SVC=<svc>,MODE=MULTI,DEVICE=3390
+

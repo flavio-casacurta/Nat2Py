@@ -1,0 +1,6 @@
+01,A1,025,A,DE,NU       ;filename w/o extension
+01,A2,004,A,DE,NU       ;extension
+01,A3,008,A             ;loblength as string
+01,L1,0,A,LB,NV,NB,NU   ;lob
+01,L2,0,A,LA,NV         ;thumbnail if jpeg or gif
+01,X1,180,A,NU          ;url of origin
