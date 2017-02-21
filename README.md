@@ -1,2 +1,2 @@
 # Nat2Py
-Translator Natural/ADABAS to Python/Postgres
+Accessing ADABAS by PYTHON
