@@ -25,3 +25,6 @@ DATATYPES_NATURAL = {'A': {'type': 'str', 'init': "''", 'import': ''},
                      'D': {'type': 'date', 'init': 'date(1, 1, 1)', 'import': 'from datetime import date\n'},
                      'T': {'type': 'time', 'init': 'time(1, 1, 1)', 'import': 'from datetime import time\n'},
                      'L': {'type': 'boolean', 'init': False}}
+
+
+COMMANDS = (
