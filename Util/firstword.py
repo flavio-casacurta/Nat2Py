@@ -16,7 +16,8 @@ setcmd = set()
 
 for pgm in filter(ehPgm, pgmList):
     lines = open(pgm).readlines()
-    clearLines =  map(l472, filter(both(isNotBlank, isNotRem), lines))
+    clearLines =  map(l472, filter(isNotRem, lines))
+    clearLines =  filter(isNotBlank, clearLines)
     lPgm = clearLines[clearLines.index(filter(isEndDefine, clearLines)[0])+1:]
     for line in lPgm:
         setcmd.add(line.split()[0])

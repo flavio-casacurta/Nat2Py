@@ -77,19 +77,18 @@ def dictionarize(dda, match, ancestors, spc, imports):
 
 
 def proc_DEFINE_DATA(lines):
-    clearLines =  map(l472, filter(both(isNotBlank, isNotRem), lines))
 
     try:
-        line_dd = clearLines.index(filter(isDefine, clearLines)[0])
+        line_dd = lines.index(filter(isDefine, lines)[0])
     except IndexError:
         return False, [], [], 'Nao e um programa Natural valido'
 
     try:
-        line_ed = clearLines.index(filter(isEndDefine, clearLines)[0])
+        line_ed = lines.index(filter(isEndDefine, lines)[0])
     except IndexError:
         return False, [], [], 'Nao e um programa Natural valido'
 
-    lines = homogenize(clearLines[line_dd + 1:line_ed])
+    lines = homogenize(lines[line_dd + 1:line_ed])
     imports = ''
     ancestors = ['']
     spc = 0

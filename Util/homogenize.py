@@ -7,8 +7,10 @@
 import re
 from change import change
 from warehouse import DDA
-
+from warehouse import LINEFEED
+from warehouse import COMMANDS_NATURAL
 from HOFs import *
+
 def homogenize(dda):
     clearLines = filter(isNotBlank, dda)
     joinLines = []
@@ -58,3 +60,39 @@ def homogenize(dda):
                 line = re.sub('\s+\d+X', sub, line)
         homolines.append(line)
     return homolines
+
+
+def homogenize_proc(lines):
+    joinLines = []
+    holder = []
+    ilines = iter(lines)
+    stop = False
+
+    while True:
+        if stop:
+            break
+
+        if not holder:
+            try:
+                line = ilines.next()
+            except StopIteration:
+                break
+
+        if not holder:
+            holder.append(line)
+
+        try:
+            line = ilines.next()
+        except StopIteration:
+            joinLines.append(" ".join(holder))
+            stop = True
+            continue
+
+        if word(line, 1) not in LINEFEED:
+            holder.append(" " + line.strip())
+        else:
+            joinLines.append(" ".join(holder))
+            holder = []
+            holder.append(line)
+
+    return joinLines
