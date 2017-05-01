@@ -4,19 +4,7 @@ import re
 import json
 from Util.HOFs import *
 from Util.homogenize import homogenize_proc
-
-
-def proc_USING(dda, Using, imports):
-
-    with open (r'Convertidos\{}.imp'.format(Using)) as impo:
-        for imp in impo.readlines():
-            if imp and imp not in imports:
-                imports += imp
-
-    using = file(r'Convertidos\{}.txt'.format(Using)).read()
-    filejson = file('Convertidos/{}.json'.format(Using)).read()
-    references.update(json.loads(filejson))
-    return using, imports
+from Util.procedures import *
 
 
 def proc_Procedure(lines):
@@ -31,10 +19,10 @@ def proc_Procedure(lines):
     ancestors = ['']
     spc = 0
     spa = 0
-
+    procs = ''
     for line in lines:
 
-        wrd1 =  word(line, 1)
+        procs += '{}\n'.format(line)
 
-    return True
+    return True, procs
 

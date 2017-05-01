@@ -8,7 +8,7 @@ import re
 from change import change
 from warehouse import DDA
 from warehouse import LINEFEED
-from warehouse import COMMANDS_NATURAL
+
 from HOFs import *
 
 def homogenize(dda):

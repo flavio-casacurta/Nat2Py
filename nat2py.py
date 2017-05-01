@@ -6,22 +6,21 @@ from Util.HOFs import *
 
 
 lines = file(r'C:\Natural\POC_SERPRO\Originais\POC.XXX.ALTERACAO.TXT').readlines()
-lines = filter(isNotBlank, map(l472, filter(isNotRem , lines)))
+lines = filter(isNotBlank, map(l480, filter(isNotRem, lines)))
 
 ret, references, def_gda, def_pda, def_lda, imports = proc_DEFINE_DATA.proc_DEFINE_DATA(lines)
 
-ret =  proc_Procedure.proc_Procedure(lines)
-
-print ret
+ret, procs = proc_Procedure.proc_Procedure(lines, references)
 
 Print_Dict(r'references.txt')(references)
 
 dic = {'@GLOBAL': def_gda
         ,'@PARAMETER': def_pda
         ,'@LOCAL': def_lda
-        ,'@IMPORTS': imports}
+        ,'@IMPORTS': imports
+        ,'@PROCEDURE': procs}
 
-template = open(r'C:\Python\MyTools\Nat2Py\Templates\pgm_template.py').read()
+template = open(r'C:\Python\MyTools\Nat2PyBath\Templates\pgm_template.py').read()
 prog = change(dic, template)
 progWrite = open(r'Convertidos\pgmteste.py', 'w')
 progWrite.write(prog)

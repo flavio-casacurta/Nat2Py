@@ -20,7 +20,7 @@ for pgm in filter(ehPgm, pgmList):
     baseName = os.path.basename(pgm)
     namePgm = baseName[:baseName.index('.')]
     lines = open(pgm).readlines()
-    clearLines =  map(l472, filter(both(isNotBlank, isNotRem), lines))
+    clearLines =  map(l480, filter(both(isNotBlank, isNotRem), lines))
     lPgm = clearLines[clearLines.index(filter(isEndDefine, clearLines)[0])+1:]
     for line in lPgm:
         cmds.write('{} - {}\n'.format(namePgm, line.split()[0]))

@@ -1,5 +1,5 @@
 from HOFsGenericas import *
-l472 = lambda line: line[4:72].rstrip()
+l480 = lambda line: line[4:80].rstrip()
 isRem = lambda line: truth(re.match(r'^.{4}\s*[*]', line, re.UNICODE))
 isNotRem = lambda line: not isRem(line)
 
