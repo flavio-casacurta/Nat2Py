@@ -14,6 +14,11 @@ DDA = { 'GLOBAL': 'gda'
       , 'LOCAL': 'lda'
       , 'PARAMETER': 'pda'}
 
+AD = {'PI': [('writable', False)],
+      'PN': [('writable', False), ('dark', True)],
+      'P': [('writable', False)],
+      'I': [('writable', True)]}
+
 
 DATATYPES_NATURAL = {'A': {'type': 'str', 'init': "''", 'import': ''},
                      'N': {'type': 'Decimal', 'init': 'Decimal(0)', 'import': 'from decimal import *\n'},
