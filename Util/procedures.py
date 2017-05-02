@@ -33,7 +33,10 @@ def procMOVE(line, references):
         elif srcs.find('(') != -1:
             src, idx = trgt.split('(')[:]
             idx = '[{}]'.format(idx[:-1])
-        source = '{}{} = '.format(references.get('"{}"'.format(src)['def'], src), idx)
+        try:
+            source = '{}{} = '.format(references['"{}"'.format(src)]['def'], idx)
+        except:
+            source = src
 
     return '{}{}'.format(target, source)
 
