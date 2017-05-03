@@ -128,11 +128,11 @@ lda = {"F255":{
 
 #PROCEDURE
  SET KEY ALL
- MOVE (AD=PI)                     TO   #ATR  #ATR1(*)  #ATR2(*,*)  #ATR6
- MOVE (AD=PN)                     TO   #ATR4
- MOVE (AD=PN)                     TO   #ATR3
- MOVE (AD=P)                      TO   #ATR5
- MOVE 3                           TO   #IND-TL
+lda['#ATR'] = lda['#ATR1'][*] = lda['#ATR2'][*,*] = lda['#ATR6'] = [('writable', False)]
+lda['#ATR4'] = [('writable', False), ('dark', True)]
+lda['#ATR3'] = [('writable', False), ('dark', True)]
+lda['#ATR5'] = [('writable', False)]
+lda['#IND-TL'] = 3
  READ (3) F255
  END-READ
  IF *COUNTER(0870)                EQ   0
@@ -148,11 +148,11 @@ lda = {"F255":{
  READ F255 BY ISN
    RESET #TELA
    PERFORM FORMATAR-TELA
-   MOVE *ISN                         TO  #TL-REGISTRO
-   MOVE (AD=I)                      TO   #ATR  #ATR1(*)  #ATR2(*,*)  #ATR4
-   MOVE (AD=P)                      TO   #ATR6
-   MOVE (AD=P)                      TO   #ATR3
-   MOVE (AD=P)                      TO   #ATR5
+lda['#TL-REGISTRO'] = *ISN
+lda['#ATR'] = lda['#ATR1'][*] = lda['#ATR2'][*,*] = lda['#ATR4'] = [('writable', True)]
+lda['#ATR6'] = [('writable', False)]
+lda['#ATR3'] = [('writable', False)]
+lda['#ATR5'] = [('writable', False)]
    INPUT USING MAP 'T11111IN'
    IF *PF-KEY                       EQ   'PF3' OR= 'PF15'
       STOP
@@ -168,7 +168,7 @@ lda = {"F255":{
    END-IF
    PERFORM CRITICA-CAMPOS
    PERFORM ALTERAR-REGISTRO
-   MOVE (AD=P)                      TO   #ATR  #ATR1(*)  #ATR2(*,*)  #ATR4
+lda['#ATR'] = lda['#ATR1'][*] = lda['#ATR2'][*,*] = lda['#ATR4'] = [('writable', False)]
    INPUT WITH TEXT 'ALTERACAO EFETUADA' USING MAP 'T11111IN'
    IF *PF-KEY                       EQ   'PF3' OR= 'PF15'
       STOP
@@ -179,43 +179,43 @@ lda = {"F255":{
    END-IF
  END-READ
  DEFINE SUBROUTINE FORMATAR-TELA
-  MOVE  CAMPO-ALFA                 TO   #CAMPO-ALFA
-  MOVE  EDITED CAMPO-NUMERICO(EM=ZZZZZZZZZZZZZZZZ9,99)  TO   #CAMPO-NUM
-  MOVE LEFT #CAMPO-NUM             TO   #CAMPO-NUM
-  MOVE  EDITED CAMPO-PACK(EM=ZZZZZZZZZZZZ9,99)  TO   #CAMPO-PACK
-  MOVE LEFT #CAMPO-PACK            TO   #CAMPO-PACK
-  MOVE  CAMPO-BINARIO              TO   #CAMPO-BIN-N
-  MOVE  CAMPO-NUMERICO-DATA        TO   #CAMPO-DATA-TELA-N
-  MOVE EDITED  CAMPO-DATE-DATA(EM=DD/MM/YYYY)  TO   #TL-DT-DATE
-  MOVE  CAMPO-NUMERICO-HORA        TO   #COMPO-HORA-HO-N
-  MOVE  EDITED  CAMPO-TIME-HORA(EM=HH:II:SS)  TO   #TL-HO-TIME
-  MOVE CAMPO-MULTIPLO(*)           TO   #CAMPO-MULTIPLO-R(*)
-  MOVE CAMPO-PE-ALFA(*)            TO   #CAMPO-PE-ALFA(*)
-  MOVE CAMPO-PE-NUM(*)             TO   #CAMPO-PE-NUM-R(*)
-  MOVE CAMPO-PE2-MULTIPLO(*,*) TO #CAMPO-PE2-MULTIPLO-R(*,*)
-  MOVE CAMPO-PE2-ALFA(*)           TO   #CAMPO-PE2-ALFA(*)
-  MOVE CAMPO-PE2-NUM(*)            TO   #CAMPO-PE2-NUM-R(*)
+lda['#TELA']['#CAMPO-ALFA'] = lda['F255']['CAMPO-ALFA']
+lda['#TELA']['#CAMPO-NUM'] = lda['F255']['CAMPO-NUMERICO']
+
+lda['#TELA']['#CAMPO-PACK'] = lda['F255']['CAMPO-PACK']
+
+lda['#TELA']['#CAMPO-BIN-R1']['#CAMPO-BIN-N'] = lda['F255']['CAMPO-BINARIO']
+lda['#TELA']['#CAMPO-DATA-TELA-R2']['#CAMPO-DATA-TELA-N'] = lda['F255']['CAMPO-NUMERICO-DATA']
+lda['#TL-DT-DATE'] = lda['F255']['CAMPO-DATE-DATA']
+lda['#TELA']['#CAPO-HORA-TELA-R2']['#COMPO-HORA-HO-N'] = lda['F255']['CAMPO-NUMERICO-HORA']
+lda['#TL-HO-TIME'] = lda['F255']['CAMPO-TIME-HORA']
+lda['#TELA']['#CAMPO-MULTIPLO-R1']['#CAMPO-MULTIPLO-R'][*] = lda['F255']['CAMPO-MULTIPLO'][*]
+lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-ALFA'][*] = lda['F255']['GP-SEM-MULTIPLO']['CAMPO-PE-ALFA'][*]
+lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM-R1']['#CAMPO-PE-NUM-R'][*] = lda['F255']['GP-SEM-MULTIPLO']['CAMPO-PE-NUM'][*]
+lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO-R1']['#CAMPO-PE2-MULTIPLO-R'][*,*] = lda['F255']['GP-COM-MULTIPLO']['CAMPO-PE2-MULTIPLO'][*,*]
+lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-ALFA'][*] = lda['F255']['GP-COM-MULTIPLO']['CAMPO-PE2-ALFA'][*]
+lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM-R1']['#CAMPO-PE2-NUM-R'][*] = lda['F255']['GP-COM-MULTIPLO']['CAMPO-PE2-NUM'][*]
  END-SUBROUTINE
  DEFINE SUBROUTINE CRITICA-CAMPOS
-   MOVE LEFT #CAMPO-ALFA            TO   #CAMPO-ALFA
+
    IF #CAMPO-ALFA                   EQ   '                          '
       REINPUT 'PREENCHIMENTO OBRIGATORIO' MARK *#CAMPO-ALFA
    END-IF
-   MOVE LEFT #CAMPO-NUM             TO   #CAMPO-NUM
+
    IF #CAMPO-NUM                    EQ   '            '
       REINPUT 'PREENCHIMENTO OBRIGATORIO' MARK *#CAMPO-NUM
    END-IF
-   MOVE RIGHT #CAMPO-NUM            TO   #CAMPO-NUM
+
    IF #CAMPO-NUM              EQ    MASK ('                'N','NN)  OR=   MASK ('               'NN','NN)  OR=   MASK ('              'NNN','NN)  OR=   MASK ('             'NNNN','NN)  OR=   MASK ('            'NNNNN','NN)  OR=   MASK ('           'NNNNNN','NN)  OR=   MASK ('          'NNNNNNN','NN)  OR=   MASK ('         'NNNNNNNN','NN)  OR=   MASK ('        'NNNNNNNNN','NN)  OR=   MASK ('       'NNNNNNNNNN','NN)  OR=   MASK ('      'NNNNNNNNNNN','NN)  OR=   MASK ('     'NNNNNNNNNNNN','NN)  OR=   MASK ('    'NNNNNNNNNNNNN','NN)  OR=   MASK ('   'NNNNNNNNNNNNNN','NN)  OR=   MASK ('  'NNNNNNNNNNNNNNN','NN)  OR=   MASK (' 'NNNNNNNNNNNNNNNN','NN)  OR=   MASK (NNNNNNNNNNNNNNNNN','NN)
       EXAMINE FULL #CAMPO-NUM FOR ' ' REPLACE '0'
    ELSE
        REINPUT  'PREENCHER CAMPO COM NUMEROS E NO MINIMO DUAS CASAS DECIMAIS.'  MARK *#CAMPO-NUM
    END-IF
-   MOVE LEFT #CAMPO-PACK            TO   #CAMPO-PACK
+
    IF #CAMPO-PACK                   EQ   '            '
       REINPUT 'PREENCHIMENTO OBRIGATORIO' MARK *#CAMPO-PACK
    END-IF
-   MOVE RIGHT #CAMPO-PACK           TO   #CAMPO-PACK
+
    IF #CAMPO-PACK             EQ    MASK ('            'N','NN)  OR=   MASK ('           'NN','NN)  OR=   MASK ('          'NNN','NN)  OR=   MASK ('         'NNNN','NN)  OR=   MASK ('        'NNNNN','NN)  OR=   MASK ('       'NNNNNN','NN)  OR=   MASK ('      'NNNNNNN','NN)  OR=   MASK ('     'NNNNNNNN','NN)  OR=   MASK ('    'NNNNNNNNN','NN)  OR=   MASK ('   'NNNNNNNNNN','NN)  OR=   MASK ('  'NNNNNNNNNNN','NN)  OR=   MASK (' 'NNNNNNNNNNNN','NN)  OR=   MASK (NNNNNNNNNNNNN','NN)
       EXAMINE FULL #CAMPO-PACK FOR ' ' REPLACE '0'
    ELSE
@@ -242,7 +242,7 @@ lda = {"F255":{
       REINPUT 'HORA INVALIDA'      MARK *#CAPO-HORA-TELA
    END-IF
    FOR #IND1        1              TO  5
-    MOVE RIGHT #CAMPO-MULTIPLO(#IND1) TO  #CAMPO-MULTIPLO(#IND1)
+lda['#TELA']['#CAMPO-MULTIPLO'][#IND1] = #CAMPO-MULTIPLO(#IND1)
     IF #CAMPO-MULTIPLO(#IND1)      EQ  MASK ('  'N)  OR= MASK (' 'NN)  OR= MASK (NNN)
        IGNORE
     ELSE
@@ -255,7 +255,7 @@ lda = {"F255":{
    END-FOR
    EXAMINE FULL #CAMPO-MULTIPLO(*) FOR ' ' REPLACE '0'
    FOR #IND1        1              TO  5
-    MOVE RIGHT #CAMPO-PE-NUM(#IND1) TO  #CAMPO-PE-NUM(#IND1)
+lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM'][#IND1] = #CAMPO-PE-NUM(#IND1)
     IF #CAMPO-PE-NUM(#IND1)        EQ  MASK ('    'N)  OR= MASK ('   'NN)  OR= MASK ('  'NNN)  OR= MASK (' 'NNNN)  OR= MASK (NNNNN)
        IGNORE
     ELSE
@@ -269,7 +269,7 @@ lda = {"F255":{
    EXAMINE FULL #CAMPO-PE-NUM(*) FOR ' ' REPLACE '0'
    FOR #IND1        1              TO  5
     FOR #IND2        1             TO  5
-     MOVE RIGHT #CAMPO-PE2-MULTIPLO (#IND1,#IND2)  TO  #CAMPO-PE2-MULTIPLO(#IND1,#IND2)
+lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][#IND1,#IND2] = lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO']
      IF #CAMPO-PE2-MULTIPLO(#IND1,#IND2)      EQ  MASK ('  'N)  OR= MASK (' 'NN)  OR= MASK (NNN)
          IGNORE
      ELSE
@@ -283,7 +283,7 @@ lda = {"F255":{
    END-FOR
    EXAMINE FULL #CAMPO-PE2-MULTIPLO(*,*) FOR ' ' REPLACE '0'
    FOR #IND1        1              TO  5
-    MOVE RIGHT #CAMPO-PE2-NUM(#IND1) TO  #CAMPO-PE2-NUM(#IND1)
+lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM'][#IND1] = #CAMPO-PE2-NUM(#IND1)
     IF #CAMPO-PE2-NUM(#IND1)       EQ  MASK ('    'N)  OR= MASK ('   'NN)  OR= MASK ('  'NNN)  OR= MASK (' 'NNNN)  OR= MASK (NNNNN)
        IGNORE
     ELSE
@@ -299,27 +299,28 @@ lda = {"F255":{
       ESCAPE TOP
    END-IF
  END-SUBROUTINE
- DEFINE SUBROUTINE  ALTERAR-REGISTRO  GET F255 #TL-REGISTRO
+ DEFINE SUBROUTINE  ALTERAR-REGISTRO
+  GET F255 #TL-REGISTRO
  EXAMINE FULL #CAMPO-NUM FOR ',' DELETE
- MOVE RIGHT  #CAMPO-NUM  TO   #CAMPO-NUM
+
  EXAMINE FULL #CAMPO-NUM FOR ' ' REPLACE '0'
  EXAMINE FULL #CAMPO-PACK FOR ',' DELETE
- MOVE RIGHT #CAMPO-PACK TO #CAMPO-PACK
+
  EXAMINE FULL #CAMPO-PACK FOR ' ' REPLACE '0'
-  MOVE  #CAMPO-ALFA                TO   CAMPO-ALFA
-  MOVE  #CAMPO-R-NU-DEC            TO   CAMPO-NUMERICO
-  MOVE  #CAMPO-R-PACK-DEC          TO   CAMPO-PACK
-  MOVE  #CAMPO-BIN-N               TO   CAMPO-BINARIO
-  MOVE  #CAMPO-DATA-TELA-N         TO   CAMPO-NUMERICO-DATA
-  MOVE EDITED #CAMPO-DATA-TELA  TO   CAMPO-DATE-DATA(EM=YYYYMMDD)
-  MOVE  #COMPO-HORA-HO-N           TO   CAMPO-NUMERICO-HORA
-  MOVE  EDITED  #CAPO-HORA-TELA  TO   CAMPO-TIME-HORA(EM=HHIISS)
-  MOVE #CAMPO-MULTIPLO-R(*)        TO   CAMPO-MULTIPLO(*)
-  MOVE #CAMPO-PE-ALFA(*)           TO   CAMPO-PE-ALFA(*)
-  MOVE #CAMPO-PE-NUM-R(*)          TO   CAMPO-PE-NUM(*)
-  MOVE #CAMPO-PE2-MULTIPLO-R(*,*)  TO   CAMPO-PE2-MULTIPLO(*,*)
-  MOVE #CAMPO-PE2-ALFA(*)          TO   CAMPO-PE2-ALFA(*)
-  MOVE #CAMPO-PE2-NUM-R(*)         TO   CAMPO-PE2-NUM(*)
+lda['F255']['CAMPO-ALFA'] = lda['#TELA']['#CAMPO-ALFA']
+lda['F255']['CAMPO-NUMERICO'] = lda['#TELA']['#CAMPO-NUM-R1']['#CAMPO-R-NU-TOT-R1']['#CAMPO-R-NU-DEC']
+lda['F255']['CAMPO-PACK'] = lda['#TELA']['#CAMPO-PACK-R1']['#CAMPO-R-PACK-TOT-R1']['#CAMPO-R-PACK-DEC']
+lda['F255']['CAMPO-BINARIO'] = lda['#TELA']['#CAMPO-BIN-R1']['#CAMPO-BIN-N']
+lda['F255']['CAMPO-NUMERICO-DATA'] = lda['#TELA']['#CAMPO-DATA-TELA-R2']['#CAMPO-DATA-TELA-N']
+lda['F255']['CAMPO-DATE-DATA'][EM=YYYYMMDD] = lda['#TELA']['#CAMPO-DATA-TELA']
+lda['F255']['CAMPO-NUMERICO-HORA'] = lda['#TELA']['#CAPO-HORA-TELA-R2']['#COMPO-HORA-HO-N']
+lda['F255']['CAMPO-TIME-HORA'][EM=HHIISS] = lda['#TELA']['#CAPO-HORA-TELA']
+lda['F255']['CAMPO-MULTIPLO'][*] = lda['#TELA']['#CAMPO-MULTIPLO-R1']['#CAMPO-MULTIPLO-R'][*]
+lda['F255']['GP-SEM-MULTIPLO']['CAMPO-PE-ALFA'][*] = lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-ALFA'][*]
+lda['F255']['GP-SEM-MULTIPLO']['CAMPO-PE-NUM'][*] = lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM-R1']['#CAMPO-PE-NUM-R'][*]
+lda['F255']['GP-COM-MULTIPLO']['CAMPO-PE2-MULTIPLO'][*,*] = lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO-R1']['#CAMPO-PE2-MULTIPLO-R'][*,*]
+lda['F255']['GP-COM-MULTIPLO']['CAMPO-PE2-ALFA'][*] = lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-ALFA'][*]
+lda['F255']['GP-COM-MULTIPLO']['CAMPO-PE2-NUM'][*] = lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM-R1']['#CAMPO-PE2-NUM-R'][*]
   UPDATE (3290)
   END TRANSACTION
  END-SUBROUTINE

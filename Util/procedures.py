@@ -25,13 +25,15 @@ def procMOVE(line, references):
         if trgt.find('(') != -1:
             trg, idx = trgt.split('(')[:]
             idx = '[{}]'.format(idx[:-1])
-        target += '{}{} = '.format(references['"{}"'.format(trg)]['def'], idx)
+        target += '{}{} = '.format(references.get(u'{}'.format(trg),
+                                   references.get('"{}"'.format(trg),
+                                   {})).get('def', trg), idx)
 
     src = source
     idx = ''
     if src.startswith('(AD='):
         source = AD[''.join(src.split('=')[1])[:-1]]
-    elif src.startswith('LEFT'):
+    elif src.startswith('LEFT') or src.startswith('RIGHT'):
         source = src.split()[1]
     elif src.startswith('EDITED'):
         source = ''.join(src.split('(EM=')[0]).split()[1]
