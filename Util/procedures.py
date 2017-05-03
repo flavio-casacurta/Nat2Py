@@ -11,9 +11,12 @@ def procCmd(line, references):
     else:
         return line
 
+
 def procMOVE(line, references):
-    sources, targets = ' '.join(words(line)[1][1:]).split('TO')[:]
-    sources = sources.split()
+
+    source, targets = ' '.join(words(line)[1][1:]).split('TO')[:]
+    targets = targets.strip().upper()
+    source = source.strip().upper()
     targets = targets.split()
     target = ''
     for trgt in targets:
@@ -24,19 +27,20 @@ def procMOVE(line, references):
             idx = '[{}]'.format(idx[:-1])
         target += '{}{} = '.format(references['"{}"'.format(trg)]['def'], idx)
 
-    for srcs in sources:
-        src = srcs
-        idx = ''
-        if srcs.startswith('(AD='):
-            source = AD[''.join(srcs.split('=')[1])[:-1]]
-            break
-        elif srcs.find('(') != -1:
-            src, idx = trgt.split('(')[:]
-            idx = '[{}]'.format(idx[:-1])
-        try:
-            source = '{}{} = '.format(references['"{}"'.format(src)]['def'], idx)
-        except:
-            source = src
-
-    return '{}{}'.format(target, source)
+    src = source
+    idx = ''
+    if src.startswith('(AD='):
+        source = AD[''.join(src.split('=')[1])[:-1]]
+    elif src.startswith('LEFT'):
+        source = src.split()[1]
+    elif src.startswith('EDITED'):
+        source = ''.join(src.split('(EM=')[0]).split()[1]
+    elif src.find('(') != -1:
+        source, idx = src.split('(')[:]
+        idx = '[{}]'.format(idx[:-1])
+    source = '{}{}'.format(references.get(u'{}'.format(source),
+                           references.get('"{}"'.format(source),
+                           {})).get('def', source), idx)
+    ret = '' if target.replace('=','').strip() == source else '{}{}'.format(target, source)
+    return ret
 
