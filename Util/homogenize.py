@@ -95,4 +95,28 @@ def homogenize_proc(lines):
             holder = []
             holder.append(line)
 
+    return orEq(joinLines)
+
+
+def orEq(lines):
+    joinLines = []
+    ilines = iter(lines)
+    stop = False
+    if_old = ""
+
+    while True:
+        if stop:
+            break
+        try:
+            line = ilines.next()
+        except StopIteration:
+            stop = True
+            continue
+        if line.strip().startswith('IF'):
+            line = line.replace("=", "EQ")
+            if_old = "".join("".join(line.split("EQ")[0]).strip().split()[1:])
+        if line.strip().startswith("OR="):
+            line = line.replace("OR=", "OR {} EQ".format(if_old)).strip()
+        joinLines.append(line)
+
     return joinLines

@@ -35,11 +35,36 @@ DATATYPES_NATURAL = {'A': {'type': 'str', 'init': "''", 'import': ''},
 LINEFEED = ('ADD', 'AND', 'CALL', 'CALLNAT', 'COMPRESS', 'COMPUTE', 'DECIDE', 'DEFINE',
             'DELETE', 'DIVIDE', 'ELSE', 'END', 'END-DECIDE', 'END-FIND', 'END-FOR', 'END-IF',
             'END-NOREC', 'END-READ', 'END-REPEAT', 'END-SELECT', 'END-SUBROUTINE', 'ESCAPE',
-            'EXAMINE', 'FIND', 'FOR', 'GET', 'IF', 'IGNORE', 'INPUT', 'MOVE', 'OR', 'PERFORM', 'READ',
+            'EXAMINE', 'FIND', 'FOR', 'GET', 'IF', 'IGNORE', 'INPUT', 'MOVE', 'OR', 'OR=', 'PERFORM', 'READ',
             'REINPUT', 'REPEAT', 'RESET', 'SELECT', 'SET', 'STOP', 'STORE', 'SUBTRACT', 'UPDATE',
             'WHEN', 'WRITE')
 
-COMMANDS_NATURAL = ('ADD', 'AND', 'CALL', 'CALLNAT', 'COMPRESS', 'COMPUTE', 'DECIDE', 'DEFINE',
-                    'DELETE', 'DIVIDE', 'ELSE', 'ESCAPE', 'EXAMINE', 'FIND', 'FOR', 'GET', 'IF', 'IGNORE',
-                    'INPUT', 'MOVE', 'OR', 'PERFORM', 'READ', 'REINPUT', 'REPEAT', 'RESET', 'SELECT',
-                    'SET', 'STORE', 'SUBTRACT', 'UPDATE', 'WHEN', 'WRITE')
+#COMMANDS_NATURAL = ('ADD', 'AND', 'CALL', 'CALLNAT', 'COMPRESS', 'COMPUTE', 'DECIDE', 'DEFINE',
+#                    'DELETE', 'DIVIDE', 'ELSE', 'ESCAPE', 'EXAMINE', 'FIND', 'FOR', 'GET', 'IF', 'IGNORE',
+#                    'INPUT', 'MOVE', 'OR', 'PERFORM', 'READ', 'REINPUT', 'REPEAT', 'RESET', 'SELECT',
+#                    'SET', 'STORE', 'SUBTRACT', 'UPDATE', 'WHEN', 'WRITE')
+
+COMMANDS_NATURAL = ('AND', 'IF', 'MOVE', 'OR')
+
+OPERADORES_LOGICOS = {'EQ': '=='
+                     ,'=' : '=='
+                     ,'NE': '!='
+                     ,'GT': '>'
+                     ,'>' : '>'
+                     ,'>=': '>='
+                     ,'LT': '<'
+                     ,'<' : '<'
+                     ,'<=': '<='
+                     ,'NO': 'not'
+                     ,'NOT': 'not'}
+
+MASKS = {'(YYYYMMDD)': 'mask_yyyymmdd'
+        ,'(DDMMYYYY)': 'mask_ddmmyyyy'
+        ,'(DD.MM.YYYY)': 'mask_dddotmmdotyyyy'
+        ,'(DD/MM/YYYY)': 'mask_ddbmmbyyyy'
+        ,'(DD)': 'mask_dd'
+        ,'(MM)': 'mask_mm'
+        ,'(HHMMSS)': 'mask_hhmmss'
+        ,'(HH:MM:SS)': 'mask_hh2pmm2pss'}
+
+
