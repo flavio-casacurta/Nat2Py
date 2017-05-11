@@ -19,18 +19,17 @@ def procMOVE(line, references):
     targets = targets.split()
     target = ''
     for trgt in targets:
-        trg = trgt
         idx = ''
         if trgt.find('(') != -1:
-            trg, idx = trgt.split('(')[:]
+            trgt, idx = trgt.split('(')[:]
             idx = idx[:-1]
             idx = '{}'.format(references.get(u'{}'.format(idx),
                               references.get('"{}"'.format(idx),
                               {})).get('def', idx))
             idx = '[{}]'.format(idx)
-        target += '{}{} = '.format(references.get(u'{}'.format(trg),
-                                   references.get('"{}"'.format(trg),
-                                   {})).get('def', trg), idx)
+        target += '{}{} = '.format(references.get(u'{}'.format(trgt),
+                                   references.get('"{}"'.format(trgt),
+                                   {})).get('def', trgt), idx)
 
     if source.startswith('LEFT') or source.startswith('RIGHT'):
         source = source.split()[1]
@@ -91,7 +90,7 @@ def reMask(line, references):
         newMask = "mask_full_num"
         ret = """{} {} {}({},{}):""".format(cmd, oper, newMask, fld, len(mask)-2)
     else:
-        newMask = mask.replace("N","[0-9]").replace("'","")
+        newMask = mask.replace("N","\d").replace("'","")
         ret = """{} {} re.match({},{}):""".format(cmd, oper, newMask, fld)
 
     return ret

@@ -39,6 +39,13 @@ LINEFEED = ('ADD', 'AND', 'CALL', 'CALLNAT', 'COMPRESS', 'COMPUTE', 'DECIDE', 'D
             'REINPUT', 'REPEAT', 'RESET', 'SELECT', 'SET', 'STOP', 'STORE', 'SUBTRACT', 'UPDATE',
             'WHEN', 'WRITE')
 
+CMDSPLIT = ('ADD', 'AND', 'CALL', 'CALLNAT', 'COMPRESS', 'COMPUTE', 'DECIDE', 'DEFINE',
+            'DELETE', 'DIVIDE', 'ELSE', 'END', 'END-DECIDE', 'END-FIND', 'END-FOR', 'END-IF',
+            'END-NOREC', 'END-READ', 'END-REPEAT', 'END-SELECT', 'END-SUBROUTINE', 'ESCAPE',
+            'EXAMINE', 'FIND', 'GET', 'IF', 'IGNORE', 'INPUT', 'MOVE', 'OR', 'OR=', 'PERFORM', 'READ',
+            'REINPUT', 'REPEAT', 'RESET', 'SELECT', 'SET', 'STOP', 'STORE', 'SUBTRACT', 'UPDATE',
+            'WHEN', 'WRITE')
+
 #COMMANDS_NATURAL = ('ADD', 'AND', 'CALL', 'CALLNAT', 'COMPRESS', 'COMPUTE', 'DECIDE', 'DEFINE',
 #                    'DELETE', 'DIVIDE', 'ELSE', 'ESCAPE', 'EXAMINE', 'FIND', 'FOR', 'GET', 'IF', 'IGNORE',
 #                    'INPUT', 'MOVE', 'OR', 'PERFORM', 'READ', 'REINPUT', 'REPEAT', 'RESET', 'SELECT',

@@ -8,7 +8,7 @@ import re
 from change import change
 from warehouse import DDA
 from warehouse import LINEFEED
-
+from warehouse import CMDSPLIT
 from HOFs import *
 
 def homogenize(dda):
@@ -95,7 +95,32 @@ def homogenize_proc(lines):
             holder = []
             holder.append(line)
 
-    return orEq(joinLines)
+    joinLines = splitCmd(joinLines)
+    joinLines = orEq(joinLines)
+
+    return joinLines
+
+
+def splitCmd(lines):
+    joinLines = []
+
+    for line in lines:
+        wrd = words(line)
+        for w in xrange(1, wrd[0]):
+            if wrd[1][w] in CMDSPLIT:
+                wrd1 = word(line, 1)
+                if wrd[1][w] == wrd1:
+                    lw = len(wrd1)
+                    idx = line[lw:].index(wrd1) + 2
+                    ll = len(wrd1 + ' ' + line[lw:idx])
+                    joinLines.append(wrd1 + ' ' + line[lw:idx])
+                    line = line[ll:]
+                else:
+                    joinLines.append(line[:line.index(wrd[1][w])].strip())
+                    line = line[line.index(wrd[1][w]):]
+        joinLines.append(line)
+
+    return joinLines
 
 
 def orEq(lines):

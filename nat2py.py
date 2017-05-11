@@ -5,7 +5,7 @@ from Util.change import change
 from Util.HOFs import *
 
 
-lines = file(r'C:\Natural\POC_SERPRO\Originais\POC.XXX.ALTERACAO.TXT').readlines()
+lines = file(r'C:\Python\MyTools\Nat2PyBath\Work\POC.XXX.ALTERACAO.TXT').readlines()
 lines = filter(isNotBlank, map(l480, filter(isNotRem, lines)))
 
 ret, references, def_gda, def_pda, def_lda, imports = proc_DEFINE_DATA.proc_DEFINE_DATA(lines)

@@ -1,0 +1,357 @@
+0010 DEFINE DATA
+0020 GLOBAL USING G11111AA
+0030 LOCAL USING L11111AA
+0040 LOCAL
+0050 1 #ATR                           (C)
+0060 1 #ATR1                          (C/1:5)
+0070 1 #ATR2                          (C/1:5,1:5)
+0080 1 #ATR3                          (C)
+0090 1 #ATR4                          (C)
+0100 1 #ATR5                          (C)
+0110 1 #ATR6                          (C)
+0120 1 #TELA
+0130  2 #CAMPO-ALFA                    (A78)
+0140  2 #CAMPO-NUM                     (A20)
+0150  2 REDEFINE                       #CAMPO-NUM
+0160    3 FILLER                       1X
+0170    3 #CAMPO-R-NU-TOT              (N19)
+0180    3 REDEFINE                     #CAMPO-R-NU-TOT
+0190      4 #CAMPO-R-NU-DEC            (N17,2)
+0200  2 #CAMPO-PACK                    (A16)
+0210  2 REDEFINE                       #CAMPO-PACK
+0220    3 FILLER                       1X
+0230    3 #CAMPO-R-PACK-TOT            (N15)
+0240    3 REDEFINE                     #CAMPO-R-PACK-TOT
+0250      4 #CAMPO-R-PACK-DEC          (N13,2)
+0260  2 #CAMPO-BIN                     (A09)
+0270  2 REDEFINE                       #CAMPO-BIN
+0280    3 #CAMPO-BIN-N                 (N09)
+0290  2 #CAMPO-DATA-TELA               (A08)
+0300  2 REDEFINE                       #CAMPO-DATA-TELA
+0310    3 #CAMPO-DT-NUM-ANO            (A04)
+0320    3 #CAMPO-DT-NUM-MES            (A02)
+0330    3 #CAMPO-DT-NUM-DIA            (A02)
+0340  2 REDEFINE                       #CAMPO-DATA-TELA
+0350    3 #CAMPO-DATA-TELA-N           (N08)
+0360  2 #CAPO-HORA-TELA                (A06)
+0370  2 REDEFINE                       #CAPO-HORA-TELA
+0380    3 #COMPO-HORA-HO               (A02)
+0390    3 #COMPO-HORA-MM               (A02)
+0400    3 #COMPO-HORA-SS               (A02)
+0410  2 REDEFINE                       #CAPO-HORA-TELA
+0420    3 #COMPO-HORA-HO-N             (N06)
+0430  2 #CAMPO-MULTIPLO                (A03/1:5)
+0440  2 REDEFINE                     #CAMPO-MULTIPLO
+0450    3 #CAMPO-MULTIPLO-R            (N03/1:5)
+0460  2 #CAMPO-PE-1                    (1:5)
+0470    3 #CAMPO-PE-ALFA               (A10)
+0480    3 #CAMPO-PE-NUM                (A05)
+0490    3 REDEFINE                     #CAMPO-PE-NUM
+0500      4 #CAMPO-PE-NUM-R            (N05)
+0510 **
+0520  2 #CAMPO-PE-2                    (1:5)
+0530    3 #CAMPO-PE2-MULTIPLO          (A03/1:5)
+0540    3 REDEFINE                    #CAMPO-PE2-MULTIPLO
+0550      4 #CAMPO-PE2-MULTIPLO-R      (N03/1:5)
+0560    3 #CAMPO-PE2-ALFA              (A10)
+0570    3 #CAMPO-PE2-NUM               (A05)
+0580    3 REDEFINE                     #CAMPO-PE2-NUM
+0590      4 #CAMPO-PE2-NUM-R           (N05)
+0600 **
+0610  2 #TL-CONFIRMA                   (A01)
+0620 1 #IND1                          (N05)
+0630 1 #IND2                          (N05)
+0640 1 #IND-TL                        (N07)
+0650 1 #TL-TX-CONF                    (A13) INIT<'CONFIRMA S/N:'>
+0660 1 #TL-TX-REGISTRO                (A16) INIT<'REGISTRO ISN   :'>
+0670 1 #TL-REGISTRO                   (N08)
+0680 1 #TL-TX-DATE                    (A10) INIT<'DATA DATE:'>
+0690 1 #TL-DT-DATE                    (A10)
+0700 1 #TL-TX-TIME                    (A10) INIT<'HORA TIME:'>
+0710 1 #TL-HO-TIME                    (A08)
+0720 1 #TX-PFS                        (A48)
+0730   INIT <'PF8 - AVANCA'>
+0740 1 #CAMPO-RETORNA                 (A78)
+0750 1 #TB-RETORNA                    (A78/1:10000)
+0760 1 #IND-TB                        (N01)
+0770 END-DEFINE
+0780 SET KEY ALL
+0790 MOVE (AD=PI)                     TO   #ATR
+0800                                       #ATR1(*)
+0810                                       #ATR2(*,*)
+0820                                       #ATR6
+0830 MOVE (AD=PN)                     TO   #ATR4
+0840 MOVE (AD=PN)                     TO   #ATR3
+0850 MOVE (AD=P)                      TO   #ATR5
+0860 MOVE 3                           TO   #IND-TL
+0870 READ (3) F255
+0880 END-READ
+0890 IF *COUNTER(0870)                EQ   0
+0900   INPUT WITH TEXT 'NAO EXISTE REGISTROS A SEREM ALTERADOS'
+0910                                    USING MAP 'T11111IN'
+0920   IF *PF-KEY                       EQ   'PF3' OR= 'PF15'
+0930      STOP
+0940   ELSE
+0950    IF *PF-KEY                     NE   'ENTR'
+0960       REINPUT  'TECLA INVALIDA'
+0970    END-IF
+0980   END-IF
+0990 END-IF
+1000 READ F255 BY ISN
+1010   RESET #TELA
+1020   PERFORM FORMATAR-TELA
+1030   MOVE *ISN                         TO  #TL-REGISTRO
+1040   MOVE (AD=I)                      TO   #ATR
+1050                                         #ATR1(*)
+1060                                         #ATR2(*,*)
+1070                                         #ATR4
+1080   MOVE (AD=P)                      TO   #ATR6
+1090   MOVE (AD=P)                      TO   #ATR3
+1100   MOVE (AD=P)                      TO   #ATR5
+1110 **
+1120   INPUT USING MAP 'T11111IN'
+1130   IF *PF-KEY                       EQ   'PF3' OR= 'PF15'
+1140      STOP
+1150   ELSE
+1160     IF *PF-KEY                     EQ   'ENTR' OR= 'PF8'
+1170        IGNORE
+1180     ELSE
+1190         REINPUT 'TECLA INVALIDA'
+1200     END-IF
+1210   END-IF
+1220   IF #TL-CONFIRMA                  NE   'S'
+1230       ESCAPE TOP
+1240   END-IF
+1250   PERFORM CRITICA-CAMPOS
+1260   PERFORM ALTERAR-REGISTRO
+1270   MOVE (AD=P)                      TO   #ATR
+1280                                         #ATR1(*)
+1290                                         #ATR2(*,*)
+1300                                         #ATR4
+1310   INPUT WITH TEXT 'ALTERACAO EFETUADA' USING MAP 'T11111IN'
+1320   IF *PF-KEY                       EQ   'PF3' OR= 'PF15'
+1330      STOP
+1340   ELSE
+1350     IF *PF-KEY                     NE   'ENTR'
+1360        REINPUT  'TECLA INVALIDA'
+1370     END-IF
+1380   END-IF
+1390 **
+1400 END-READ
+1410 ***********************************************************************
+1420 DEFINE SUBROUTINE FORMATAR-TELA
+1430 ***********************************************************************
+1440  MOVE  CAMPO-ALFA                 TO   #CAMPO-ALFA
+1450  MOVE  EDITED CAMPO-NUMERICO(EM=ZZZZZZZZZZZZZZZZ9,99)
+1460                                   TO   #CAMPO-NUM
+1470  MOVE LEFT #CAMPO-NUM             TO   #CAMPO-NUM
+1480  MOVE  EDITED CAMPO-PACK(EM=ZZZZZZZZZZZZ9,99)
+1490                                   TO   #CAMPO-PACK
+1500  MOVE LEFT #CAMPO-PACK            TO   #CAMPO-PACK
+1510  MOVE  CAMPO-BINARIO              TO   #CAMPO-BIN-N
+1520  MOVE  CAMPO-NUMERICO-DATA        TO   #CAMPO-DATA-TELA-N
+1530  MOVE EDITED  CAMPO-DATE-DATA(EM=DD/MM/YYYY)
+1540                                   TO   #TL-DT-DATE
+1550  MOVE  CAMPO-NUMERICO-HORA        TO   #COMPO-HORA-HO-N
+1560  MOVE  EDITED  CAMPO-TIME-HORA(EM=HH:II:SS)
+1570                                   TO   #TL-HO-TIME
+1580  MOVE CAMPO-MULTIPLO(*)           TO   #CAMPO-MULTIPLO-R(*)
+1590  MOVE CAMPO-PE-ALFA(*)            TO   #CAMPO-PE-ALFA(*)
+1600  MOVE CAMPO-PE-NUM(*)             TO   #CAMPO-PE-NUM-R(*)
+1610 **
+1620  MOVE CAMPO-PE2-MULTIPLO(*,*) TO #CAMPO-PE2-MULTIPLO-R(*,*)
+1630  MOVE CAMPO-PE2-ALFA(*)           TO   #CAMPO-PE2-ALFA(*)
+1640  MOVE CAMPO-PE2-NUM(*)            TO   #CAMPO-PE2-NUM-R(*)
+1650 END-SUBROUTINE
+1660 ***********************************************************************
+1670 DEFINE SUBROUTINE CRITICA-CAMPOS
+1680 ************************************************************************
+1690   MOVE LEFT #CAMPO-ALFA            TO   #CAMPO-ALFA
+1700   IF #CAMPO-ALFA                   EQ   '                          '
+1710      REINPUT 'PREENCHIMENTO OBRIGATORIO' MARK *#CAMPO-ALFA
+1720   END-IF
+1730   MOVE LEFT #CAMPO-NUM             TO   #CAMPO-NUM
+1740   IF #CAMPO-NUM                    EQ   '            '
+1750      REINPUT 'PREENCHIMENTO OBRIGATORIO' MARK *#CAMPO-NUM
+1760   END-IF
+1770   MOVE RIGHT #CAMPO-NUM            TO   #CAMPO-NUM
+1780   IF #CAMPO-NUM              EQ    MASK ('                'N','NN)
+1790                              OR=   MASK ('               'NN','NN)
+1800                              OR=   MASK ('              'NNN','NN)
+1810                              OR=   MASK ('             'NNNN','NN)
+1820                              OR=   MASK ('            'NNNNN','NN)
+1830                              OR=   MASK ('           'NNNNNN','NN)
+1840                              OR=   MASK ('          'NNNNNNN','NN)
+1850                              OR=   MASK ('         'NNNNNNNN','NN)
+1860                              OR=   MASK ('        'NNNNNNNNN','NN)
+1870                              OR=   MASK ('       'NNNNNNNNNN','NN)
+1880                              OR=   MASK ('      'NNNNNNNNNNN','NN)
+1890                              OR=   MASK ('     'NNNNNNNNNNNN','NN)
+1900                              OR=   MASK ('    'NNNNNNNNNNNNN','NN)
+1910                              OR=   MASK ('   'NNNNNNNNNNNNNN','NN)
+1920                              OR=   MASK ('  'NNNNNNNNNNNNNNN','NN)
+1930                              OR=   MASK (' 'NNNNNNNNNNNNNNNN','NN)
+1940                              OR=   MASK (NNNNNNNNNNNNNNNNN','NN)
+1950      EXAMINE FULL #CAMPO-NUM FOR ' ' REPLACE '0'
+1960   ELSE
+1970       REINPUT
+1980        'PREENCHER CAMPO COM NUMEROS E NO MINIMO DUAS CASAS DECIMAIS.'
+1990        MARK *#CAMPO-NUM
+2000   END-IF
+2010   MOVE LEFT #CAMPO-PACK            TO   #CAMPO-PACK
+2020   IF #CAMPO-PACK                   EQ   '            '
+2030      REINPUT 'PREENCHIMENTO OBRIGATORIO' MARK *#CAMPO-PACK
+2040   END-IF
+2050   MOVE RIGHT #CAMPO-PACK           TO   #CAMPO-PACK
+2060   IF #CAMPO-PACK             EQ    MASK ('            'N','NN)
+2070                              OR=   MASK ('           'NN','NN)
+2080                              OR=   MASK ('          'NNN','NN)
+2090                              OR=   MASK ('         'NNNN','NN)
+2100                              OR=   MASK ('        'NNNNN','NN)
+2110                              OR=   MASK ('       'NNNNNN','NN)
+2120                              OR=   MASK ('      'NNNNNNN','NN)
+2130                              OR=   MASK ('     'NNNNNNNN','NN)
+2140                              OR=   MASK ('    'NNNNNNNNN','NN)
+2150                              OR=   MASK ('   'NNNNNNNNNN','NN)
+2160                              OR=   MASK ('  'NNNNNNNNNNN','NN)
+2170                              OR=   MASK (' 'NNNNNNNNNNNN','NN)
+2180                              OR=   MASK (NNNNNNNNNNNNN','NN)
+2190      EXAMINE FULL #CAMPO-PACK FOR ' ' REPLACE '0'
+2200   ELSE
+2210       REINPUT
+2220        'PREENCHER CAMPO COM NUMEROS E NO MINIMO DUAS CASAS DECIMAIS.'
+2230        MARK *#CAMPO-PACK
+2240   END-IF
+2250   IF #CAMPO-BIN                   EQ   '         '
+2260      REINPUT 'PREENCHIMENTO OBRIGATORIO' MARK *#CAMPO-BIN
+2270   END-IF
+2280   IF #CAMPO-BIN                   NE   MASK (NNNNNNNNN)
+2290      REINPUT 'PREENCHER TOTALMENTE O CAMPO COM NUMEROS' MARK *#CAMPO-BIN
+2300   END-IF
+2310   IF #CAMPO-DATA-TELA             EQ  '        '
+2320      REINPUT 'PREENCHIMENTO OBRIGATORIO' MARK *#CAMPO-DATA-TELA
+2330   END-IF
+2340   IF #CAMPO-DATA-TELA             NE  MASK (YYYYMMDD)
+2350      REINPUT 'DATA INVALIDA'      MARK *#CAMPO-DATA-TELA
+2360   END-IF
+2370   IF #CAPO-HORA-TELA              EQ  '        '
+2380      REINPUT 'PREENCHIMENTO OBRIGATORIO' MARK *#CAPO-HORA-TELA
+2390   END-IF
+2400   IF #COMPO-HORA-HO               EQ '00'  THRU '23' AND
+2410      #COMPO-HORA-MM               EQ '00'  THRU '59' AND
+2420      #COMPO-HORA-SS               EQ '00'  THRU '59'
+2430      IGNORE
+2440   ELSE
+2450      REINPUT 'HORA INVALIDA'      MARK *#CAPO-HORA-TELA
+2460   END-IF
+2470   FOR #IND1        1              TO  5
+2480    MOVE RIGHT #CAMPO-MULTIPLO(#IND1) TO  #CAMPO-MULTIPLO(#IND1)
+2490    IF #CAMPO-MULTIPLO(#IND1)      EQ  MASK ('  'N)
+2500                                   OR= MASK (' 'NN)
+2510                                   OR= MASK (NNN)
+2520       IGNORE
+2530    ELSE
+2540     IF #CAMPO-MULTIPLO(#IND1)     EQ  '   '
+2550        IGNORE
+2560     ELSE
+2570       REINPUT
+2580        'PREENCHIMENTO INVALIDO - DIGITAR SOMENTE NUMEROS OU EM BRANCO'
+2590        MARK *#CAMPO-MULTIPLO(1)
+2600     END-IF
+2610    END-IF
+2620   END-FOR
+2630   EXAMINE FULL #CAMPO-MULTIPLO(*) FOR ' ' REPLACE '0'
+2640   FOR #IND1        1              TO  5
+2650    MOVE RIGHT #CAMPO-PE-NUM(#IND1) TO  #CAMPO-PE-NUM(#IND1)
+2660    IF #CAMPO-PE-NUM(#IND1)        EQ  MASK ('    'N)
+2670                                   OR= MASK ('   'NN)
+2680                                   OR= MASK ('  'NNN)
+2690                                   OR= MASK (' 'NNNN)
+2700                                   OR= MASK (NNNNN)
+2710       IGNORE
+2720    ELSE
+2730     IF #CAMPO-PE-NUM(#IND1)     EQ  '     '
+2740        IGNORE
+2750     ELSE
+2760       REINPUT
+2770        'PREENCHIMENTO INVALIDO - DIGITAR SOMENTE NUMEROS OU EM BRANCO'
+2780        MARK *#CAMPO-PE-NUM(1)
+2790     END-IF
+2800    END-IF
+2810   END-FOR
+2820   EXAMINE FULL #CAMPO-PE-NUM(*) FOR ' ' REPLACE '0'
+2830   FOR #IND1        1              TO  5
+2840    FOR #IND2        1             TO  5
+2850     MOVE RIGHT #CAMPO-PE2-MULTIPLO (#IND1,#IND2)
+2860                                   TO  #CAMPO-PE2-MULTIPLO(#IND1,#IND2)
+2870     IF #CAMPO-PE2-MULTIPLO(#IND1,#IND2)      EQ  MASK ('  'N)
+2880                                    OR= MASK (' 'NN)
+2890                                    OR= MASK (NNN)
+2900         IGNORE
+2910     ELSE
+2920      IF #CAMPO-PE2-MULTIPLO(#IND1,#IND2)     EQ  '   '
+2930         IGNORE
+2940      ELSE
+2950        REINPUT
+2960         'PREENCHIMENTO INVALIDO - DIGITAR SOMENTE NUMEROS OU EM BRANCO'
+2970         MARK *#CAMPO-PE2-MULTIPLO(1,1)
+2980      END-IF
+2990     END-IF
+3000    END-FOR
+3010   END-FOR
+3020   EXAMINE FULL #CAMPO-PE2-MULTIPLO(*,*) FOR ' ' REPLACE '0'
+3030   FOR #IND1        1              TO  5
+3040    MOVE RIGHT #CAMPO-PE2-NUM(#IND1) TO  #CAMPO-PE2-NUM(#IND1)
+3050    IF #CAMPO-PE2-NUM(#IND1)       EQ  MASK ('    'N)
+3060                                   OR= MASK ('   'NN)
+3070                                   OR= MASK ('  'NNN)
+3080                                   OR= MASK (' 'NNNN)
+3090                                   OR= MASK (NNNNN)
+3100       IGNORE
+3110    ELSE
+3120     IF #CAMPO-PE2-NUM(#IND1)    EQ  '     '
+3130        IGNORE
+3140     ELSE
+3150       REINPUT
+3160        'PREENCHIMENTO INVALIDO - DIGITAR SOMENTE NUMEROS OU EM BRANCO'
+3170        MARK *#CAMPO-PE2-NUM(1)
+3180     END-IF
+3190    END-IF
+3200   END-FOR
+3210   EXAMINE FULL #CAMPO-PE2-NUM(*) FOR ' ' REPLACE '0'
+3220   IF #TL-CONFIRMA                 NE   'S'
+3230      ESCAPE TOP
+3240   END-IF
+3250 END-SUBROUTINE
+3260 ***********************************************************************
+3270 DEFINE SUBROUTINE  ALTERAR-REGISTRO
+3280 ************************************************************************
+3290  GET F255 #TL-REGISTRO
+3300 EXAMINE FULL #CAMPO-NUM FOR ',' DELETE
+3310 MOVE RIGHT  #CAMPO-NUM  TO   #CAMPO-NUM
+3320 EXAMINE FULL #CAMPO-NUM FOR ' ' REPLACE '0'
+3330 EXAMINE FULL #CAMPO-PACK FOR ',' DELETE
+3340 MOVE RIGHT #CAMPO-PACK TO #CAMPO-PACK
+3350 EXAMINE FULL #CAMPO-PACK FOR ' ' REPLACE '0'
+3360  MOVE  #CAMPO-ALFA                TO   CAMPO-ALFA
+3370  MOVE  #CAMPO-R-NU-DEC            TO   CAMPO-NUMERICO
+3380  MOVE  #CAMPO-R-PACK-DEC          TO   CAMPO-PACK
+3390  MOVE  #CAMPO-BIN-N               TO   CAMPO-BINARIO
+3400  MOVE  #CAMPO-DATA-TELA-N         TO   CAMPO-NUMERICO-DATA
+3410  MOVE EDITED #CAMPO-DATA-TELA
+3420                                   TO   CAMPO-DATE-DATA(EM=YYYYMMDD)
+3430  MOVE  #COMPO-HORA-HO-N           TO   CAMPO-NUMERICO-HORA
+3440  MOVE  EDITED  #CAPO-HORA-TELA
+3450                                   TO   CAMPO-TIME-HORA(EM=HHIISS)
+3460  MOVE #CAMPO-MULTIPLO-R(*)        TO   CAMPO-MULTIPLO(*)
+3470  MOVE #CAMPO-PE-ALFA(*)           TO   CAMPO-PE-ALFA(*)
+3480  MOVE #CAMPO-PE-NUM-R(*)          TO   CAMPO-PE-NUM(*)
+3490 **
+3500  MOVE #CAMPO-PE2-MULTIPLO-R(*,*)  TO   CAMPO-PE2-MULTIPLO(*,*)
+3510  MOVE #CAMPO-PE2-ALFA(*)          TO   CAMPO-PE2-ALFA(*)
+3520  MOVE #CAMPO-PE2-NUM-R(*)         TO   CAMPO-PE2-NUM(*)
+3530  UPDATE (3290)
+3540  END TRANSACTION
+3550 END-SUBROUTINE
+3560 END
+
