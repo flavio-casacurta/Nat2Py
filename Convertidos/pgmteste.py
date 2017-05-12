@@ -140,9 +140,9 @@ lda['#IND-TL'] = 3
 IF *PF-KEY                       EQ   'PF3'
 OR *PF-KEY EQ 'PF15'
       STOP
-   ELSE
+else:
     IF *PF-KEY                     NE   'ENTR'
-       REINPUT  'TECLA INVALIDA'
+return False, 'TECLA INVALIDA'
     END-IF
    END-IF
  END-IF
@@ -158,12 +158,12 @@ lda['#ATR5'] = [('writable', False)]
 IF *PF-KEY                       EQ   'PF3'
 OR *PF-KEY EQ 'PF15'
       STOP
-   ELSE
+else:
 IF *PF-KEY                     EQ   'ENTR'
 OR *PF-KEY EQ 'PF8'
-        IGNORE
-     ELSE
-         REINPUT 'TECLA INVALIDA'
+continue
+else:
+return False, 'TECLA INVALIDA'
      END-IF
    END-IF
    IF #TL-CONFIRMA                  NE   'S'
@@ -176,9 +176,9 @@ lda['#ATR'] = lda['#ATR1'][*] = lda['#ATR2'][*,*] = lda['#ATR4'] = [('writable',
 IF *PF-KEY                       EQ   'PF3'
 OR *PF-KEY EQ 'PF15'
       STOP
-   ELSE
+else:
      IF *PF-KEY                     NE   'ENTR'
-        REINPUT  'TECLA INVALIDA'
+return False, 'TECLA INVALIDA'
      END-IF
    END-IF
  END-READ
@@ -203,106 +203,106 @@ lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM-R1']['#CAMPO-PE2-NUM-R'][*] = lda['F
  DEFINE SUBROUTINE CRITICA-CAMPOS
 
    IF #CAMPO-ALFA                   EQ   '                          '
-      REINPUT 'PREENCHIMENTO OBRIGATORIO' MARK *#CAMPO-ALFA
+return False, "lda['#TELA']['#CAMPO-ALFA']", 'PREENCHIMENTO OBRIGATORIO'
    END-IF
 
    IF #CAMPO-NUM                    EQ   '            '
-      REINPUT 'PREENCHIMENTO OBRIGATORIO' MARK *#CAMPO-NUM
+return False, "lda['#TELA']['#CAMPO-NUM']", 'PREENCHIMENTO OBRIGATORIO'
    END-IF
 
-if  re.match((                \d,\d\d),lda['#TELA']['#CAMPO-NUM']):
-or  re.match((               \d\d,\d\d),lda['#TELA']['#CAMPO-NUM']):
-or  re.match((              \d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM']):
-or  re.match((             \d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM']):
-or  re.match((            \d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM']):
-or  re.match((           \d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM']):
-or  re.match((          \d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM']):
-or  re.match((         \d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM']):
-or  re.match((        \d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM']):
-or  re.match((       \d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM']):
-or  re.match((      \d\d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM']):
-or  re.match((     \d\d\d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM']):
-or  re.match((    \d\d\d\d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM']):
-or  re.match((   \d\d\d\d\d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM']):
-or  re.match((  \d\d\d\d\d\d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM']):
-or  re.match(( \d\d\d\d\d\d\d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM']):
-or  re.match((\d\d\d\d\d\d\d\d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM']):
+if  re.match((                \d,\d\d),lda['#TELA']['#CAMPO-NUM'])
+or  re.match((               \d\d,\d\d),lda['#TELA']['#CAMPO-NUM'])
+or  re.match((              \d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM'])
+or  re.match((             \d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM'])
+or  re.match((            \d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM'])
+or  re.match((           \d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM'])
+or  re.match((          \d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM'])
+or  re.match((         \d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM'])
+or  re.match((        \d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM'])
+or  re.match((       \d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM'])
+or  re.match((      \d\d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM'])
+or  re.match((     \d\d\d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM'])
+or  re.match((    \d\d\d\d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM'])
+or  re.match((   \d\d\d\d\d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM'])
+or  re.match((  \d\d\d\d\d\d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM'])
+or  re.match(( \d\d\d\d\d\d\d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM'])
+or  re.match((\d\d\d\d\d\d\d\d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-NUM'])
       EXAMINE FULL #CAMPO-NUM FOR ' ' REPLACE '0'
-   ELSE
-       REINPUT  'PREENCHER CAMPO COM NUMEROS E NO MINIMO DUAS CASAS DECIMAIS.'  MARK *#CAMPO-NUM
+else:
+return False, "lda['#TELA']['#CAMPO-NUM']", 'PREENCHER CAMPO COM NUMEROS E NO MINIMO DUAS CASAS DECIMAIS.'
    END-IF
 
    IF #CAMPO-PACK                   EQ   '            '
-      REINPUT 'PREENCHIMENTO OBRIGATORIO' MARK *#CAMPO-PACK
+return False, "lda['#TELA']['#CAMPO-PACK']", 'PREENCHIMENTO OBRIGATORIO'
    END-IF
 
-if  re.match((            \d,\d\d),lda['#TELA']['#CAMPO-PACK']):
-or  re.match((           \d\d,\d\d),lda['#TELA']['#CAMPO-PACK']):
-or  re.match((          \d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK']):
-or  re.match((         \d\d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK']):
-or  re.match((        \d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK']):
-or  re.match((       \d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK']):
-or  re.match((      \d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK']):
-or  re.match((     \d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK']):
-or  re.match((    \d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK']):
-or  re.match((   \d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK']):
-or  re.match((  \d\d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK']):
-or  re.match(( \d\d\d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK']):
-or  re.match((\d\d\d\d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK']):
+if  re.match((            \d,\d\d),lda['#TELA']['#CAMPO-PACK'])
+or  re.match((           \d\d,\d\d),lda['#TELA']['#CAMPO-PACK'])
+or  re.match((          \d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK'])
+or  re.match((         \d\d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK'])
+or  re.match((        \d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK'])
+or  re.match((       \d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK'])
+or  re.match((      \d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK'])
+or  re.match((     \d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK'])
+or  re.match((    \d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK'])
+or  re.match((   \d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK'])
+or  re.match((  \d\d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK'])
+or  re.match(( \d\d\d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK'])
+or  re.match((\d\d\d\d\d\d\d\d\d\d\d\d\d,\d\d),lda['#TELA']['#CAMPO-PACK'])
       EXAMINE FULL #CAMPO-PACK FOR ' ' REPLACE '0'
-   ELSE
-       REINPUT  'PREENCHER CAMPO COM NUMEROS E NO MINIMO DUAS CASAS DECIMAIS.'  MARK *#CAMPO-PACK
+else:
+return False, "lda['#TELA']['#CAMPO-PACK']", 'PREENCHER CAMPO COM NUMEROS E NO MINIMO DUAS CASAS DECIMAIS.'
    END-IF
    IF #CAMPO-BIN                   EQ   '         '
-      REINPUT 'PREENCHIMENTO OBRIGATORIO' MARK *#CAMPO-BIN
+return False, "lda['#TELA']['#CAMPO-BIN']", 'PREENCHIMENTO OBRIGATORIO'
    END-IF
-if not mask_full_num(lda['#TELA']['#CAMPO-BIN'],9):
-      REINPUT 'PREENCHER TOTALMENTE O CAMPO COM NUMEROS' MARK *#CAMPO-BIN
+if not mask_full_num(lda['#TELA']['#CAMPO-BIN'],9)
+return False, "lda['#TELA']['#CAMPO-BIN']", 'PREENCHER TOTALMENTE O CAMPO COM NUMEROS'
    END-IF
    IF #CAMPO-DATA-TELA             EQ  '        '
-      REINPUT 'PREENCHIMENTO OBRIGATORIO' MARK *#CAMPO-DATA-TELA
+return False, "lda['#TELA']['#CAMPO-DATA-TELA']", 'PREENCHIMENTO OBRIGATORIO'
    END-IF
-if not mask_yyyymmdd(lda['#TELA']['#CAMPO-DATA-TELA']):
-      REINPUT 'DATA INVALIDA'      MARK *#CAMPO-DATA-TELA
+if not mask_yyyymmdd(lda['#TELA']['#CAMPO-DATA-TELA'])
+return False, "lda['#TELA']['#CAMPO-DATA-TELA']", 'DATA INVALIDA'
    END-IF
    IF #CAPO-HORA-TELA              EQ  '        '
-      REINPUT 'PREENCHIMENTO OBRIGATORIO' MARK *#CAPO-HORA-TELA
+return False, "lda['#TELA']['#CAPO-HORA-TELA']", 'PREENCHIMENTO OBRIGATORIO'
    END-IF
 IF #COMPO-HORA-HO               EQ '00'  THRU '23'
 AND   #COMPO-HORA-MM               EQ '00'  THRU '59'
 AND  #COMPO-HORA-SS               EQ '00'  THRU '59'
-      IGNORE
-   ELSE
-      REINPUT 'HORA INVALIDA'      MARK *#CAPO-HORA-TELA
+continue
+else:
+return False, "lda['#TELA']['#CAPO-HORA-TELA']", 'HORA INVALIDA'
    END-IF
    FOR #IND1        1              TO  5
 
-if  re.match((  \d),lda['#TELA']['#CAMPO-MULTIPLO'][lda['#IND1']]):
-or  re.match(( \d\d),lda['#TELA']['#CAMPO-MULTIPLO'][lda['#IND1']]):
-or  mask_full_num(lda['#TELA']['#CAMPO-MULTIPLO'][lda['#IND1']],3):
-       IGNORE
-    ELSE
+if  re.match((  \d),lda['#TELA']['#CAMPO-MULTIPLO'][lda['#IND1']])
+or  re.match(( \d\d),lda['#TELA']['#CAMPO-MULTIPLO'][lda['#IND1']])
+or  mask_full_num(lda['#TELA']['#CAMPO-MULTIPLO'][lda['#IND1']],3)
+continue
+else:
      IF #CAMPO-MULTIPLO(#IND1)     EQ  '   '
-        IGNORE
-     ELSE
-       REINPUT  'PREENCHIMENTO INVALIDO - DIGITAR SOMENTE NUMEROS OU EM BRANCO'  MARK *#CAMPO-MULTIPLO(1)
+continue
+else:
+return False, "lda['#TELA']['#CAMPO-MULTIPLO'][1]", 'PREENCHIMENTO INVALIDO - DIGITAR SOMENTE NUMEROS OU EM BRANCO'
      END-IF
     END-IF
    END-FOR
    EXAMINE FULL #CAMPO-MULTIPLO(*) FOR ' ' REPLACE '0'
    FOR #IND1        1              TO  5
 
-if  re.match((    \d),lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM'][lda['#IND1']]):
-or  re.match((   \d\d),lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM'][lda['#IND1']]):
-or  re.match((  \d\d\d),lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM'][lda['#IND1']]):
-or  re.match(( \d\d\d\d),lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM'][lda['#IND1']]):
-or  mask_full_num(lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM'][lda['#IND1']],5):
-       IGNORE
-    ELSE
+if  re.match((    \d),lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM'][lda['#IND1']])
+or  re.match((   \d\d),lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM'][lda['#IND1']])
+or  re.match((  \d\d\d),lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM'][lda['#IND1']])
+or  re.match(( \d\d\d\d),lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM'][lda['#IND1']])
+or  mask_full_num(lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM'][lda['#IND1']],5)
+continue
+else:
      IF #CAMPO-PE-NUM(#IND1)     EQ  '     '
-        IGNORE
-     ELSE
-       REINPUT  'PREENCHIMENTO INVALIDO - DIGITAR SOMENTE NUMEROS OU EM BRANCO'  MARK *#CAMPO-PE-NUM(1)
+continue
+else:
+return False, "lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM'][1]", 'PREENCHIMENTO INVALIDO - DIGITAR SOMENTE NUMEROS OU EM BRANCO'
      END-IF
     END-IF
    END-FOR
@@ -310,15 +310,15 @@ or  mask_full_num(lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM'][lda['#IND1']],5):
    FOR #IND1        1              TO  5
     FOR #IND2        1             TO  5
 lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][#IND1,#IND2] = lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO']
-if  re.match((  \d),lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][#IND1,#IND2]):
-or  re.match(( \d\d),lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][#IND1,#IND2]):
-or  mask_full_num(lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][#IND1,#IND2],3):
-         IGNORE
-     ELSE
+if  re.match((  \d),lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][#IND1,#IND2])
+or  re.match(( \d\d),lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][#IND1,#IND2])
+or  mask_full_num(lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][#IND1,#IND2],3)
+continue
+else:
       IF #CAMPO-PE2-MULTIPLO(#IND1,#IND2)     EQ  '   '
-         IGNORE
-      ELSE
-        REINPUT  'PREENCHIMENTO INVALIDO - DIGITAR SOMENTE NUMEROS OU EM BRANCO'  MARK *#CAMPO-PE2-MULTIPLO(1,1)
+continue
+else:
+return False, "lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][1,1]", 'PREENCHIMENTO INVALIDO - DIGITAR SOMENTE NUMEROS OU EM BRANCO'
       END-IF
      END-IF
     END-FOR
@@ -326,17 +326,17 @@ or  mask_full_num(lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][#IND1,#IND2
    EXAMINE FULL #CAMPO-PE2-MULTIPLO(*,*) FOR ' ' REPLACE '0'
    FOR #IND1        1              TO  5
 
-if  re.match((    \d),lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM'][lda['#IND1']]):
-or  re.match((   \d\d),lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM'][lda['#IND1']]):
-or  re.match((  \d\d\d),lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM'][lda['#IND1']]):
-or  re.match(( \d\d\d\d),lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM'][lda['#IND1']]):
-or  mask_full_num(lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM'][lda['#IND1']],5):
-       IGNORE
-    ELSE
+if  re.match((    \d),lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM'][lda['#IND1']])
+or  re.match((   \d\d),lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM'][lda['#IND1']])
+or  re.match((  \d\d\d),lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM'][lda['#IND1']])
+or  re.match(( \d\d\d\d),lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM'][lda['#IND1']])
+or  mask_full_num(lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM'][lda['#IND1']],5)
+continue
+else:
      IF #CAMPO-PE2-NUM(#IND1)    EQ  '     '
-        IGNORE
-     ELSE
-       REINPUT  'PREENCHIMENTO INVALIDO - DIGITAR SOMENTE NUMEROS OU EM BRANCO'  MARK *#CAMPO-PE2-NUM(1)
+continue
+else:
+return False, "lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM'][1]", 'PREENCHIMENTO INVALIDO - DIGITAR SOMENTE NUMEROS OU EM BRANCO'
      END-IF
     END-IF
    END-FOR

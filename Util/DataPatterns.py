@@ -29,3 +29,8 @@ class DataPatterns:
     row_pattern_value = re.compile(r'\s+VALUE(S)?\s+(IS\s+)?(ARE\s+)?(?P<value>\S+)')
 
     row_pattern_mask = re.compile(r'\s{0,12}\d{1,13}[,]\d{2}')
+
+    row_pattern_reinpt = r"""^REINPUT\s+\'(?P<msg>.*)\'"""
+    row_pattern_mark = r"""\s+MARK\s+\*(?P<mark>\S+)"""
+    row_pattern_reinput = re.compile(row_pattern_reinpt +
+                                     opt_pattern_format.format(row_pattern_mark))

@@ -46,12 +46,12 @@ CMDSPLIT = ('ADD', 'AND', 'CALL', 'CALLNAT', 'COMPRESS', 'COMPUTE', 'DECIDE', 'D
             'REINPUT', 'REPEAT', 'RESET', 'SELECT', 'SET', 'STOP', 'STORE', 'SUBTRACT', 'UPDATE',
             'WHEN', 'WRITE')
 
-#COMMANDS_NATURAL = ('ADD', 'AND', 'CALL', 'CALLNAT', 'COMPRESS', 'COMPUTE', 'DECIDE', 'DEFINE',
-#                    'DELETE', 'DIVIDE', 'ELSE', 'ESCAPE', 'EXAMINE', 'FIND', 'FOR', 'GET', 'IF', 'IGNORE',
-#                    'INPUT', 'MOVE', 'OR', 'PERFORM', 'READ', 'REINPUT', 'REPEAT', 'RESET', 'SELECT',
+#COMMANDS_NATURAL = ('ADD', 'CALL', 'CALLNAT', 'COMPRESS', 'COMPUTE', 'DECIDE', 'DEFINE',
+#                    'DELETE', 'DIVIDE', 'ESCAPE', 'EXAMINE', 'FIND', 'FOR', 'GET',
+#                    'INPUT', 'PERFORM', 'READ', 'REPEAT', 'RESET', 'SELECT',
 #                    'SET', 'STORE', 'SUBTRACT', 'UPDATE', 'WHEN', 'WRITE')
 
-COMMANDS_NATURAL = ('AND', 'IF', 'MOVE', 'OR')
+COMMANDS_NATURAL = ('AND', 'ELSE', 'IF', 'IGNORE', 'MOVE', 'OR', 'REINPUT')
 
 OPERADORES_LOGICOS = {'EQ': '=='
                      ,'=' : '=='

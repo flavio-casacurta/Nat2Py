@@ -2,6 +2,7 @@
 
 from Util.warehouse import COMMANDS_NATURAL, AD, MASKS
 from Util.HOFs import *
+from Util.DataPatterns import *
 
 def procCmd(line, references):
     firstWord = word(line,1)
@@ -58,9 +59,39 @@ def procIF(line, references):
         line = reMask(line, references)
     return line
 
-
 procAND = procIF
 procOR = procIF
+
+
+def procELSE(line, references):
+    return 'else:'
+
+
+def procIGNORE(line, references):
+    return 'continue'
+
+
+def procREINPUT(line, references):
+    match = DataPatterns.row_pattern_reinput.match(line.strip())
+    if not match:
+        return 'return False'
+    match = match.groupdict()
+    idx = ''
+    if match['mark']:
+        fld = match['mark']
+        if fld.find('(') != -1:
+            fld, idx = fld.split('(')[:]
+            idx = idx[:-1]
+            idx = '{}'.format(references.get(u'{}'.format(idx),
+                              references.get('"{}"'.format(idx),
+                              {})).get('def', idx))
+            idx = '[{}]'.format(idx)
+        fld = """"{}{}", """.format(references.get(u'{}'.format(fld),
+                               references.get('"{}"'.format(fld),
+                               {})).get('def', fld), idx)
+    else:
+        fld = ''
+    return """return False, {}'{}'""".format(fld, match['msg'])
 
 
 def reMask(line, references):
@@ -85,12 +116,12 @@ def reMask(line, references):
     mask = ''.join(line.split("MASK")[1:]).strip()
     newMask = MASKS.get(mask, None)
     if newMask:
-        ret = """{} {} {}({}):""".format(cmd, oper, newMask, fld)
+        ret = """{} {} {}({})""".format(cmd, oper, newMask, fld)
     elif mask[1:-1] == '{}'.format('N'*(len(mask)-2)):
         newMask = "mask_full_num"
-        ret = """{} {} {}({},{}):""".format(cmd, oper, newMask, fld, len(mask)-2)
+        ret = """{} {} {}({},{})""".format(cmd, oper, newMask, fld, len(mask)-2)
     else:
         newMask = mask.replace("N","\d").replace("'","")
-        ret = """{} {} re.match({},{}):""".format(cmd, oper, newMask, fld)
+        ret = """{} {} re.match({},{})""".format(cmd, oper, newMask, fld)
 
     return ret
