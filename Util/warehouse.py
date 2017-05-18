@@ -53,17 +53,20 @@ CMDSPLIT = ('ADD', 'AND', 'CALL', 'CALLNAT', 'COMPRESS', 'COMPUTE', 'DECIDE', 'D
 
 COMMANDS_NATURAL = ('AND', 'ELSE', 'IF', 'IGNORE', 'MOVE', 'OR', 'REINPUT')
 
-OPERADORES_LOGICOS = {'EQ': '=='
-                     ,'=' : '=='
-                     ,'NE': '!='
-                     ,'GT': '>'
-                     ,'>' : '>'
-                     ,'>=': '>='
-                     ,'LT': '<'
-                     ,'<' : '<'
-                     ,'<=': '<='
-                     ,'NO': 'not'
-                     ,'NOT': 'not'}
+LOGICAL_OPERATORS = {'EQ': '=='
+                    ,'NE': '!='
+                    ,'GT': '>'
+                    ,'GE': '>='
+                    ,'LT': '<'
+                    ,'LE': '<='
+                    ,'NO': 'not'
+                    ,'NOT': 'not'}
+
+OPERATORS_REPLACE = {' = ' : ' EQ '
+                    ,' > ' : ' GT '
+                    ,' >= ': ' GE '
+                    ,' < ' : ' LT '
+                    ,' <= ': ' LE '}
 
 MASKS = {'(YYYYMMDD)': 'mask_yyyymmdd'
         ,'(DDMMYYYY)': 'mask_ddmmyyyy'

@@ -34,3 +34,5 @@ class DataPatterns:
     row_pattern_mark = r"""\s+MARK\s+\*(?P<mark>\S+)"""
     row_pattern_reinput = re.compile(row_pattern_reinpt +
                                      opt_pattern_format.format(row_pattern_mark))
+    row_pattern_if = re.compile(r"""^IF|AND|OR\s+(?P<operando1>\S+)?""" +
+                                r"""\s+(?P<operator>EQ|NE|GT|GE|LT|LE|NO|NOT)\s+(?P<operando2>.+)""")

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from Util.warehouse import COMMANDS_NATURAL, AD, MASKS
+from Util.warehouse import *
 from Util.HOFs import *
+from Util.change import change
 from Util.DataPatterns import *
 
 def procCmd(line, references):
@@ -20,43 +21,33 @@ def procMOVE(line, references):
     targets = targets.split()
     target = ''
     for trgt in targets:
-        idx = ''
-        if trgt.find('(') != -1:
-            trgt, idx = trgt.split('(')[:]
-            idx = idx[:-1]
-            idx = '{}'.format(references.get(u'{}'.format(idx),
-                              references.get('"{}"'.format(idx),
-                              {})).get('def', idx))
-            idx = '[{}]'.format(idx)
-        target += '{}{} = '.format(references.get(u'{}'.format(trgt),
-                                   references.get('"{}"'.format(trgt),
-                                   {})).get('def', trgt), idx)
+        target += field_ref(trgt, references)
 
-    if source.startswith('LEFT') or source.startswith('RIGHT'):
-        source = source.split()[1]
-    src = source
-    idx = ''
-    if src.startswith('(AD='):
-        source = AD[''.join(src.split('=')[1])[:-1]]
-    elif src.startswith('EDITED'):
-        source = ''.join(src.split('(EM=')[0]).split()[1]
-    elif src.find('(') != -1:
-        source, idx = src.split('(')[:]
-        idx = idx[:-1]
-        idx = '{}'.format(references.get(u'{}'.format(idx),
-                          references.get('"{}"'.format(idx),
-                          {})).get('def', idx))
-        idx = '[{}]'.format(idx)
-    source = '{}{}'.format(references.get(u'{}'.format(source),
-                           references.get('"{}"'.format(source),
-                           {})).get('def', source), idx)
+    if source.startswith('(AD='):
+        source = AD[''.join(source.split('=')[1])[:-1]]
+    else:
+        if source.startswith('LEFT') or source.startswith('RIGHT'):
+            source = source.split()[1]
+        elif source.startswith('EDITED'):
+            source = ''.join(source.split('(EM=')[0]).split()[1]
+        source = field_ref(source, references)
     ret = '' if target.replace('=','').strip() == source else '{}{}'.format(target, source)
     return ret
 
 
 def procIF(line, references):
+    line = change(OPERATORS_REPLACE, line)
     if "MASK" in line:
         line = reMask(line, references)
+    else:
+        match = DataPatterns.row_pattern_if.match(line.strip())
+        if not match:
+            return line
+        match = match.groupdict()
+        operando1 = field_ref(match['operando1'], references) if match['operando1'] else ''
+        operando2 = field_ref(match['operando2'], references) if match['operando2'] else ''
+        line = '{} {} {} {}'.format(word(line,1).lower(), operando1,
+                                    LOGICAL_OPERATORS[match[operator]], operando2)
     return line
 
 procAND = procIF
@@ -76,26 +67,11 @@ def procREINPUT(line, references):
     if not match:
         return 'return False'
     match = match.groupdict()
-    idx = ''
-    if match['mark']:
-        fld = match['mark']
-        if fld.find('(') != -1:
-            fld, idx = fld.split('(')[:]
-            idx = idx[:-1]
-            idx = '{}'.format(references.get(u'{}'.format(idx),
-                              references.get('"{}"'.format(idx),
-                              {})).get('def', idx))
-            idx = '[{}]'.format(idx)
-        fld = """"{}{}", """.format(references.get(u'{}'.format(fld),
-                               references.get('"{}"'.format(fld),
-                               {})).get('def', fld), idx)
-    else:
-        fld = ''
+    fld = field_ref(match['mark'], references) if match['mark'] else ''
     return """return False, {}'{}'""".format(fld, match['msg'])
 
 
 def reMask(line, references):
-    idx = ""
     cmd = word(line, 1).lower()
     if 'EQ' in line:
         oper = ""
@@ -103,16 +79,7 @@ def reMask(line, references):
     elif 'NE' in line:
         oper = "not"
         fld = "".join("".join(line.split("NE")[0]).strip().split()[1:])
-    if fld.find('(') != -1:
-        fld, idx = fld.split('(')[:]
-        idx = idx[:-1]
-        idx = '{}'.format(references.get(u'{}'.format(idx),
-                          references.get('"{}"'.format(idx),
-                          {})).get('def', idx))
-        idx = '[{}]'.format(idx)
-    fld = "{}{}".format(references.get(u'{}'.format(fld),
-                        references.get('"{}"'.format(fld),
-                        {})).get('def', fld), idx)
+    fld = field_ref(fld, references)
     mask = ''.join(line.split("MASK")[1:]).strip()
     newMask = MASKS.get(mask, None)
     if newMask:
@@ -125,3 +92,18 @@ def reMask(line, references):
         ret = """{} {} re.match({},{})""".format(cmd, oper, newMask, fld)
 
     return ret
+
+
+def field_ref(fld, references):
+    idx = ""
+    if fld.find('(') != -1:
+        fld, idx = fld.split('(')[:]
+        idx = idx[:-1]
+        idx = '{}'.format(references.get(u'{}'.format(idx),
+                          references.get('"{}"'.format(idx),
+                          {})).get('def', idx))
+        idx = '[{}]'.format(idx)
+    field = "{}{}".format(references.get(u'{}'.format(fld),
+                          references.get('"{}"'.format(fld),
+                          {})).get('def', fld), idx)
+    return field
