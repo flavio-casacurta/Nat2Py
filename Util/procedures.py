@@ -21,13 +21,13 @@ def procMOVE(line, references):
     targets = targets.split()
     target = ''
     for trgt in targets:
-        target += field_ref(trgt, references)
+        target += field_ref(trgt, references) + ' = '
 
     if source.startswith('(AD='):
         source = AD[''.join(source.split('=')[1])[:-1]]
     else:
         if source.startswith('LEFT') or source.startswith('RIGHT'):
-            source = source.split()[1]
+            source = ''.join(source.split()[1:])
         elif source.startswith('EDITED'):
             source = ''.join(source.split('(EM=')[0]).split()[1]
         source = field_ref(source, references)
@@ -47,7 +47,7 @@ def procIF(line, references):
         operando1 = field_ref(match['operando1'], references) if match['operando1'] else ''
         operando2 = field_ref(match['operando2'], references) if match['operando2'] else ''
         line = '{} {} {} {}'.format(word(line,1).lower(), operando1,
-                                    LOGICAL_OPERATORS[match[operator]], operando2)
+                                    LOGICAL_OPERATORS[match['operator']], operando2)
     return line
 
 procAND = procIF
@@ -56,6 +56,19 @@ procOR = procIF
 
 def procELSE(line, references):
     return 'else:'
+
+
+def procFOR(line, references):
+    match = DataPatterns.row_pattern_for.match(line.strip())
+    if not match:
+        return line
+    match = match.groupdict()
+    operando1 = field_ref(match['operando1'], references)
+    start = field_ref(match['start'], references)
+    start = int(start) - 1 if start.isdigit() else "int({})-1".format(start)
+    stop = field_ref(match['stop'], references)
+    stop = int(stop) if stop.isdigit() else "int({})".format(stop)
+    return """for {} in xrange({}, {}):""".format(operando1, start, stop)
 
 
 def procIGNORE(line, references):
@@ -67,7 +80,7 @@ def procREINPUT(line, references):
     if not match:
         return 'return False'
     match = match.groupdict()
-    fld = field_ref(match['mark'], references) if match['mark'] else ''
+    fld = field_ref(match['mark'], references)+ ' ,' if match['mark'] else ''
     return """return False, {}'{}'""".format(fld, match['msg'])
 
 

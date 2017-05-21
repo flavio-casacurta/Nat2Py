@@ -51,7 +51,7 @@ CMDSPLIT = ('ADD', 'AND', 'CALL', 'CALLNAT', 'COMPRESS', 'COMPUTE', 'DECIDE', 'D
 #                    'INPUT', 'PERFORM', 'READ', 'REPEAT', 'RESET', 'SELECT',
 #                    'SET', 'STORE', 'SUBTRACT', 'UPDATE', 'WHEN', 'WRITE')
 
-COMMANDS_NATURAL = ('AND', 'ELSE', 'IF', 'IGNORE', 'MOVE', 'OR', 'REINPUT')
+COMMANDS_NATURAL = ('AND', 'ELSE', 'FOR', 'IF', 'IGNORE', 'MOVE', 'OR', 'REINPUT')
 
 LOGICAL_OPERATORS = {'EQ': '=='
                     ,'NE': '!='
