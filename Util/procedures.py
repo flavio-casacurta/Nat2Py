@@ -86,10 +86,10 @@ def procREINPUT(line, references):
 
 def reMask(line, references):
     cmd = word(line, 1).lower()
-    if 'EQ' in line:
+    if ' EQ ' in line:
         oper = ""
         fld = "".join("".join(line.split("EQ")[0]).strip().split()[1:])
-    elif 'NE' in line:
+    elif ' NE ' in line:
         oper = "not"
         fld = "".join("".join(line.split("NE")[0]).strip().split()[1:])
     fld = field_ref(fld, references)
