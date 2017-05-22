@@ -21,7 +21,7 @@ def procMOVE(line, references):
     targets = targets.split()
     target = ''
     for trgt in targets:
-        target += field_ref(trgt, references) + ' = '
+        target += field_ref(trgt, references) + ' '
 
     if source.startswith('(AD='):
         source = AD[''.join(source.split('=')[1])[:-1]]
@@ -31,8 +31,11 @@ def procMOVE(line, references):
         elif source.startswith('EDITED'):
             source = ''.join(source.split('(EM=')[0]).split()[1]
         source = field_ref(source, references)
-    ret = '' if target.replace('=','').strip() == source else '{}{}'.format(target, source)
-    return ret
+    ret = ''
+    for trgt in target.split():
+        rem = '# removido >>>' if target.strip() == source else ''
+        ret += "{}{} = {}\n".format(rem, trgt, source)
+    return ret[:-1]
 
 
 def procIF(line, references):
@@ -120,3 +123,11 @@ def field_ref(fld, references):
                           references.get('"{}"'.format(fld),
                           {})).get('def', fld), idx)
     return field
+
+
+def type_ref(fld, references):
+    fld = fld.split('(')[0]
+    fld_type = "{}".format(references.get(u'{}'.format(fld),
+                          references.get('"{}"'.format(fld),
+                          {})).get('type', 'A'))
+    return fld_type

@@ -31,9 +31,16 @@ class DataPatterns:
     row_pattern_mask = re.compile(r'\s{0,12}\d{1,13}[,]\d{2}')
 
     row_pattern_reinpt = r"""^REINPUT\s+\'(?P<msg>.*)\'"""
+
     row_pattern_mark = r"""\s+MARK\s+\*(?P<mark>\S+)"""
+
     row_pattern_reinput = re.compile(row_pattern_reinpt +
                                      opt_pattern_format.format(row_pattern_mark))
+
     row_pattern_if = re.compile(r"""^(IF|AND|OR)\s+(?P<operando1>\S+)?""" +
                                 r"""\s+(?P<operator>EQ|NE|GT|GE|LT|LE|NO|NOT)\s+(?P<operando2>.+)""")
+
     row_pattern_for = re.compile(r"""^FOR\s+(?P<operando1>\S+)\s+(?P<start>\S+)\s+(TO\s+)?(?P<stop>\S+)""")
+
+    row_pattern_examine = re.compile(r"""^EXAMINE\s+FULL\s+(?P<operando1>\S+)\s+FOR\s+""" +
+                                     r"""(?P<for>.*)\s+REPLACE\s+(?P<rep>.*)""")
