@@ -1,6 +1,6 @@
 "#ATR" {
     def = lda['#ATR']
-    init = ''
+    init = None
     length = 0
     level = 1
     occurs = 0
@@ -11,7 +11,7 @@
     }
 "#ATR1" {
     def = lda['#ATR1']
-    init = ''
+    init = None
     length = 0
     level = 1
     occurs = 5
@@ -22,7 +22,7 @@
     }
 "#ATR2" {
     def = lda['#ATR2']
-    init = ''
+    init = None
     length = 0
     level = 1
     occurs = 5
@@ -33,7 +33,7 @@
     }
 "#ATR3" {
     def = lda['#ATR3']
-    init = ''
+    init = None
     length = 0
     level = 1
     occurs = 0
@@ -44,7 +44,7 @@
     }
 "#ATR4" {
     def = lda['#ATR4']
-    init = ''
+    init = None
     length = 0
     level = 1
     occurs = 0
@@ -55,7 +55,7 @@
     }
 "#ATR5" {
     def = lda['#ATR5']
-    init = ''
+    init = None
     length = 0
     level = 1
     occurs = 0
@@ -66,7 +66,7 @@
     }
 "#ATR6" {
     def = lda['#ATR6']
-    init = ''
+    init = None
     length = 0
     level = 1
     occurs = 0
@@ -77,7 +77,7 @@
     }
 "#CAMPO-ALFA" {
     def = lda['#TELA']['#CAMPO-ALFA']
-    init = ''
+    init = ""
     length = 78
     level = 2
     occurs = 0
@@ -88,7 +88,7 @@
     }
 "#CAMPO-BIN" {
     def = lda['#TELA']['#CAMPO-BIN']
-    init = ''
+    init = ""
     length = 9
     level = 2
     occurs = 0
@@ -121,7 +121,7 @@
     }
 "#CAMPO-DATA-TELA" {
     def = lda['#TELA']['#CAMPO-DATA-TELA']
-    init = ''
+    init = ""
     length = 8
     level = 2
     occurs = 0
@@ -165,7 +165,7 @@
     }
 "#CAMPO-DT-NUM-ANO" {
     def = lda['#TELA']['#CAMPO-DATA-TELA-R1']['#CAMPO-DT-NUM-ANO']
-    init = ''
+    init = ""
     length = 4
     level = 3
     occurs = 0
@@ -176,7 +176,7 @@
     }
 "#CAMPO-DT-NUM-DIA" {
     def = lda['#TELA']['#CAMPO-DATA-TELA-R1']['#CAMPO-DT-NUM-DIA']
-    init = ''
+    init = ""
     length = 2
     level = 3
     occurs = 0
@@ -187,7 +187,7 @@
     }
 "#CAMPO-DT-NUM-MES" {
     def = lda['#TELA']['#CAMPO-DATA-TELA-R1']['#CAMPO-DT-NUM-MES']
-    init = ''
+    init = ""
     length = 2
     level = 3
     occurs = 0
@@ -198,7 +198,7 @@
     }
 "#CAMPO-MULTIPLO" {
     def = lda['#TELA']['#CAMPO-MULTIPLO']
-    init = ''
+    init = ""
     length = 3
     level = 2
     occurs = 5
@@ -231,7 +231,7 @@
     }
 "#CAMPO-NUM" {
     def = lda['#TELA']['#CAMPO-NUM']
-    init = ''
+    init = ""
     length = 20
     level = 2
     occurs = 0
@@ -253,7 +253,7 @@
     }
 "#CAMPO-PACK" {
     def = lda['#TELA']['#CAMPO-PACK']
-    init = ''
+    init = ""
     length = 16
     level = 2
     occurs = 0
@@ -297,7 +297,7 @@
     }
 "#CAMPO-PE-ALFA" {
     def = lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-ALFA']
-    init = ''
+    init = ""
     length = 10
     level = 3
     occurs = 0
@@ -308,7 +308,7 @@
     }
 "#CAMPO-PE-NUM" {
     def = lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM']
-    init = ''
+    init = ""
     length = 5
     level = 3
     occurs = 0
@@ -341,7 +341,7 @@
     }
 "#CAMPO-PE2-ALFA" {
     def = lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-ALFA']
-    init = ''
+    init = ""
     length = 10
     level = 3
     occurs = 0
@@ -352,7 +352,7 @@
     }
 "#CAMPO-PE2-MULTIPLO" {
     def = lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO']
-    init = ''
+    init = ""
     length = 3
     level = 3
     occurs = 5
@@ -385,7 +385,7 @@
     }
 "#CAMPO-PE2-NUM" {
     def = lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM']
-    init = ''
+    init = ""
     length = 5
     level = 3
     occurs = 0
@@ -484,7 +484,7 @@
     }
 "#CAMPO-RETORNA" {
     def = lda['#CAMPO-RETORNA']
-    init = ''
+    init = ""
     length = 78
     level = 1
     occurs = 0
@@ -495,7 +495,7 @@
     }
 "#CAPO-HORA-TELA" {
     def = lda['#TELA']['#CAPO-HORA-TELA']
-    init = ''
+    init = ""
     length = 6
     level = 2
     occurs = 0
@@ -528,7 +528,7 @@
     }
 "#COMPO-HORA-HO" {
     def = lda['#TELA']['#CAPO-HORA-TELA-R1']['#COMPO-HORA-HO']
-    init = ''
+    init = ""
     length = 2
     level = 3
     occurs = 0
@@ -550,7 +550,7 @@
     }
 "#COMPO-HORA-MM" {
     def = lda['#TELA']['#CAPO-HORA-TELA-R1']['#COMPO-HORA-MM']
-    init = ''
+    init = ""
     length = 2
     level = 3
     occurs = 0
@@ -561,7 +561,7 @@
     }
 "#COMPO-HORA-SS" {
     def = lda['#TELA']['#CAPO-HORA-TELA-R1']['#COMPO-HORA-SS']
-    init = ''
+    init = ""
     length = 2
     level = 3
     occurs = 0
@@ -616,7 +616,7 @@
     }
 "#TB-RETORNA" {
     def = lda['#TB-RETORNA']
-    init = ''
+    init = ""
     length = 78
     level = 1
     occurs = 10000
@@ -638,7 +638,7 @@
     }
 "#TL-CONFIRMA" {
     def = lda['#TELA']['#TL-CONFIRMA']
-    init = ''
+    init = ""
     length = 1
     level = 2
     occurs = 0
@@ -649,7 +649,7 @@
     }
 "#TL-DT-DATE" {
     def = lda['#TL-DT-DATE']
-    init = ''
+    init = ""
     length = 10
     level = 1
     occurs = 0
@@ -660,7 +660,7 @@
     }
 "#TL-HO-TIME" {
     def = lda['#TL-HO-TIME']
-    init = ''
+    init = ""
     length = 8
     level = 1
     occurs = 0
@@ -737,7 +737,7 @@
     }
 "FILLER_01" {
     def = lda['#TELA']['#CAMPO-NUM-R1']['FILLER_01']
-    init = ''
+    init = ""
     length = 1
     level = 3
     occurs = 0
@@ -748,7 +748,7 @@
     }
 "FILLER_02" {
     def = lda['#TELA']['#CAMPO-PACK-R1']['FILLER_02']
-    init = ''
+    init = ""
     length = 1
     level = 3
     occurs = 0

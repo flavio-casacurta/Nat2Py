@@ -30,12 +30,12 @@ def proc_USING(dda, Using, imports):
 
 
 def get_init(match, imports):
-    type = None if not match.get('type', None) else match['type']
-    init = None if not match.get('init', None) else match['init']
-    if type:
+    _type = match.get('type', None)
+    init = match.get('init', None)
+    if _type:
         if not init:
-            init = DATATYPES_NATURAL[type]['init']
-            imp = DATATYPES_NATURAL[type]['import']
+            init = DATATYPES_NATURAL[_type]['init']
+            imp = DATATYPES_NATURAL[_type]['import']
             if imp and imp not in imports:
                 imports += imp
     else:
@@ -67,12 +67,15 @@ def set_attrb(dda, match, ancestors, init):
 def dictionarize(dda, match, ancestors, spc, imports):
     init, imports = get_init(match, imports)
     set_attrb(dda, match, ancestors, init)
-    ac1 = '' if init == '{' else '[' if match.get('occurs', None) else ''
-    fc1 = '' if init == '{' else ']' if match.get('occurs', None) else ''
-    ac2 = '' if init == '{' else '[' if match.get('two_dimension', None) else ''
-    fc2 = '' if init == '{' else ']' if match.get('two_dimension', None) else ''
+    occurs = match.get('occurs', None)
+    two_dimension = match.get('two_dimension', None)
+    vinit = init
+    if occurs:
+        vinit = '[' + "".join("{}".format((init,) * int(occurs)))[1:-1] + ']'
+        if two_dimension:
+            vinit = '['+"".join("{}".format((vinit,) * int(two_dimension)))[1:-1]+']'
     comma = '' if init == '{' else ','
-    attrb = """{}"{}": {}{}{}{}{}{}\n""".format(' '*spc, match['name'], ac1, ac2, init, fc1, fc2, comma)
+    attrb = """{}"{}": {}{}\n""".format(' '*spc, match['name'], vinit, comma)
     return attrb, init, ancestors, imports
 
 

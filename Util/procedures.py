@@ -33,9 +33,38 @@ def procMOVE(line, references):
         source = field_ref(source, references)
     ret = ''
     for trgt in target.split():
-        rem = '# removido >>>' if target.strip() == source else ''
-        ret += "{}{} = {}\n".format(rem, trgt, source)
+        if target.strip() == source:
+            ret += """# removido >>> {}\n""".format(line)
+        else:
+            ret += "{} = {}\n".format(trgt, source)
     return ret[:-1]
+
+
+def procELSE(line, references):
+    return 'else:'
+
+
+def procEXAMINE(line, references):
+    match = DataPatterns.row_pattern_examine.match(line.strip())
+    if not match:
+        return "#EXAMINE not match >>> " + line
+    match = match.groupdict()
+    operando1 = field_ref(match['operando1'], references)
+    arg1 = field_ref(match['arg1'], references)
+    arg2 = field_ref(match['arg2'], references)
+    return """{}.replace({}, {})""".format(operando1, arg1, arg2)
+
+def procFOR(line, references):
+    match = DataPatterns.row_pattern_for.match(line.strip())
+    if not match:
+        return "#FOR not match >>> " + line
+    match = match.groupdict()
+    operando1 = field_ref(match['operando1'], references)
+    start = field_ref(match['start'], references)
+    start = int(start) - 1 if start.isdigit() else "int({})-1".format(start)
+    stop = field_ref(match['stop'], references)
+    stop = int(stop) if stop.isdigit() else "int({})".format(stop)
+    return """for {} in xrange({}, {}):""".format(operando1, start, stop)
 
 
 def procIF(line, references):
@@ -55,23 +84,6 @@ def procIF(line, references):
 
 procAND = procIF
 procOR = procIF
-
-
-def procELSE(line, references):
-    return 'else:'
-
-
-def procFOR(line, references):
-    match = DataPatterns.row_pattern_for.match(line.strip())
-    if not match:
-        return line
-    match = match.groupdict()
-    operando1 = field_ref(match['operando1'], references)
-    start = field_ref(match['start'], references)
-    start = int(start) - 1 if start.isdigit() else "int({})-1".format(start)
-    stop = field_ref(match['stop'], references)
-    stop = int(stop) if stop.isdigit() else "int({})".format(stop)
-    return """for {} in xrange({}, {}):""".format(operando1, start, stop)
 
 
 def procIGNORE(line, references):

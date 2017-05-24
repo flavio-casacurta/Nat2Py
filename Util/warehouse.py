@@ -20,13 +20,13 @@ AD = {'PI': [('writable', False)],
       'I': [('writable', True)]}
 
 
-DATATYPES_NATURAL = {'A': {'type': 'str', 'init': "''", 'import': ''},
+DATATYPES_NATURAL = {'A': {'type': 'str', 'init': '""', 'import': ''},
                      'N': {'type': 'Decimal', 'init': 'Decimal(0)', 'import': 'from decimal import *\n'},
                      'P': {'type': 'Decimal', 'init': 'Decimal(0)', 'import': 'from decimal import *\n'},
                      'I': {'type': 'int', 'init': 0, 'import': ''},
                      'F': {'type': 'Decimal', 'init': 'Decimal(0.0)', 'import': 'from decimal import *\n'},
                      'B': {'type': 'int', 'init': 0, 'import': ''},
-                     'C': {'type': 'str', 'init': "''", 'import': ''},
+                     'C': {'type': 'str', 'init': None, 'import': ''},
                      'D': {'type': 'date', 'init': 'date(1, 1, 1)', 'import': 'from datetime import date\n'},
                      'T': {'type': 'time', 'init': 'time(1, 1, 1)', 'import': 'from datetime import time\n'},
                      'L': {'type': 'boolean', 'init': False}}
@@ -47,11 +47,11 @@ CMDSPLIT = ('ADD', 'AND', 'CALL', 'CALLNAT', 'COMPRESS', 'COMPUTE', 'DECIDE', 'D
             'WHEN', 'WRITE')
 
 #COMMANDS_NATURAL = ('ADD', 'CALL', 'CALLNAT', 'COMPRESS', 'COMPUTE', 'DECIDE', 'DEFINE',
-#                    'DELETE', 'DIVIDE', 'ESCAPE', 'EXAMINE', 'FIND', 'FOR', 'GET',
+#                    'DELETE', 'DIVIDE', 'ESCAPE', 'FIND', 'FOR', 'GET',
 #                    'INPUT', 'PERFORM', 'READ', 'REPEAT', 'RESET', 'SELECT',
 #                    'SET', 'STORE', 'SUBTRACT', 'UPDATE', 'WHEN', 'WRITE')
 
-COMMANDS_NATURAL = ('AND', 'ELSE', 'FOR', 'IF', 'IGNORE', 'MOVE', 'OR', 'REINPUT')
+COMMANDS_NATURAL = ('AND', 'ELSE', 'EXAMINE', 'FOR', 'IF', 'IGNORE', 'MOVE', 'OR', 'REINPUT')
 
 LOGICAL_OPERATORS = {'EQ': '=='
                     ,'NE': '!='
