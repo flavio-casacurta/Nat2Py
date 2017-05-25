@@ -20,7 +20,7 @@ AD = {'PI': [('writable', False)],
       'I': [('writable', True)]}
 
 
-DATATYPES_NATURAL = {'A': {'type': 'str', 'init': '""', 'import': ''},
+DATATYPES_NATURAL = {'A': {'type': 'str', 'init': None, 'import': ''},
                      'N': {'type': 'Decimal', 'init': 'Decimal(0)', 'import': 'from decimal import *\n'},
                      'P': {'type': 'Decimal', 'init': 'Decimal(0)', 'import': 'from decimal import *\n'},
                      'I': {'type': 'int', 'init': 0, 'import': ''},

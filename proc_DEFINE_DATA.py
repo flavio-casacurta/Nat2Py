@@ -71,6 +71,7 @@ def dictionarize(dda, match, ancestors, spc, imports):
     two_dimension = match.get('two_dimension', None)
     vinit = init
     if occurs:
+        occurs = 99 if int(occurs) > 99 else occurs
         vinit = '[' + "".join("{}".format((init,) * int(occurs)))[1:-1] + ']'
         if two_dimension:
             vinit = '['+"".join("{}".format((vinit,) * int(two_dimension)))[1:-1]+']'
