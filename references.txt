@@ -278,7 +278,7 @@
     init = 
     length = 0
     level = 2
-    occurs = 5
+    occurs = 0
     redefine = False
     scale = 0
     two_dimension = 0
@@ -289,7 +289,7 @@
     init = 
     length = 0
     level = 2
-    occurs = 5
+    occurs = 0
     redefine = False
     scale = 0
     two_dimension = 0
@@ -300,7 +300,7 @@
     init = None
     length = 10
     level = 3
-    occurs = 0
+    occurs = 5
     redefine = False
     scale = 0
     two_dimension = 0
@@ -311,7 +311,7 @@
     init = None
     length = 5
     level = 3
-    occurs = 0
+    occurs = 5
     redefine = False
     scale = 0
     two_dimension = 0
@@ -322,7 +322,7 @@
     init = Decimal(0)
     length = 5
     level = 4
-    occurs = 0
+    occurs = 5
     redefine = False
     scale = 0
     two_dimension = 0
@@ -344,7 +344,7 @@
     init = None
     length = 10
     level = 3
-    occurs = 0
+    occurs = 5
     redefine = False
     scale = 0
     two_dimension = 0
@@ -358,7 +358,7 @@
     occurs = 5
     redefine = False
     scale = 0
-    two_dimension = 0
+    two_dimension = 5
     type = A
     }
 "#CAMPO-PE2-MULTIPLO-R" {
@@ -369,7 +369,7 @@
     occurs = 5
     redefine = False
     scale = 0
-    two_dimension = 0
+    two_dimension = 5
     type = N
     }
 "#CAMPO-PE2-MULTIPLO-R1" {
@@ -388,7 +388,7 @@
     init = None
     length = 5
     level = 3
-    occurs = 0
+    occurs = 5
     redefine = False
     scale = 0
     two_dimension = 0
@@ -399,7 +399,7 @@
     init = Decimal(0)
     length = 5
     level = 4
-    occurs = 0
+    occurs = 5
     redefine = False
     scale = 0
     two_dimension = 0

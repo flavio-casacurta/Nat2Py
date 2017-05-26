@@ -10,6 +10,7 @@ from warehouse import DDA
 from warehouse import LINEFEED
 from warehouse import CMDSPLIT
 from HOFs import *
+from DataPatterns import *
 
 def homogenize(dda):
     clearLines = filter(isNotBlank, dda)
@@ -59,7 +60,31 @@ def homogenize(dda):
                 sub = ' (A{})'.format(match['length'])
                 line = re.sub('\s+\d+X', sub, line)
         homolines.append(line)
-    return homolines
+    homoocurs = []
+    level_ant = 1
+    occurs_gr = 0
+    for line in homolines:
+        match = DataPatterns.row_pattern.match(line.strip())
+        if match:
+            match = match.groupdict()
+            level = int(match['level'])
+            if not match['length'] and not match['type'] and match['occurs']:
+                occurs_gr = match['occurs']
+                line = line.replace("(1:{})".format(occurs_gr), "")
+                level_ant = level
+            else:
+                if level <= level_ant:
+                    occurs_gr = 0
+            if level > level_ant:
+                if occurs_gr:
+                    occ1 = "1:{}".format(occurs_gr)
+                    if match['occurs']:
+                        occ2 = "1:{}".format(match['occurs'])
+                        line = line.replace(occ2, occ1 + ',' + occ2)
+                    else:
+                        line = line.replace(')', '/'+occ1 + ')')
+        homoocurs.append(line)
+    return homoocurs
 
 
 def homogenize_proc(lines):

@@ -89,22 +89,22 @@ lda = {"F255":{
       "#CAMPO-MULTIPLO-R1": {
                              "#CAMPO-MULTIPLO-R": ['Decimal(0)', 'Decimal(0)', 'Decimal(0)', 'Decimal(0)', 'Decimal(0)'],
                             },
-      "#CAMPO-PE-1": ['{', '{', '{', '{', '{']
-                      "#CAMPO-PE-ALFA": None,
-                      "#CAMPO-PE-NUM": None,
+      "#CAMPO-PE-1": {
+                      "#CAMPO-PE-ALFA": [None, None, None, None, None],
+                      "#CAMPO-PE-NUM": [None, None, None, None, None],
                       "#CAMPO-PE-NUM-R1": {
-                                           "#CAMPO-PE-NUM-R": Decimal(0),
+                                           "#CAMPO-PE-NUM-R": ['Decimal(0)', 'Decimal(0)', 'Decimal(0)', 'Decimal(0)', 'Decimal(0)'],
                                           },
                      },
- "#CAMPO-PE-2": ['{', '{', '{', '{', '{']
-                 "#CAMPO-PE2-MULTIPLO": [None, None, None, None, None],
+ "#CAMPO-PE-2": {
+                 "#CAMPO-PE2-MULTIPLO": ['[None, None, None, None, None]', '[None, None, None, None, None]', '[None, None, None, None, None]', '[None, None, None, None, None]', '[None, None, None, None, None]'],
                  "#CAMPO-PE2-MULTIPLO-R1": {
-                                            "#CAMPO-PE2-MULTIPLO-R": ['Decimal(0)', 'Decimal(0)', 'Decimal(0)', 'Decimal(0)', 'Decimal(0)'],
+                                            "#CAMPO-PE2-MULTIPLO-R": ["['Decimal(0)', 'Decimal(0)', 'Decimal(0)', 'Decimal(0)', 'Decimal(0)']", "['Decimal(0)', 'Decimal(0)', 'Decimal(0)', 'Decimal(0)', 'Decimal(0)']", "['Decimal(0)', 'Decimal(0)', 'Decimal(0)', 'Decimal(0)', 'Decimal(0)']", "['Decimal(0)', 'Decimal(0)', 'Decimal(0)', 'Decimal(0)', 'Decimal(0)']", "['Decimal(0)', 'Decimal(0)', 'Decimal(0)', 'Decimal(0)', 'Decimal(0)']"],
                                            },
-                 "#CAMPO-PE2-ALFA": None,
-                 "#CAMPO-PE2-NUM": None,
+                 "#CAMPO-PE2-ALFA": [None, None, None, None, None],
+                 "#CAMPO-PE2-NUM": [None, None, None, None, None],
                  "#CAMPO-PE2-NUM-R1": {
-                                       "#CAMPO-PE2-NUM-R": Decimal(0),
+                                       "#CAMPO-PE2-NUM-R": ['Decimal(0)', 'Decimal(0)', 'Decimal(0)', 'Decimal(0)', 'Decimal(0)'],
                                       },
                 },
                  "#TL-CONFIRMA": None,
@@ -223,19 +223,21 @@ lda['#TL-HO-TIME'] = lda['F255']['CAMPO-TIME-HORA']
 for ndx1 in xrange(5):
 lda['#TELA']['#CAMPO-MULTIPLO-R1']['#CAMPO-MULTIPLO-R'][ndx1] = lda['F255']['CAMPO-MULTIPLO'][ndx1]
 END-FOR
-for ndx1 in xrange(0):
+for ndx1 in xrange(5):
 lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-ALFA'][ndx1] = lda['F255']['GP-SEM-MULTIPLO']['CAMPO-PE-ALFA'][ndx1]
 END-FOR
-for ndx1 in xrange(0):
+for ndx1 in xrange(5):
 lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM-R1']['#CAMPO-PE-NUM-R'][ndx1] = lda['F255']['GP-SEM-MULTIPLO']['CAMPO-PE-NUM'][ndx1]
 END-FOR
 for ndx1 in xrange(5):
-lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO-R1']['#CAMPO-PE2-MULTIPLO-R'][*,*] = lda['F255']['GP-COM-MULTIPLO']['CAMPO-PE2-MULTIPLO'][*,*]
+for ndx2 in xrange(5):
+lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO-R1']['#CAMPO-PE2-MULTIPLO-R'][ndx1][ndx2] = lda['F255']['GP-COM-MULTIPLO']['CAMPO-PE2-MULTIPLO'][ndx1][ndx2]
 END-FOR
-for ndx1 in xrange(0):
+END-FOR
+for ndx1 in xrange(5):
 lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-ALFA'][ndx1] = lda['F255']['GP-COM-MULTIPLO']['CAMPO-PE2-ALFA'][ndx1]
 END-FOR
-for ndx1 in xrange(0):
+for ndx1 in xrange(5):
 lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM-R1']['#CAMPO-PE2-NUM-R'][ndx1] = lda['F255']['GP-COM-MULTIPLO']['CAMPO-PE2-NUM'][ndx1]
 END-FOR
  END-SUBROUTINE
@@ -349,7 +351,7 @@ return False, lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM'][0] ,'PREENCHIMENTO IN
      END-IF
     END-IF
    END-FOR
-for ndx1 in xrange(0):
+for ndx1 in xrange(5):
 lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM'][ndx1].replace(' ', '0')
 END-FOR
 for lda['#IND1'] in xrange(0, 5):
@@ -369,7 +371,9 @@ return False, lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][1,1] ,'PREENCHI
     END-FOR
    END-FOR
 for ndx1 in xrange(5):
-lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][*,*].replace(' ', '0')
+for ndx2 in xrange(5):
+lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][ndx1][ndx2].replace(' ', '0')
+END-FOR
 END-FOR
 for lda['#IND1'] in xrange(0, 5):
 # removido >>>     MOVE RIGHT #CAMPO-PE2-NUM(#IND1) TO  #CAMPO-PE2-NUM(#IND1)
@@ -387,7 +391,7 @@ return False, lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM'][0] ,'PREENCHIMENTO I
      END-IF
     END-IF
    END-FOR
-for ndx1 in xrange(0):
+for ndx1 in xrange(5):
 lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM'][ndx1].replace(' ', '0')
 END-FOR
 if lda['#TELA']['#TL-CONFIRMA'] != 'S'
