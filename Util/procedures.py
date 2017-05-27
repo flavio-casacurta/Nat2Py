@@ -145,11 +145,14 @@ def field_ref(fld, references):
     if fld.find('(') != -1:
         fld, idx = fld.split('(')[:]
         idx = idx[:-1]
-        idx = '{}'.format(references.get(u'{}'.format(idx),
-                          references.get('"{}"'.format(idx),
-                          {})).get('def', idx))
-        if idx.isdigit():
-            idx = str(int(idx)-1)
+        for i in idx.split(','):
+            if i.isdigit():
+                idx = idx.replace(i, str(int(i) - 1), 1)
+            else:
+                ix = '{}'.format(references.get(u'{}'.format(i),
+                                 references.get('"{}"'.format(i),
+                                 {})).get('def', i))
+                idx = idx.replace(i, ix, 1)
         idx = '[{}]'.format(idx)
     field = "{}{}".format(references.get(u'{}'.format(fld),
                           references.get('"{}"'.format(fld),

@@ -64,25 +64,27 @@ def homogenize(dda):
     level_ant = 1
     occurs_gr = 0
     for line in homolines:
-        match = DataPatterns.row_pattern.match(line.strip())
-        if match:
-            match = match.groupdict()
-            level = int(match['level'])
-            if not match['length'] and not match['type'] and match['occurs']:
-                occurs_gr = match['occurs']
-                line = line.replace("(1:{})".format(occurs_gr), "")
-                level_ant = level
-            else:
-                if level <= level_ant:
-                    occurs_gr = 0
-            if level > level_ant:
-                if occurs_gr:
-                    occ1 = "1:{}".format(occurs_gr)
-                    if match['occurs']:
-                        occ2 = "1:{}".format(match['occurs'])
-                        line = line.replace(occ2, occ1 + ',' + occ2)
-                    else:
-                        line = line.replace(')', '/'+occ1 + ')')
+        match = DataPatterns.row_pattern_redefine.match(line.strip())
+        if not match:
+            match = DataPatterns.row_pattern.match(line.strip())
+            if match:
+                match = match.groupdict()
+                level = int(match['level'])
+                if not match['length'] and not match['type'] and match['occurs']:
+                    occurs_gr = match['occurs']
+                    line = line.replace("(1:{})".format(occurs_gr), "")
+                    level_ant = level
+                else:
+                    if level <= level_ant:
+                        occurs_gr = 0
+                if level > level_ant:
+                    if occurs_gr:
+                        occ1 = "1:{}".format(occurs_gr)
+                        if match['occurs']:
+                            occ2 = "1:{}".format(match['occurs'])
+                            line = line.replace(occ2, occ1 + ',' + occ2)
+                        else:
+                            line = line.replace(')', '/'+occ1 + ')')
         homoocurs.append(line)
     return homoocurs
 

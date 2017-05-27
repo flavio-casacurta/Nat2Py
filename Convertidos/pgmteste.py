@@ -357,15 +357,15 @@ END-FOR
 for lda['#IND1'] in xrange(0, 5):
 for lda['#IND2'] in xrange(0, 5):
 # removido >>>      MOVE RIGHT #CAMPO-PE2-MULTIPLO (#IND1,#IND2)  TO  #CAMPO-PE2-MULTIPLO(#IND1,#IND2)
-if  re.match((  \d),lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][#IND1,#IND2])
-or  re.match(( \d\d),lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][#IND1,#IND2])
-or  mask_full_num(lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][#IND1,#IND2],3)
+if  re.match((  \d),lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][lda['#IND1'],lda['#IND2']])
+or  re.match(( \d\d),lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][lda['#IND1'],lda['#IND2']])
+or  mask_full_num(lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][lda['#IND1'],lda['#IND2']],3)
 continue
 else:
-if lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][#IND1,#IND2] == '   '
+if lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][lda['#IND1'],lda['#IND2']] == '   '
 continue
 else:
-return False, lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][1,1] ,'PREENCHIMENTO INVALIDO - DIGITAR SOMENTE NUMEROS OU EM BRANCO'
+return False, lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO'][0,0] ,'PREENCHIMENTO INVALIDO - DIGITAR SOMENTE NUMEROS OU EM BRANCO'
       END-IF
      END-IF
     END-FOR
