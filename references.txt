@@ -99,7 +99,7 @@
     }
 "#CAMPO-BIN-N" {
     def = lda['#TELA']['#CAMPO-BIN-R1']['#CAMPO-BIN-N']
-    init = Decimal(0)
+    init = 0
     length = 9
     level = 3
     occurs = 0
@@ -132,7 +132,7 @@
     }
 "#CAMPO-DATA-TELA-N" {
     def = lda['#TELA']['#CAMPO-DATA-TELA-R2']['#CAMPO-DATA-TELA-N']
-    init = Decimal(0)
+    init = 0
     length = 8
     level = 3
     occurs = 0
@@ -209,7 +209,7 @@
     }
 "#CAMPO-MULTIPLO-R" {
     def = lda['#TELA']['#CAMPO-MULTIPLO-R1']['#CAMPO-MULTIPLO-R']
-    init = Decimal(0)
+    init = 0
     length = 3
     level = 3
     occurs = 5
@@ -319,7 +319,7 @@
     }
 "#CAMPO-PE-NUM-R" {
     def = lda['#TELA']['#CAMPO-PE-1']['#CAMPO-PE-NUM-R1']['#CAMPO-PE-NUM-R']
-    init = Decimal(0)
+    init = 0
     length = 5
     level = 4
     occurs = 5
@@ -363,7 +363,7 @@
     }
 "#CAMPO-PE2-MULTIPLO-R" {
     def = lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-MULTIPLO-R1']['#CAMPO-PE2-MULTIPLO-R']
-    init = Decimal(0)
+    init = 0
     length = 3
     level = 4
     occurs = 5
@@ -396,7 +396,7 @@
     }
 "#CAMPO-PE2-NUM-R" {
     def = lda['#TELA']['#CAMPO-PE-2']['#CAMPO-PE2-NUM-R1']['#CAMPO-PE2-NUM-R']
-    init = Decimal(0)
+    init = 0
     length = 5
     level = 4
     occurs = 5
@@ -418,7 +418,7 @@
     }
 "#CAMPO-R-NU-DEC" {
     def = lda['#TELA']['#CAMPO-NUM-R1']['#CAMPO-R-NU-TOT-R1']['#CAMPO-R-NU-DEC']
-    init = Decimal(0)
+    init = 0
     length = 17
     level = 4
     occurs = 0
@@ -429,7 +429,7 @@
     }
 "#CAMPO-R-NU-TOT" {
     def = lda['#TELA']['#CAMPO-NUM-R1']['#CAMPO-R-NU-TOT']
-    init = Decimal(0)
+    init = 0
     length = 19
     level = 3
     occurs = 0
@@ -451,7 +451,7 @@
     }
 "#CAMPO-R-PACK-DEC" {
     def = lda['#TELA']['#CAMPO-PACK-R1']['#CAMPO-R-PACK-TOT-R1']['#CAMPO-R-PACK-DEC']
-    init = Decimal(0)
+    init = 0
     length = 13
     level = 4
     occurs = 0
@@ -462,7 +462,7 @@
     }
 "#CAMPO-R-PACK-TOT" {
     def = lda['#TELA']['#CAMPO-PACK-R1']['#CAMPO-R-PACK-TOT']
-    init = Decimal(0)
+    init = 0
     length = 15
     level = 3
     occurs = 0
@@ -539,7 +539,7 @@
     }
 "#COMPO-HORA-HO-N" {
     def = lda['#TELA']['#CAPO-HORA-TELA-R2']['#COMPO-HORA-HO-N']
-    init = Decimal(0)
+    init = 0
     length = 6
     level = 3
     occurs = 0
@@ -572,7 +572,7 @@
     }
 "#IND-TB" {
     def = lda['#IND-TB']
-    init = Decimal(0)
+    init = 0
     length = 1
     level = 1
     occurs = 0
@@ -583,7 +583,7 @@
     }
 "#IND-TL" {
     def = lda['#IND-TL']
-    init = Decimal(0)
+    init = 0
     length = 7
     level = 1
     occurs = 0
@@ -594,7 +594,7 @@
     }
 "#IND1" {
     def = lda['#IND1']
-    init = Decimal(0)
+    init = 0
     length = 5
     level = 1
     occurs = 0
@@ -605,7 +605,7 @@
     }
 "#IND2" {
     def = lda['#IND2']
-    init = Decimal(0)
+    init = 0
     length = 5
     level = 1
     occurs = 0
@@ -671,7 +671,7 @@
     }
 "#TL-REGISTRO" {
     def = lda['#TL-REGISTRO']
-    init = Decimal(0)
+    init = 0
     length = 8
     level = 1
     occurs = 0

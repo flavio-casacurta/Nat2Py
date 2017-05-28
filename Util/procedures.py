@@ -45,6 +45,10 @@ def procMOVE(line, references):
     return ret[:-1]
 
 
+def procDEFINE(line, references):
+    return "def {}():".format(line.split()[-1].replace('-', '_'))
+
+
 def procELSE(line, references):
     return 'else:'
 
@@ -106,6 +110,10 @@ procOR = procIF
 
 def procIGNORE(line, references):
     return 'continue'
+
+
+def procPERFORM(line, references):
+    return "{}()".format(line.split()[-1].replace('-', '_'))
 
 
 def procREINPUT(line, references):

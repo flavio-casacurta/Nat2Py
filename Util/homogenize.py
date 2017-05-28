@@ -6,9 +6,7 @@
 '''
 import re
 from change import change
-from warehouse import DDA
-from warehouse import LINEFEED
-from warehouse import CMDSPLIT
+from warehouse import *
 from HOFs import *
 from DataPatterns import *
 
@@ -172,3 +170,36 @@ def orEq(lines):
         joinLines.append(line)
 
     return joinLines
+
+
+def indentation(lines):
+    sp = 0
+    indentLines = ""
+    ilines = iter(lines)
+    stop = False
+
+    while True:
+        if stop:
+            break
+        try:
+            line = ilines.next()
+        except StopIteration:
+            stop = True
+            continue
+        firstWord = word(line, 1).lower()
+        if firstWord in INDENT:
+            init = INDENT.get(firstWord, {}).get('init', None)
+            if isinstance(init, int):
+                sp = sp + init if init and sp else init if sp > 0 else sp
+            addsub = INDENT.get(firstWord, {}).get('ad', None)
+        else:
+            addsub = None
+        if firstWord.startswith('end'):
+            line = ''
+        else:
+            line = """{}{}\n""".format(' '*sp, line.strip())
+        indentLines += line
+        if addsub:
+            sp += addsub
+
+    return indentLines

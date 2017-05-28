@@ -1,3 +1,5 @@
+from decimal import *
+
 # Constantes Figurativas
 CONSTANTES_FIGURATIVAS = { 'ZERO' : 0
                          , 'ZEROS' : 0
@@ -21,10 +23,10 @@ AD = {'PI': [('writable', False)],
 
 
 DATATYPES_NATURAL = {'A': {'type': 'str', 'init': None, 'import': ''},
-                     'N': {'type': 'Decimal', 'init': 'Decimal(0)', 'import': 'from decimal import *\n'},
-                     'P': {'type': 'Decimal', 'init': 'Decimal(0)', 'import': 'from decimal import *\n'},
+                     'N': {'type': 'Decimal', 'init': Decimal(0), 'import': 'from decimal import *\n'},
+                     'P': {'type': 'Decimal', 'init': Decimal(0), 'import': 'from decimal import *\n'},
                      'I': {'type': 'int', 'init': 0, 'import': ''},
-                     'F': {'type': 'Decimal', 'init': 'Decimal(0.0)', 'import': 'from decimal import *\n'},
+                     'F': {'type': 'Decimal', 'init': Decimal(0.0), 'import': 'from decimal import *\n'},
                      'B': {'type': 'int', 'init': 0, 'import': ''},
                      'C': {'type': 'str', 'init': None, 'import': ''},
                      'D': {'type': 'date', 'init': 'date(1, 1, 1)', 'import': 'from datetime import date\n'},
@@ -46,12 +48,12 @@ CMDSPLIT = ('ADD', 'AND', 'CALL', 'CALLNAT', 'COMPRESS', 'COMPUTE', 'DECIDE', 'D
             'REINPUT', 'REPEAT', 'RESET', 'SELECT', 'SET', 'STOP', 'STORE', 'SUBTRACT', 'UPDATE',
             'WHEN', 'WRITE')
 
-#COMMANDS_NATURAL = ('ADD', 'CALL', 'CALLNAT', 'COMPRESS', 'COMPUTE', 'DECIDE', 'DEFINE',
+#COMMANDS_NATURAL = ('ADD', 'CALL', 'CALLNAT', 'COMPRESS', 'COMPUTE', 'DECIDE',
 #                    'DELETE', 'DIVIDE', 'ESCAPE', 'FIND', 'FOR', 'GET',
 #                    'INPUT', 'PERFORM', 'READ', 'REPEAT', 'RESET', 'SELECT',
 #                    'SET', 'STORE', 'SUBTRACT', 'UPDATE', 'WHEN', 'WRITE')
 
-COMMANDS_NATURAL = ('AND', 'ELSE', 'EXAMINE', 'FOR', 'IF', 'IGNORE', 'MOVE', 'OR', 'REINPUT')
+COMMANDS_NATURAL = ('AND', 'DEFINE', 'ELSE', 'EXAMINE', 'FOR', 'IF', 'IGNORE', 'MOVE', 'OR', 'PERFORM', 'REINPUT')
 
 LOGICAL_OPERATORS = {'EQ': '=='
                     ,'NE': '!='
@@ -76,5 +78,13 @@ MASKS = {'(YYYYMMDD)': 'mask_yyyymmdd'
         ,'(MM)': 'mask_mm'
         ,'(HHMMSS)': 'mask_hhmmss'
         ,'(HH:MM:SS)': 'mask_hh2pmm2pss'}
+
+INDENT = {'def': {'ad': 4, 'init': 0},
+          'end-subroutine': {'ad': 0, 'init': 0},
+          'for': {'ad': 4, 'init': None},
+          'end-for': {'ad': -4, 'init': None},
+          'if': {'ad': 4, 'init': None},
+          'else:': {'ad': 4, 'init': -4},
+          'end-if': {'ad': -4, 'init': None}}
 
 
