@@ -175,17 +175,8 @@ def orEq(lines):
 def indentation(lines):
     sp = 0
     indentLines = ""
-    ilines = iter(lines)
-    stop = False
 
-    while True:
-        if stop:
-            break
-        try:
-            line = ilines.next()
-        except StopIteration:
-            stop = True
-            continue
+    for line in lines:
         firstWord = word(line, 1).lower()
         if firstWord in INDENT:
             init = INDENT.get(firstWord, {}).get('init', None)

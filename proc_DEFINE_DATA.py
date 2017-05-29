@@ -72,9 +72,9 @@ def dictionarize(dda, match, ancestors, spc, imports):
     vinit = init
     if occurs:
         occurs = 99 if int(occurs) > 99 else occurs
-        vinit = '[' + "".join("{}".format((init,) * int(occurs)))[1:-1] + ']'
         if two_dimension:
-            vinit = '['+"".join("{}".format((vinit,) * int(two_dimension)))[1:-1]+']'
+            vinit = "[" + "{}".format((vinit,) * int(two_dimension))[1:-1] + "]"
+        vinit = "[" + "{}".format((vinit,) * int(occurs))[1:-1].replace('"', '').replace("'", '') + "]"
     comma = '' if init == '{' else ','
     attrb = """{}"{}": {}{}\n""".format(' '*spc, match['name'], vinit, comma)
     return attrb, init, ancestors, imports

@@ -40,7 +40,7 @@ lda = {"F255":{
        },
        "#ATR": None,
        "#ATR1": [None, None, None, None, None],
-       "#ATR2": ['[None, None, None, None, None]', '[None, None, None, None, None]', '[None, None, None, None, None]', '[None, None, None, None, None]', '[None, None, None, None, None]'],
+       "#ATR2": [[None, None, None, None, None], [None, None, None, None, None], [None, None, None, None, None], [None, None, None, None, None], [None, None, None, None, None]],
        "#ATR3": None,
        "#ATR4": None,
        "#ATR5": None,
@@ -87,24 +87,24 @@ lda = {"F255":{
                             },
       "#CAMPO-MULTIPLO": [None, None, None, None, None],
       "#CAMPO-MULTIPLO-R1": {
-                             "#CAMPO-MULTIPLO-R": [Decimal('0'), Decimal('0'), Decimal('0'), Decimal('0'), Decimal('0')],
+                             "#CAMPO-MULTIPLO-R": [Decimal(0), Decimal(0), Decimal(0), Decimal(0), Decimal(0)],
                             },
       "#CAMPO-PE-1": {
                       "#CAMPO-PE-ALFA": [None, None, None, None, None],
                       "#CAMPO-PE-NUM": [None, None, None, None, None],
                       "#CAMPO-PE-NUM-R1": {
-                                           "#CAMPO-PE-NUM-R": [Decimal('0'), Decimal('0'), Decimal('0'), Decimal('0'), Decimal('0')],
+                                           "#CAMPO-PE-NUM-R": [Decimal(0), Decimal(0), Decimal(0), Decimal(0), Decimal(0)],
                                           },
                      },
  "#CAMPO-PE-2": {
-                 "#CAMPO-PE2-MULTIPLO": ['[None, None, None, None, None]', '[None, None, None, None, None]', '[None, None, None, None, None]', '[None, None, None, None, None]', '[None, None, None, None, None]'],
+                 "#CAMPO-PE2-MULTIPLO": [[None, None, None, None, None], [None, None, None, None, None], [None, None, None, None, None], [None, None, None, None, None], [None, None, None, None, None]],
                  "#CAMPO-PE2-MULTIPLO-R1": {
-                                            "#CAMPO-PE2-MULTIPLO-R": ["[Decimal('0'), Decimal('0'), Decimal('0'), Decimal('0'), Decimal('0')]", "[Decimal('0'), Decimal('0'), Decimal('0'), Decimal('0'), Decimal('0')]", "[Decimal('0'), Decimal('0'), Decimal('0'), Decimal('0'), Decimal('0')]", "[Decimal('0'), Decimal('0'), Decimal('0'), Decimal('0'), Decimal('0')]", "[Decimal('0'), Decimal('0'), Decimal('0'), Decimal('0'), Decimal('0')]"],
+                                            "#CAMPO-PE2-MULTIPLO-R": [[Decimal(0), Decimal(0), Decimal(0), Decimal(0), Decimal(0)], [Decimal(0), Decimal(0), Decimal(0), Decimal(0), Decimal(0)], [Decimal(0), Decimal(0), Decimal(0), Decimal(0), Decimal(0)], [Decimal(0), Decimal(0), Decimal(0), Decimal(0), Decimal(0)], [Decimal(0), Decimal(0), Decimal(0), Decimal(0), Decimal(0)]],
                                            },
                  "#CAMPO-PE2-ALFA": [None, None, None, None, None],
                  "#CAMPO-PE2-NUM": [None, None, None, None, None],
                  "#CAMPO-PE2-NUM-R1": {
-                                       "#CAMPO-PE2-NUM-R": [Decimal('0'), Decimal('0'), Decimal('0'), Decimal('0'), Decimal('0')],
+                                       "#CAMPO-PE2-NUM-R": [Decimal(0), Decimal(0), Decimal(0), Decimal(0), Decimal(0)],
                                       },
                 },
                  "#TL-CONFIRMA": None,
