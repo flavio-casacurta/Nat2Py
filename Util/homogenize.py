@@ -182,7 +182,7 @@ def indentation(lines):
             init = INDENT.get(firstWord, {}).get('init', None)
             if isinstance(init, int):
                 sp = sp + init if init and sp else init if sp > 0 else sp
-            addsub = INDENT.get(firstWord, {}).get('ad', None)
+            addsub = INDENT.get(firstWord, {}).get('addsub', None)
         else:
             addsub = None
         if firstWord.startswith('end'):

@@ -79,12 +79,13 @@ MASKS = {'(YYYYMMDD)': 'mask_yyyymmdd'
         ,'(HHMMSS)': 'mask_hhmmss'
         ,'(HH:MM:SS)': 'mask_hh2pmm2pss'}
 
-INDENT = {'def': {'ad': 4, 'init': 0},
-          'end-subroutine': {'ad': 0, 'init': 0},
-          'for': {'ad': 4, 'init': None},
-          'end-for': {'ad': -4, 'init': None},
-          'if': {'ad': 4, 'init': None},
-          'else:': {'ad': 4, 'init': -4},
-          'end-if': {'ad': -4, 'init': None}}
+INDENT = {'def': {'addsub': 4, 'init': 0},
+          'end-subroutine': {'addsub': 0, 'init': 0},
+          'for': {'addsub': 4, 'init': None},
+          'end-for': {'addsub': -4, 'init': None},
+          'if': {'addsub': 4, 'init': None},
+          'elif': {'addsub': 4, 'init': -4},
+          'else:': {'addsub': 4, 'init': -4},
+          'end-if': {'addsub': -4, 'init': None}}
 
 

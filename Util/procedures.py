@@ -73,7 +73,7 @@ def procEXAMINE(line, references):
         else:
             operando1 = operando1.replace('[*]', '[ndx1]')
     ret += "{}.replace({}, {})\n".format(operando1, arg1, arg2)
-    ret += "END-FOR\nEND-FOR\n" if int(tw) else "END-FOR\n"
+    ret += "END-FOR\nEND-FOR\n" if int(tw) else "END-FOR\n" if int(occ) else ""
     return ret[:-1]
 
 def procFOR(line, references):
