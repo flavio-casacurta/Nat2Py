@@ -45,4 +45,15 @@ class DataPatterns:
     row_pattern_for = re.compile(r"""^FOR\s+(?P<operando1>\S+)\s+(?P<start>\S+)\s+(TO\s+)?(?P<stop>\S+)""")
 
     row_pattern_examine = re.compile(r"""^EXAMINE\s+FULL\s+(?P<operando1>\S+)\s+FOR\s+""" +
-                                     r"""(?P<arg1>.*)\s+REPLACE\s+(?P<arg2>.*)""")
+                                     r"""(?P<arg1>.*)\s+(REPLACE\s+(?P<arg2>.*)|DELETE)""")
+
+    row_pattern_multper = r"""^(?P<multper>[ MP])"""
+    row_pattern_level_names = r"""(?P<level>\d)(?P<shortname>\S{2})(?P<longname>\S+)\s+"""
+    row_pattern_attribute = r"""(?P<type>[ABCDFILNPT])?(?P<length>\d{3})(?P<scale>\d)"""
+    row_pattern_null = r"""(?P<null>[NF])"""
+    row_pattern_descsub = r"""(?P<descsub>[DS])"""
+    row_pattern_ddm_mfm = re.compile(row_pattern_multper +
+                                     row_pattern_level_names +
+                                     opt_pattern_format.format(row_pattern_attribute) +
+                                     opt_pattern_format.format(row_pattern_null) +
+                                     opt_pattern_format.format(row_pattern_descsub))

@@ -341,12 +341,10 @@ def CRITICA_CAMPOS():
         ESCAPE TOP
 def ALTERAR_REGISTRO():
     GET F255 #TL-REGISTRO
-    #EXAMINE not match >>> EXAMINE FULL #CAMPO-NUM FOR ','
-    DELETE
+    lda['#TELA']['#CAMPO-NUM'].replace(',', '')
     # removido >>>  MOVE RIGHT  #CAMPO-NUM  TO   #CAMPO-NUM
     lda['#TELA']['#CAMPO-NUM'].replace(' ', '0')
-    #EXAMINE not match >>> EXAMINE FULL #CAMPO-PACK FOR ','
-    DELETE
+    lda['#TELA']['#CAMPO-PACK'].replace(',', '')
     # removido >>>  MOVE RIGHT #CAMPO-PACK TO #CAMPO-PACK
     lda['#TELA']['#CAMPO-PACK'].replace(' ', '0')
     lda['F255']['CAMPO-ALFA'] = lda['#TELA']['#CAMPO-ALFA']

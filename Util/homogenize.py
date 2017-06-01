@@ -132,13 +132,13 @@ def splitCmd(lines):
     for line in lines:
         wrd = words(line)
         for w in xrange(1, wrd[0]):
-            if wrd[1][w] in CMDSPLIT:
-                wrd1 = word(line, 1)
-                if wrd[1][w] == wrd1:
-                    lw = len(wrd1)
-                    idx = line[lw:].index(wrd1) + 2
-                    ll = len(wrd1 + ' ' + line[lw:idx])
-                    joinLines.append(wrd1 + ' ' + line[lw:idx])
+            firstWord = word(line, 1).upper()
+            if wrd[1][w] in CMDSPLIT and wrd[1][w] != CMDEXCEPTION.get(firstWord, None):
+                if wrd[1][w] == firstWord:
+                    lw = len(firstWord)
+                    idx = line[lw:].index(firstWord) + 2
+                    ll = len(firstWord + ' ' + line[lw:idx])
+                    joinLines.append(firstWord + ' ' + line[lw:idx])
                     line = line[ll:]
                 else:
                     joinLines.append(line[:line.index(wrd[1][w])].strip())

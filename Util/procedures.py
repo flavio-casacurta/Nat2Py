@@ -63,7 +63,8 @@ def procEXAMINE(line, references):
     occtw = fieldref[1]
     occ, tw = occtw
     arg1 = field_ref(match['arg1'], references)[0]
-    arg2 = field_ref(match['arg2'], references)[0]
+    arg2 = match.get('arg2', None)
+    arg2 = field_ref(arg2, references)[0] if arg2 else "''"
     ret = ''
     if operando1[-2] == '*':
         ret += "for ndx1 in xrange({}):\n".format(occ)

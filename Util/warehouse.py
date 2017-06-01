@@ -48,6 +48,10 @@ CMDSPLIT = ('ADD', 'AND', 'CALL', 'CALLNAT', 'COMPRESS', 'COMPUTE', 'DECIDE', 'D
             'REINPUT', 'REPEAT', 'RESET', 'SELECT', 'SET', 'STOP', 'STORE', 'SUBTRACT', 'UPDATE',
             'WHEN', 'WRITE')
 
+
+CMDEXCEPTION = {'EXAMINE': 'DELETE'}
+
+
 #COMMANDS_NATURAL = ('ADD', 'CALL', 'CALLNAT', 'COMPRESS', 'COMPUTE', 'DECIDE',
 #                    'DELETE', 'DIVIDE', 'ESCAPE', 'FIND', 'FOR', 'GET',
 #                    'INPUT', 'PERFORM', 'READ', 'REPEAT', 'RESET', 'SELECT',

@@ -1,0 +1,190 @@
+*H**ENAT4104201006171044399MVS/ESA                          0AE B
+*C**                                CETEC   EDITWORK                        F
+*D01NAT4104M CETEC   T11111IN                        KNGG0899KNGG0899AAKK    S
+*D02            2010052713465252010052713465250000009280
+*D03MVS/ESA CICS    NATO
+*D04
+*S*** MAP2: PROTOTYPE
+*S*** INPUT USING MAP 'XXXXXXXX'
+*S***     #ATR #ATR1(*) #ATR2(*,*) #ATR3 #ATR4 #ATR5 #ATR6 #CAMPO-ALFA
+*S***     #CAMPO-BIN #CAMPO-DT-NUM-ANO #CAMPO-DT-NUM-DIA #CAMPO-DT-NUM-MES
+*S***     #CAMPO-MULTIPLO(*) #CAMPO-NUM #CAMPO-PACK #CAMPO-PE-ALFA(*)
+*S***     #CAMPO-PE-NUM(*) #CAMPO-PE2-ALFA(*) #CAMPO-PE2-MULTIPLO(*,*)
+*S***     #CAMPO-PE2-NUM(*) #COMPO-HORA-HO #COMPO-HORA-MM #COMPO-HORA-SS
+*S***     #IND-TL #TAB-TXT-TELA(*) #TL-CONFIRMA #TL-DT-DATE #TL-HO-TIME
+*S***     #TL-REGISTRO #TL-TX-CONF #TL-TX-DATE #TL-TX-REGISTRO #TL-TX-TIME
+*S***     #TX-PFS
+*S**DEFINE DATA PARAMETER
+*S**1  #ATR (C)
+*S**1  #ATR1 (C/00001:00005)
+*S**1  #ATR2 (C/00001:00005,00001:00005)
+*S**1  #ATR3 (C)
+*S**1  #ATR4 (C)
+*S**1  #ATR5 (C)
+*S**1  #ATR6 (C)
+*S**1 #CAMPO-ALFA (A078)
+*S**1 #CAMPO-BIN (A009)
+*S**1 #CAMPO-DT-NUM-ANO (A004)
+*S**1 #CAMPO-DT-NUM-DIA (A002)
+*S**1 #CAMPO-DT-NUM-MES (A002)
+*S**1 #CAMPO-MULTIPLO (A003/00001:00005)
+*S**1 #CAMPO-NUM (A020)
+*S**1 #CAMPO-PACK (A016)
+*S**1 #CAMPO-PE-ALFA (A010/00001:00005)
+*S**1 #CAMPO-PE-NUM (A005/00001:00005)
+*S**1 #CAMPO-PE2-ALFA (A010/00001:00005)
+*S**1 #CAMPO-PE2-MULTIPLO (A003/00001:00005,00001:00005)
+*S**1 #CAMPO-PE2-NUM (A005/00001:00005)
+*S**1 #COMPO-HORA-HO (A002)
+*S**1 #COMPO-HORA-MM (A002)
+*S**1 #COMPO-HORA-SS (A002)
+*S**1  #IND-TL (N07,0)
+*S**1 #TAB-TXT-TELA (A078/00001:00004)
+*S**1 #TL-CONFIRMA (A001)
+*S**1 #TL-DT-DATE (A010)
+*S**1 #TL-HO-TIME (A008)
+*S**1 #TL-REGISTRO (N08,0)
+*S**1 #TL-TX-CONF (A013)
+*S**1 #TL-TX-DATE (A010)
+*S**1 #TL-TX-REGISTRO (A016)
+*S**1 #TL-TX-TIME (A010)
+*S**1 #TX-PFS (A048)
+*S**END-DEFINE
+*S**FORMAT PS=023 LS=080 ZP=OFF SG=OFF KD=OFF IP=OFF
+*S*** MAP2: MAP PROFILES *****************************        410***********
+*S*** ,TTAAAMMOO   D I D I N D I D I        ?_)^&:+(                       *
+*S*** 023079        N0NNUCN_            X        01 SYSPROF NL             *
+*S**************************************************************************
+*S**INPUT          (     IP=OFF                                           /*
+*S**                                                                       )
+*S** 002T #TAB-TXT-TELA (#IND-TL+0)  (AD=OIL ) /*.01D078 A078            .
+*S**   /**A1000040000100001000010000100001100001001001000001000HV
+*S**/
+*S** 002T *DATX  (AD=OD EM=DD/MM/YYYY ) /*.01S010 D               .
+*S** 014T *TIMX  (AD=OD EM=HH:II:SS ) /*.01S008 T               .
+*S** 030T 'TESTE POC DE MIGRACAO'
+*S** 055T #TL-TX-REGISTRO  (AD=OY CV=#ATR5 ) /*.01U016 A016            .
+*S** 072T #TL-REGISTRO  (AD=OYL EM=ZZZZZZZ9 CV=#ATR5 ) /*.01U008 N08,0           .
+*S**/
+*S** 002T 'CAMPO ALFA :'
+*S**/
+*S** 002T #CAMPO-ALFA  (AD=MYT'_' CV=#ATR6 ) /*.99U078 A078            .
+*S**/
+*S** 001T 'CAMPO NUM:'
+*S** 012T #CAMPO-NUM  (AD=MYT'_' CV=#ATR ) /*.99U020 A020 20         .
+*S** 034T 'CAMPO PACK:'
+*S** 046T #CAMPO-PACK  (AD=MYT'_' CV=#ATR ) /*.99U016 A016 16         .
+*S**/
+*S** 001T 'CAMPO BIN/NUM:'
+*S** 016T #CAMPO-BIN  (AD=MYT'_' CV=#ATR ) /*.99U009 A009            .
+*S** 027T 'CAMPO DATA NUM:'
+*S** 043T #CAMPO-DT-NUM-DIA  (AD=MYT'_' CV=#ATR ) /*.99U002 A002            .
+*S** 046T '/'
+*S** 048T #CAMPO-DT-NUM-MES  (AD=MYT'_' CV=#ATR ) /*.99U002 A002            .
+*S** 051T '/'
+*S** 053T #CAMPO-DT-NUM-ANO  (AD=MYT'_' CV=#ATR ) /*.99U004 A004 4          .
+*S** 059T #TL-TX-DATE  (AD=OY CV=#ATR5 ) /*.01U010 A010            .
+*S** 070T #TL-DT-DATE  (AD=OY CV=#ATR5 ) /*.01U010 A010            .
+*S**/
+*S** 001T 'CAMPO HO NUM:'
+*S** 015T #COMPO-HORA-HO  (AD=MYT'_' CV=#ATR ) /*.99U002 A002            .
+*S** 018T ':'
+*S** 020T #COMPO-HORA-MM  (AD=MYT'_' CV=#ATR ) /*.99U002 A002            .
+*S** 023T ':'
+*S** 025T #COMPO-HORA-SS  (AD=MYT'_' CV=#ATR ) /*.99U002 A002            .
+*S** 030T #TL-TX-TIME  (AD=OY CV=#ATR5 ) /*.01U010 A010            .
+*S** 041T #TL-HO-TIME  (AD=OY CV=#ATR5 ) /*.01U008 A008            .
+*S**/
+*S** 001T 'CAMPO MULTIPLO NUM:'
+*S** 022T #CAMPO-MULTIPLO (1)  (AD=MYT'_' CV=#ATR1(1) ) /*.99U003 A003            .
+*S**   /**A1000050000100001000010000100001010001005001000002000HV
+*S** 027T #CAMPO-MULTIPLO (2)  (AD=MYT'_' CV=#ATR1(2) ) /*.99U003 A003            .
+*S** 032T #CAMPO-MULTIPLO (3)  (AD=MYT'_' CV=#ATR1(3) ) /*.99U003 A003            .
+*S** 037T #CAMPO-MULTIPLO (4)  (AD=MYT'_' CV=#ATR1(4) ) /*.99U003 A003            .
+*S** 042T #CAMPO-MULTIPLO (5)  (AD=MYT'_' CV=#ATR1(5) ) /*.99U003 A003            .
+*S**/
+*S**/
+*S** 001T 'GRUPO PERIODICO SEM MULTIPLO :'
+*S**/
+*S** 001T 'CAMPO PE ALFA:'
+*S** 016T #CAMPO-PE-ALFA (1)  (AD=MYT'_' CV=#ATR1(1) ) /*.99U010 A010            .
+*S**   /**A1000050000100001000010000100001010001005001000002000HV
+*S** 028T #CAMPO-PE-ALFA (2)  (AD=MYT'_' CV=#ATR1(2) ) /*.99U010 A010            .
+*S** 040T #CAMPO-PE-ALFA (3)  (AD=MYT'_' CV=#ATR1(3) ) /*.99U010 A010            .
+*S** 052T #CAMPO-PE-ALFA (4)  (AD=MYT'_' CV=#ATR1(4) ) /*.99U010 A010            .
+*S** 064T #CAMPO-PE-ALFA (5)  (AD=MYT'_' CV=#ATR1(5) ) /*.99U010 A010            .
+*S**/
+*S** 001T 'CAMPO PE NUM:'
+*S** 015T #CAMPO-PE-NUM (1)  (AD=MYT'_' CV=#ATR1(1) ) /*.99U005 A005            .
+*S**   /**A1000050000100001000010000100001010001005001000002000HV
+*S** 022T #CAMPO-PE-NUM (2)  (AD=MYT'_' CV=#ATR1(2) ) /*.99U005 A005            .
+*S** 029T #CAMPO-PE-NUM (3)  (AD=MYT'_' CV=#ATR1(3) ) /*.99U005 A005            .
+*S** 036T #CAMPO-PE-NUM (4)  (AD=MYT'_' CV=#ATR1(4) ) /*.99U005 A005            .
+*S** 043T #CAMPO-PE-NUM (5)  (AD=MYT'_' CV=#ATR1(5) ) /*.99U005 A005            .
+*S**/
+*S**/
+*S** 001T 'GRUPO PERIODICO COM MULTIPLO :'
+*S**/
+*S** 001T 'CAMPO PE MULTIPLO :'
+*S** 021T #CAMPO-PE2-MULTIPLO (1,1)  (AD=MYT'_' CV=#ATR2(1,1) ) /*.99U003 A003            .
+*S**   /**A2000050000500001000010000100001210005005001000002000HV
+*S** 026T #CAMPO-PE2-MULTIPLO (2,1)  (AD=MYT'_' CV=#ATR2(2,1) ) /*.99U003 A003            .
+*S** 031T #CAMPO-PE2-MULTIPLO (3,1)  (AD=MYT'_' CV=#ATR2(3,1) ) /*.99U003 A003            .
+*S** 036T #CAMPO-PE2-MULTIPLO (4,1)  (AD=MYT'_' CV=#ATR2(4,1) ) /*.99U003 A003            .
+*S** 041T #CAMPO-PE2-MULTIPLO (5,1)  (AD=MYT'_' CV=#ATR2(5,1) ) /*.99U003 A003            .
+*S**/
+*S** 021T #CAMPO-PE2-MULTIPLO (1,2)  (AD=MYT'_' CV=#ATR2(1,2) ) /*.99U003 A003            .
+*S** 026T #CAMPO-PE2-MULTIPLO (2,2)  (AD=MYT'_' CV=#ATR2(2,2) ) /*.99U003 A003            .
+*S** 031T #CAMPO-PE2-MULTIPLO (3,2)  (AD=MYT'_' CV=#ATR2(3,2) ) /*.99U003 A003            .
+*S** 036T #CAMPO-PE2-MULTIPLO (4,2)  (AD=MYT'_' CV=#ATR2(4,2) ) /*.99U003 A003            .
+*S** 041T #CAMPO-PE2-MULTIPLO (5,2)  (AD=MYT'_' CV=#ATR2(5,2) ) /*.99U003 A003            .
+*S**/
+*S** 021T #CAMPO-PE2-MULTIPLO (1,3)  (AD=MYT'_' CV=#ATR2(1,3) ) /*.99U003 A003            .
+*S** 026T #CAMPO-PE2-MULTIPLO (2,3)  (AD=MYT'_' CV=#ATR2(2,3) ) /*.99U003 A003            .
+*S** 031T #CAMPO-PE2-MULTIPLO (3,3)  (AD=MYT'_' CV=#ATR2(3,3) ) /*.99U003 A003            .
+*S** 036T #CAMPO-PE2-MULTIPLO (4,3)  (AD=MYT'_' CV=#ATR2(4,3) ) /*.99U003 A003            .
+*S** 041T #CAMPO-PE2-MULTIPLO (5,3)  (AD=MYT'_' CV=#ATR2(5,3) ) /*.99U003 A003            .
+*S**/
+*S** 021T #CAMPO-PE2-MULTIPLO (1,4)  (AD=MYT'_' CV=#ATR2(1,4) ) /*.99U003 A003            .
+*S** 026T #CAMPO-PE2-MULTIPLO (2,4)  (AD=MYT'_' CV=#ATR2(2,4) ) /*.99U003 A003            .
+*S** 031T #CAMPO-PE2-MULTIPLO (3,4)  (AD=MYT'_' CV=#ATR2(3,4) ) /*.99U003 A003            .
+*S** 036T #CAMPO-PE2-MULTIPLO (4,4)  (AD=MYT'_' CV=#ATR2(4,4) ) /*.99U003 A003            .
+*S** 041T #CAMPO-PE2-MULTIPLO (5,4)  (AD=MYT'_' CV=#ATR2(5,4) ) /*.99U003 A003            .
+*S**/
+*S** 021T #CAMPO-PE2-MULTIPLO (1,5)  (AD=MYT'_' CV=#ATR2(1,5) ) /*.99U003 A003            .
+*S** 026T #CAMPO-PE2-MULTIPLO (2,5)  (AD=MYT'_' CV=#ATR2(2,5) ) /*.99U003 A003            .
+*S** 031T #CAMPO-PE2-MULTIPLO (3,5)  (AD=MYT'_' CV=#ATR2(3,5) ) /*.99U003 A003            .
+*S** 036T #CAMPO-PE2-MULTIPLO (4,5)  (AD=MYT'_' CV=#ATR2(4,5) ) /*.99U003 A003            .
+*S** 041T #CAMPO-PE2-MULTIPLO (5,5)  (AD=MYT'_' CV=#ATR2(5,5) ) /*.99U003 A003            .
+*S** 055T ';'
+*S**/
+*S** 001T 'CAMPO PE ALFA 2'
+*S** 019T ':'
+*S** 021T #CAMPO-PE2-ALFA (1)  (AD=MYT'_' CV=#ATR1(1) ) /*.99U010 A010            .
+*S**   /**A1000050000100001000010000100001010001005001000002000HV
+*S** 033T #CAMPO-PE2-ALFA (2)  (AD=MYT'_' CV=#ATR1(2) ) /*.99U010 A010            .
+*S** 045T #CAMPO-PE2-ALFA (3)  (AD=MYT'_' CV=#ATR1(3) ) /*.99U010 A010            .
+*S** 057T #CAMPO-PE2-ALFA (4)  (AD=MYT'_' CV=#ATR1(4) ) /*.99U010 A010            .
+*S** 069T #CAMPO-PE2-ALFA (5)  (AD=MYT'_' CV=#ATR1(5) ) /*.99U010 A010            .
+*S**/
+*S** 001T 'CAMPO PE NUM 2'
+*S** 019T ':'
+*S** 021T #CAMPO-PE2-NUM (1)  (AD=MYT'_' CV=#ATR1(1) ) /*.99U005 A005            .
+*S**   /**A1000050000100001000010000100001010001005001000002000HV
+*S** 028T #CAMPO-PE2-NUM (2)  (AD=MYT'_' CV=#ATR1(2) ) /*.99U005 A005            .
+*S** 035T #CAMPO-PE2-NUM (3)  (AD=MYT'_' CV=#ATR1(3) ) /*.99U005 A005            .
+*S** 042T #CAMPO-PE2-NUM (4)  (AD=MYT'_' CV=#ATR1(4) ) /*.99U005 A005            .
+*S** 049T #CAMPO-PE2-NUM (5)  (AD=MYT'_' CV=#ATR1(5) ) /*.99U005 A005            .
+*S** 056T #TL-TX-CONF  (AD=MYT'_' CV=#ATR3 ) /*.99U013 A013 13         .
+*S** 070T #TL-CONFIRMA  (AD=MYT'_' CV=#ATR4 ) /*.99U001 A001            .
+*S**/
+*S** 001T '_' (079)
+*S**/
+*S** 002T 'PF3 - SAI'
+*S** 013T 'ENTER - CONFIRMA'
+*S** 031T #TX-PFS  (AD=OY CV=#ATR5 ) /*.01U048 A048            .
+*S*** MAP2: VALIDATION *****************************************************
+*S*** MAP2: END OF MAP *****************************************************
+*S**END
+*E
+

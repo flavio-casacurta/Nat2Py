@@ -21,7 +21,7 @@ ident = lambda x: x
 #------------------- system -----------------------------#
 wordsRe = re.compile(r'\S+', re.UNICODE)
 words = lambda line: [len(wordsRe.findall(line)), wordsRe.findall(line)]
-word = lambda line, arg: wordsRe.findall(line)[arg-1 if arg > 0 else 0] if arg <= words(line) else ''
+word = lambda line, arg: wordsRe.findall(line)[arg-1 if arg > 0 else 0] if arg <= words(line)[0] else ''
 pos = lambda arg, line: line.find(arg)
 nextWord = lambda arg, line: word(line[pos(arg,line):],2) if pos(arg,line) > -1 else ''
 sanitize = lambda line: ' '.join(line.split())

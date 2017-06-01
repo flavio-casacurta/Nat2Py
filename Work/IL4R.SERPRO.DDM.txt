@@ -1,0 +1,32 @@
+*H**ENAT4104201006171044399MVS/ESA                          0AE B
+*C**                                CETEC   POC-A-MIGRACAO-CETEC            V S
+*D01       V CETEC   POC-A-MIGRACAO-CETEC            KNGG5426
+*D02            201005271236434               0000000670
+*D03
+*D04  018  050A
+*S***   Generation started
+*S***   at 2010-05-27 12:36:43
+*S***   by user KNGG5426
+*S***
+*S** 1ABCAMPO-ALFA                      A0780ND
+*S** 1ACCAMPO-NUMERICO                  N0172ND
+*S** 1ADCAMPO-PACK                      P0132N
+*S** 1AECAMPO-BINARIO                   B0040
+*S** 1AACAMPO-NUMERICO-DATA             N0080ND
+*S** 1AFCAMPO-DATE-DATA                 D0060F
+*S** 1AGCAMPO-NUMERICO-HORA             N0060
+*S** 1AHCAMPO-TIME-HORA                 T0120N
+*S**M1AICAMPO-MULTIPLO                  N0030N
+*S**P1AJGP-SEM-MULTIPLO                  0000
+*S** 2AKCAMPO-PE-ALFA                   A0100N
+*S** 2ALCAMPO-PE-NUM                    N0050N
+*S**P1AMGP-COM-MULTIPLO                  0000
+*S**M2ANCAMPO-PE2-MULTIPLO              N0030N
+*S** 2AOCAMPO-PE2-ALFA                  A0100N
+*S** 2APCAMPO-PE2-NUM                   N0050N
+*S** 1AQSP-ALFA-NUM                     A0970NS
+*S***   -------- SOURCE FIELD(S) -------
+*S***   CAMPO-ALFA(1-78)
+*S***   CAMPO-NUMERICO(1-19)
+*E
+
