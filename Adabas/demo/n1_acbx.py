@@ -23,8 +23,8 @@ import adabas.dump
 from adabas.api import *
 from adabas.datamap import *
 
-#FNR=11;DBID=12              # Employees local DB12
-FNR=11;DBID=8                # Employees mf
+FNR=11;DBID=12              # Employees local DB12
+#FNR=11;DBID=8                # Employees mf
 FB='AA,8,A.'
 
 c1=Adabasx(fbl=64,rbl=64)   # allocate set of buffers ACBX,
