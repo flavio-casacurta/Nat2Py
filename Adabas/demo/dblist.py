@@ -105,7 +105,8 @@ for i in dbids:  # loop through list of databases
 
     except DatabaseError, (line, apa):
         #if not apa.rsp==148:
-        print 'Database %5d --'%i, line
+#        print 'Database %5d --'%i, line
+        print 'Database {: 5} -- {}'.format(i, line.split(':')[1])
         pass
     except InterfaceError, (line):
         print 'Database %5d -- %s' % (c1.dbid,line)

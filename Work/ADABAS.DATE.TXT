@@ -1,0 +1,285 @@
+*=====================================================================* 00010001
+* ==== ROTINA DE CONVERSAO DE DATAS - ADABAS -> DB2                   * 00020001
+* ==== INPUT   R1  = ADDR(DATE ADABAS -  4bytes)-yyyymmdd               00030001
+* ==== OUTPUT  R2  = ADDR(DATE DB2    - 10bytes)-yyyy-mm-dd             00040001
+* ====         R9  = ADDR(CSTBLK)                                       00050001
+* ====         R11 = ADDR(IL4BLK)                                       00060001
+*=====================================================================* 00070001
+*                                                                       00080001
+VDATEDB2 CSECT                                                          00090001
+VDATEDB2 AMODE 31                                                       00100001
+VDATEDB2 RMODE 24                                                       00110001
+         STM   R14,R12,12(R13)          SAVE REGISTER IN CALLERS SAVE   00120001
+         LR    R12,R15                  LOAD BASE REGISTER              00130001
+         USING VDATEDB2,R12                                             00140001
+         BRU   IDENTITY                 DESVIA DA IDENTIFICACAO         00150001
+         DC    CL28'SYSTEM: IL4R                '                       00160001
+         DC    CL28'PROGRAM: VDATEDB2            '                      00170001
+         DC    CL28'AUTHOR: GZ SISTEMAS         '                       00180001
+         DC    CL28'VERSION: 01 LEVEL: 00       '                       00190001
+         DC    CL28'WRITTEN: DEC , 1ST 2014     '                       00200001
+         DC    CL11'COMPILLED: '                                        00210001
+         DC    CL08'&SYSDATE'                                           00220001
+         DC    CL01' '                                                  00230001
+         DC    CL08'&SYSTIME'                                           00240001
+IDENTITY DS    0H                                                       00250001
+*                                                                       00260001
+*--------------------------------------------------------------------*  00270001
+*        ENDERECA AS AREAS                                           *  00280001
+*--------------------------------------------------------------------*  00290001
+*                                                                       00300001
+         USING CSTBLK,R9                CSTBLK                          00310001
+         ICM   R11,15,CSTIL4BL                                          00320001
+         USING IL4RBLK,R11              IL4RBLK                         00330001
+*                                                                       00340001
+*--------------------------------------------------------------------*  00350001
+*        ENDERECA WORK-AREA                                          *  00360001
+*--------------------------------------------------------------------*  00370001
+         ST    R13,DATESAVE+04                                          00380001
+         LA    R13,ADATESAV             DESLOCAMENTO NA CSTBLK          00390001
+         ALR   R13,R9                   MINHA SAVE AREA                 00400001
+         LR    R3,R1                    ENTRADA                         00410001
+         XC    CST_INDNULL,CST_INDNULL  ZERA INDICADOR DE NULOS         00420001
+         CP    DATENULL,0(4,R1)         PL4'0'                          00430001
+         BRNE  RDATAOK                                                  00440001
+*--------------------------------------------------------------------*  00450001
+* ---- Tratamento de Date Null                                          00460001
+*--------------------------------------------------------------------*  00470001
+FISO     MVC   0(10,R2),ISODEFA                                         00480001
+         MVC   CST_INDNULL,INDNULL      INDICA DATA COM ERRO            00490001
+         BRU   RETORNO                                                  00500001
+*--------------------------------------------------------------------*  00510001
+* ---- Conversao da Data Adabas p/ format Db2                           00520001
+*--------------------------------------------------------------------*  00530001
+RDATAOK  DS    0H                                                       00540001
+         LR    R3,R1                                                    00550001
+         USING DATEGREG,R2         SAIDA       YYYYMMDD                 00560001
+         USING DATEINT,R3          ENTRADA     nnnnnnnS                 00570001
+         XC    X_I2DFLAG,X_I2DFLAG                                      00580001
+         ZAP   X_DBL1,INT                                               00590001
+         AP    X_DBL1,P1           ADJUST                               00600001
+         SRP   X_DBL1,4,0          SET UP FOR FOLLOWING DIVIDE          00610001
+         DP    X_DBL1,P3652425                                          00620001
+         ZAP   X_I2DWYYYY,X_DBL1(4) GET YEAR OUT                        00630001
+         ZAP   X_TEMPINT,X_I2DWYYYY NOW CALCULATE INTERNAL FOR 1/1/YEAR 00640001
+         MP    X_TEMPINT,P365      ...BY 365                            00650001
+         SP    X_TEMPINT,P1        ADJUST RELATIVE                      00660001
+         ZAP   X_TEMPYYYY,X_I2DWYYYY NOW CALCULATE INTERNAL FOR 1/1/YEA 00670001
+         SP    X_TEMPYYYY,P1       SUBTRACT 1 FOR REAL YEARS PASSED     00680001
+         ZAP   X_DBL1,X_TEMPYYYY   NOW FACTOR # LEAP YEARS              00690001
+         DP    X_DBL1,P4                                                00700001
+         AP    X_TEMPINT,X_DBL1(7) ADD QUOTIENT                         00710001
+         ZAP   X_DBL1,X_TEMPYYYY                                        00720001
+         DP    X_DBL1,P100         DIVIDE BY 100                        00730001
+         SP    X_TEMPINT,X_DBL1(6) SUBTRACT QUOTIENT                    00740001
+         ZAP   X_DBL1,X_TEMPYYYY                                        00750001
+         DP    X_DBL1,P400         DIVIDE BY 400                        00760001
+         AP    X_TEMPINT,X_DBL1(6) ADD QUOTIENT                         00770001
+         CP    INT,X_TEMPINT       DID THEY COME OUT THE SAME?          00780001
+         BRNE  I2D00003            NO, CONTINUE                         00790001
+         SP    X_I2DWYYYY,P1       BACK UP A YEAR                       00800001
+         ZAP   X_I2DWDD,P31        FORCE THESE VALUES                   00810001
+         ZAP   X_I2DWMM,P12                                             00820001
+         BRU   I2D00070                                                 00830001
+I2D00003 DS    0H                                                       00840001
+         ZAP   X_DBL1,INT          GET INPUT INTERNAL DATE              00850001
+         SP    X_DBL1,X_TEMPINT    SUBTRACT CALCULATED VALUE            00860001
+         ZAP   X_I2DWDDD,X_DBL1    SAVE AS CALCULATED DAYS              00870001
+I2D00005 DS    0H                                                       00880001
+         NI    X_I2DFLAG,X_I2DLEAP+X_I2DVDBY4 RESET FLAG                00890001
+         ZAP   X_DBL1,X_I2DWYYYY   GET CURRENT YEAR                     00900001
+         DP    X_DBL1,P4           DIVIDE BY 4                          00910001
+         CP    X_DBL1+7(1),P0      IS THIS ZERO?                        00920001
+         BRNE  I2D00010            NO NOT LEAP                          00930001
+         OI    X_I2DFLAG,X_I2DLEAP+X_I2DVDBY4                           00940001
+         ZAP   X_DBL1,X_I2DWYYYY   GET YEAR BACK                        00950001
+         DP    X_DBL1,P100         DIVIDE BY 100                        00960001
+         CP    X_DBL1+6(2),P0      REMAINDER 0?                         00970001
+         BRNE  I2D00010            NO, DON'T CHANGE                     00980001
+         NI    X_I2DFLAG,255-X_I2DLEAP RESET LEAP                       00990001
+         ZAP   X_DBL1,X_I2DWYYYY   GET YEAR BACK                        01000001
+         DP    X_DBL1,P400         DIVIDE BY 100                        01010001
+         CP    X_DBL1+6(2),P0      REMAINDER 0?                         01020001
+         BRNE  I2D00010            NO, DON'T CHANGE                     01030001
+         OI    X_I2DFLAG,X_I2DLEAP AHA, IT'S A LEAP                     01040001
+I2D00010 DS    0H                                                       01050001
+         TM    X_I2DFLAG,X_I2DLEAP IS THIS LEAP                         01060001
+         BRZ   I2D00030            NO, CHECK AGAINST 365                01070001
+         CP    X_I2DWDDD,P366      MORE THAN 366 DAYS?                  01080001
+         BNH   I2D00040            NO, SKIP                             01090001
+         SP    X_I2DWDDD,P366      SUBTRACT 366                         01100001
+         AP    X_I2DWYYYY,P1       ADD 1 TO YEAR                        01110001
+         BRU   I2D00005            RECALCULATE LEAP YEAR                01120001
+I2D00030 DS    0H                                                       01130001
+         CP    X_I2DWDDD,P365      MORE THAN 365 DAYS?                  01140001
+         BNH   I2D00040            NO, SKIP                             01150001
+         SP    X_I2DWDDD,P365      SUBTRACT 365                         01160001
+         AP    X_I2DWYYYY,P1       ADD 1 TO YEAR                        01170001
+         BRU   I2D00005            RECALCULATE LEAP YEAR                01180001
+I2D00040 DS    0H                                                       01190001
+         UNPK  X_DBL1(5),X_I2DWYYYY                                     01200001
+         MVC   D2IYYYY,X_DBL1+1                                         01210001
+         OI    D2IYYYY+3,X'F0'                                          01220001
+         LA    R15,1                                                    01230001
+         LA    R1,DIM              GET MONTH DAYS                       01240001
+         TM    X_I2DFLAG,X_I2DLEAP IS THIS LEAP                         01250001
+         BRZ   I2D00050            NO, SKIP                             01260001
+         LA    R1,DIML             POINT TO LEAP                        01270001
+I2D00050 DS    0H                                                       01280001
+         CP    X_I2DWDDD,0(2,R1)   MORE DAYS?                           01290001
+         BNH   I2D00060            NO, WE'RE IN THIS MONTH NOW          01300001
+         SP    X_I2DWDDD,0(2,R1)   SUBTRACT THIS ONE                    01310001
+         LA    R1,2(,R1)           POINT TO NEXT ONE                    01320001
+         LA    R15,1(,R15)         NEXT MONTH                           01330001
+         BRU   I2D00050            AND CONTINUE                         01340001
+I2D00060 DS    0H                                                       01350001
+         ZAP   X_I2DWDD,X_I2DWDDD  PUT IN DAYS                          01360001
+         CVD   R15,X_DBL1                                               01370001
+         ZAP   X_I2DWMM,X_DBL1     PUT IN MONTH                         01380001
+I2D00070 DS    0H                                                       01390001
+         UNPK  X_DBL1(3),X_I2DWMM                                       01400001
+         MVC   D2IMM,X_DBL1+1                                           01410001
+         OI    D2IMM+1,X'F0'                                            01420001
+         UNPK  X_DBL1(3),X_I2DWDD                                       01430001
+         MVC   D2IDD,X_DBL1+1                                           01440001
+         OI    D2IDD+1,X'F0'                                            01450001
+RETORNO  DS    0H                                                       01460001
+         MVI   D2BARRA1,C'-'                                            01470001
+         MVI   D2BARRA2,C'-'                                            01480001
+         L     R13,DATESAVE+04                                          01490001
+         LM    R14,R12,12(R13)          RESTORE REMAINDER OF CALLER'S   01500001
+         BR    R14                                                      01510001
+* --------------------------------------------------------------------  01520001
+* ---- WORKING STORAGE -----------------------------------------------  01530001
+* --------------------------------------------------------------------  01540001
+         LTORG ,                                                        01550001
+         DS    0F                                                       01560001
+ISODEFA  DC    CL10'0000-00-00'            yyyy-mm-dd                   01570001
+DATENULL DC    P'0'                                                     01580001
+         DS    0D                                                       01590001
+DIM      DC    PL2'31,28,31,30,31,30,31,31,30,31,30,31'                 01600001
+DIML     DC    PL2'31,29,31,30,31,30,31,31,30,31,30,31'                 01610001
+P0       DC    P'0'                                                     01620001
+P1       DC    P'1'                                                     01630001
+P4       DC    P'4'                                                     01640001
+P12      DC    P'12'                                                    01650001
+P31      DC    P'31'                                                    01660001
+P100     DC    P'100'                                                   01670001
+P365     DC    P'365'                                                   01680001
+P366     DC    P'366'                                                   01690001
+P400     DC    P'400'                                                   01700001
+P3652425 DC    P'365.2425'                                              01710001
+EBCDIC0  DC    10C'0'                                                   01720001
+INDNULL  DC    H'-1'                                                    01730001
+* -------------------------------------------------------------------*  01740001
+* ---- DUMMY SECTION ------------------------------------------------*  01750001
+* -------------------------------------------------------------------*  01760001
+         PRINT OFF                                                      01770001
+         GBLB  &REGS                                                    01780001
+         COPY  IL4DSECT                                                 01790001
+         COPY  ALMDSECT                                                 01800001
+         COPY  AUTDSECT                                                 01810001
+         PRINT ON                                                       01820001
+         END   VDATEDB2                                                 01830001
+*=====================================================================* 01840001
+* ==== ROTINA DE CONVERSAO DE TIME  - ADABAS -> DB2                   * 01850001
+* ==== INPUT   R1  = ADDR(TIME ADABAS -  7bytes packed)                 01860001
+* ====         R2  = ADDR(TIME DB2    -  8bytes)                        01870001
+* ====         R9  = ADDR(CSTBLK)                                       01880001
+* ====         R11 = ADDR(IL4BLK)                                       01890001
+*=====================================================================* 01900001
+*                                                                       01910001
+VTIMEDB2 CSECT                                                          01920001
+VTIMEDB2 AMODE 31                                                       01930001
+VTIMEDB2 RMODE 24                                                       01940001
+         STM   R14,R12,12(R13)          SAVE REGISTER IN CALLERS SAVE   01950001
+         LR    R12,R15                  LOAD BASE REGISTER              01960001
+         USING VTIMEDB2,R12             ESTABLISH BASE REGISTER         01970001
+         BRU   IDENTITY                 DESVIA DA IDENTIFICACAO         01980001
+         DC    CL28'SYSTEM: IL4R                '                       01990001
+         DC    CL28'PROGRAM: VTIMEDB2            '                      02000001
+         DC    CL28'AUTHOR: GZ SISTEMAS         '                       02010001
+         DC    CL28'VERSION: 01 LEVEL: 00       '                       02020001
+         DC    CL28'WRITTEN: DEC , 1ST 2014     '                       02030001
+         DC    CL11'COMPILLED: '                                        02040001
+         DC    CL08'&SYSDATE'                                           02050001
+         DC    CL01' '                                                  02060001
+         DC    CL08'&SYSTIME'                                           02070001
+IDENTITY DS    0H                                                       02080001
+*--------------------------------------------------------------------*  02090001
+*        ENDERECA AS AREAS                                           *  02100001
+*--------------------------------------------------------------------*  02110001
+*                                                                       02120001
+         USING CSTBLK,R9                CSTBLK                          02130001
+         ICM   R11,15,CSTIL4BL          IL4RBLK                         02140001
+         USING IL4RBLK,R11              ESTABLISH COMREG REGISTER       02150001
+*                                                                       02160001
+*--------------------------------------------------------------------*  02170001
+*        ENDERECA WORK-AREA                                          *  02180001
+*--------------------------------------------------------------------*  02190001
+         ST    R13,DATESAVE+04                                          02200001
+         LA    R13,ADATESAV             DESLOCAMENTO NA CSTBLK          02210001
+         ALR   R13,R9                   MINHA SAVE AREA                 02220001
+         LR    R8,R2                    SAIDA                           02230001
+         LR    R3,R1                    ENTRADA                         02240001
+         XC    CST_INDNULL,CST_INDNULL  ZERA INDICADOR DE NULOS         02250001
+         CP    TIMENULL,0(7,R1)         PL7'0'                          02260001
+         BRNE  RDATAOK                                                  02270001
+*--------------------------------------------------------------------*  02280001
+* ---- Tratamento de Time Null                                          02290001
+*--------------------------------------------------------------------*  02300001
+FISO     MVC   0(08,R2),ISODEFA                                         02310001
+         MVC   CST_INDNULL,INDNULL      INDICA DATA COM ERRO            02320001
+         BRU   RETORNO                                                  02330001
+*--------------------------------------------------------------------*  02340001
+* ---- Conversao da Data Adabas p/ format Db2                           02350001
+*--------------------------------------------------------------------*  02360001
+RDATAOK  DS    0H                                                       02370001
+*--------------------------------------------------------------------*  02380001
+         LA    R14,3                                                    02390001
+         ZAP   CST_DB2DATE,0(7,R1)                                      02400001
+         DP    CST_DB2DATE,=P'3600'                                     02410001
+         MVC   CST_HORA,CST_DB2DATE+11                                  02420001
+         XC    CST_DB2DATE+11(1),CST_DB2DATE+11                         02430001
+         MP    CST_DB2DATE(13),=P'3600'                                 02440001
+         AP    CST_DB2DATE(13),CST_DB2DATE+13(3)                        02450001
+         DP    CST_DB2DATE(13),=P'60'                                   02460001
+         MVC   CST_MINUTO,CST_DB2DATE+09                                02470001
+         XC    CST_DB2DATE+09(1),CST_DB2DATE+09                         02480001
+         MP    CST_DB2DATE(11),=P'60'                                   02490001
+         AP    CST_DB2DATE(11),CST_DB2DATE+11(2)                        02500001
+         MVC   CST_SEGUNDO,CST_DB2DATE+09                               02510001
+         MVC   CST_DB2TIME_ZONADO+00(09),=X'F021207A20207A2020'         02520001
+         ED    CST_DB2TIME_ZONADO+00(09),CST_HORA                       02530001
+         MVC   CST_DB2TIME_ZONADO+00(08),CST_DB2TIME_ZONADO+01          02540001
+         MVC   0(8,R2),CST_DB2TIME_ZONADO                               02550001
+RETORNO  DS    0H                       RESTORES RETURN CODE            02560001
+         L     R13,DATESAVE+04                                          02570001
+         LM    R14,R12,12(R13)          RESTORE REMAINDER OF CALLER'S   02580001
+         BR    R14                                                      02590001
+*                                                                       02600001
+* --------------------------------------------------------------------  02610001
+* ---- WORKING STORAGE -----------------------------------------------  02620001
+* --------------------------------------------------------------------  02630001
+         LTORG                                                          02640001
+         DS    0F                                                       02650001
+TIMENULL DC    P'0'                                                     02660001
+ISODEFA  DC    CL08'00:00:00'              hh-mm-dd                     02670001
+FULLNULL DC    XL10'FFFFFFFFFFFFFFFFFFFF'                               02680001
+ZEROBIN  DC    XL11'0000000000000000000000'                             02690001
+INDNULL  DC    H'-1'                                                    02700001
+*                                                                       02710001
+TRACO    EQU   C'-'                                                     02720001
+PONTO    EQU   C'.'                                                     02730001
+BARRA    EQU   C'/'                                                     02740001
+* -------------------------------------------------------------------*  02750001
+* ---- DUMMY SECTION ------------------------------------------------*  02760001
+* -------------------------------------------------------------------*  02770001
+         PRINT OFF                                                      02780001
+         GBLB  &REGS                                                    02790001
+         COPY  IL4DSECT                                                 02800001
+         COPY  ALMDSECT                                                 02810001
+         COPY  AUTDSECT                                                 02820001
+         PRINT ON                                                       02830001
+         END   VTIMEDB2                                                 02840001
+
